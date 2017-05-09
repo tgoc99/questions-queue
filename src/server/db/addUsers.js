@@ -1,12 +1,17 @@
 const User = require('./user');
 
 const newUsers = [{
-  username: 'lnrdgmz',
+  username: 'tgoc99',
   role: 'admin',
   cohort: 'hrnyc-7',
 },
 {
-  username: 'jaffrepaul',
+  username: 'aruvham',
+  role: 'admin',
+  cohort: 'hrnyc-7',
+},
+{
+  username: 'huawillian',
   role: 'admin',
   cohort: 'hrnyc-7',
 }];
