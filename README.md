@@ -1,6 +1,6 @@
 # Question Queue
 
-A web application for students to submit questions to be answered during a later lecture. Questions can optionally include code snippets or tags.
+A web application for students to submit questions to be answered during a lecture. Questions can include code snippets or tags.
 
 ## Table of Contents
 
@@ -8,44 +8,29 @@ A web application for students to submit questions to be answered during a later
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
-1. [Installing Dependencies](#installing-dependencies)
-1. [Tasks](#tasks)
-1. [Contributing](#contributing)
 
 ## Team
+  __Greenfield Team__
 
   - __Product Owner__: Leo Gomez
   - __Scrum Master__: Deb Mozumder
-  - __Development Team Members__: David Hamberlin, Paul Jaffre
+  - __Developer__: David Hamberlin
+  - __Developer__: Paul Jaffre
 
+  __Legacy Team__
+
+  - __Product Owner__: Arturo Ruvalcaba
+  - __Scrum Master__: Willian Hua
+  - __Developer__: Thomas O'Connor
 
 ## Usage
 
-The front-end must be bundled before running the application. Run `npm build` to run the bundler once, or `npm run dev` to have the bundler watch for changes.
+Bundle FrontEnd before running the application. Run 'npm build' to run the bundler once, or 'npm run dev' to have the bundler watch for changes.
 
-To start the server, run `npm start`.
+To start the server, run 'npm start' from the root directory.
 
 ## Requirements
 
 - Node 6.10.0
 
-For a complete list of dependencies, review `package.json`.
-
-
-## Development
-
-## Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install
-```
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md).
-
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+For a complete list of dependencies, refer to 'package.json'.
