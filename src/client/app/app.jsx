@@ -2,12 +2,14 @@ import { remove } from 'lodash';
 import React from 'react';
 import { render } from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import QueueComponent from './QueueComponent.jsx';
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 import SearchBar from './SearchBar.jsx';
+
+import NavBar from './navbar.component.jsx';
+
 
 const putRequest = (question) =>
   fetch('/api/questions', {
@@ -274,19 +276,14 @@ class App extends React.Component {
       snackMessage: '',
     });
   }
+
   render() {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar title="Question Queue"
-            showMenuIconButton={false}
-            iconElementRight={
-              <FlatButton label="Log Out"
-                href="/auth/logout"
-                />
-            }
-            />
           <div className="app-body">
+            <NavBar />
+
             <QuestionFormComponent
               handleSubmit={this.handleSubmit}
               user={this.state.user}
