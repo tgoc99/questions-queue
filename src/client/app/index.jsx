@@ -10,10 +10,16 @@ import {
   Link,
   Redirect,
   withRouter,
+  IndexRoute
 } from 'react-router-dom';
 
 import LoginComponent from './Login.jsx';
-import App from './app.jsx';
+import AppComponent from './app.jsx';
+import HomeComponent from './home.component.jsx';
+import QuestionComponent from './question.component.jsx';
+import ProfileComponent from './profile.component.jsx';
+import ManageComponent from './manage.component.jsx';
+import AnalyticsComponent from './analytics.component.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -43,23 +49,68 @@ class Main extends React.Component {
         <div>
           <Route exact path="/" render={() => (
             this.state.loggedIn ? (
-              <Redirect to="/questions" />
+              <Redirect to="/home" />
             ) : (
               <Redirect push to="/login" />
             )
           )} />
+
           <Route path="/questions"
             render={ () => (
               this.state.loggedIn ? (
-                <App logout={this.logout}
+                <AppComponent logout={this.logout}
                   login={this.login}
                 />
               ) : (
                 <Redirect to="/" />
               )
-            )
-          }
-            />
+          )} />
+
+          <Route path="/home"
+            render={ () => (
+              this.state.loggedIn ? (
+                <HomeComponent />
+              ) : (
+                <Redirect to="/" />
+              )
+          )} />
+
+          <Route path="/question"
+            render={ () => (
+              this.state.loggedIn ? (
+                <QuestionComponent />
+              ) : (
+                <Redirect to="/" />
+              )
+          )} />
+
+          <Route path="/profile"
+            render={ () => (
+              this.state.loggedIn ? (
+                <ProfileComponent />
+              ) : (
+                <Redirect to="/" />
+              )
+          )} />  
+
+          <Route path="/manage"
+            render={ () => (
+              this.state.loggedIn ? (
+                <ManageComponent />
+              ) : (
+                <Redirect to="/" />
+              )
+          )} />  
+
+          <Route path="/analytics"
+            render={ () => (
+              this.state.loggedIn ? (
+                <AnalyticsComponent />
+              ) : (
+                <Redirect to="/" />
+              )
+          )} />  
+
           <Route path="/login" render={() => (
             <LoginComponent
               login={this.login}
