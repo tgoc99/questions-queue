@@ -1,5 +1,5 @@
 # Webpack bundle
-src/client/public/bundle.js
+src/client/dist
 
 # Logs
 logs
