@@ -3,9 +3,9 @@ const GithubStrategy = require('passport-github2').Strategy;
 const config = process.env.GITHUBID ? {
   githubID: process.env.GITHUBID,
   githubSecret: process.env.GITHUBSECRET,
-} : require('../../config');
+} : require('../../config.js');
 
-const baseURL = process.env.BASEURL || '';
+const baseURL = process.env.BASEURL || config.baseURL;
 
 passport.use(new GithubStrategy({
   clientID: config.githubID,
