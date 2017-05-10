@@ -65,8 +65,13 @@ body {
 .question .tag-bar {
   margin: 10px 0px !important;
 }
+.questionFormCodeButton {
+  width: 100%!important;
+  margin: 20px 0px !important;
+}
 .submit-button {
-  margin: 10px 10px !important;
+  margin: 20px 10px !important;
+  width: 98%;
 }
 .tag-chip>span {
   font-size: 0.8em !important;

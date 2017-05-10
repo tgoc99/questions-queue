@@ -142,7 +142,7 @@ class QuestionFormComponent extends React.Component {
     return (
       <Paper className="question-form" >
         <form onSubmit={this.props.handleEdit ? this.handleEdit : this.handleSubmit} >
-          <div>
+          <div className="questionFormCodeButton">
             <TextField
               name="questionText"
               className="question-text-form"
@@ -151,7 +151,7 @@ class QuestionFormComponent extends React.Component {
               multiLine={true}
               floatingLabelText="Ask a question..."
               onChange={this.handleInputChange} />
-            <FlatButton onClick={this.toggleCode}
+            <RaisedButton className="questionFormCodeButton" onClick={this.toggleCode}
               label= {this.state.showCode ? 'Hide Code' : this.state.showButtonText} />
             {this.state.showCode ? codeZone : null}
             <br/>
