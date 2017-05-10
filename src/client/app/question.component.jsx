@@ -64,7 +64,6 @@ class QuestionComponent extends React.Component {
 			        open={this.state.snackbar}
 			        message={this.state.snackMessage}
 			        autoHideDuration={4000}
-			        onRequestClose={this.closeSnackbar}
 			    />
 			</div>
 		</MuiThemeProvider>)

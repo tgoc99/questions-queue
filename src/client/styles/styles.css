@@ -6,13 +6,16 @@ body {
 .welcomeText {
   text-align: center;
   padding: 0px;
-  margin-bottom: 50px
+  margin-bottom: 50px;
+  font-size: 20pt;
+  font-weight: bold;
 }
 .githubIcon {
   background: url("./assets/github.svg");
 }
 .loginButton {
   align-items: center;
+  max-width: 350px;
 }
 .add-user {
   margin: 15px 50px !important;
