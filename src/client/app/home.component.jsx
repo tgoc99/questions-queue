@@ -1,3 +1,4 @@
+import { remove } from 'lodash';
 import React from 'react';
 import NavBar from './navbar.component.jsx';
 import QueueComponent from './QueueComponent.jsx';
@@ -45,13 +46,14 @@ class HomeComponent extends React.Component {
 		    snackbar: false,
 		}
 
-
+		this.handleVote = this.handleVote.bind(this);
 	    this.handleUpvote = this.handleUpvote.bind(this);
 	    this.handleDownvote = this.handleDownvote.bind(this);
 	    this.handleAnswered = this.handleAnswered.bind(this);
 	    this.handleDelete = this.handleDelete.bind(this);
 	    this.handleEdit = this.handleEdit.bind(this);
 	    this.handleTagDelete = this.handleTagDelete.bind(this);
+	    this.closeSnackbar = this.closeSnackbar.bind(this);
 	}
 
   componentDidMount() {
@@ -65,9 +67,11 @@ class HomeComponent extends React.Component {
       this.getQuestions();
     }, 2000);
   }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
   getUsers() {
     const props = this.props;
     return fetch('/api/users', { credentials: 'include' })
@@ -80,6 +84,7 @@ class HomeComponent extends React.Component {
       }
     })
   }
+
   getQuestions() {
     const props = this.props;
     fetch('/api/questions', { credentials: 'include' })
@@ -93,6 +98,29 @@ class HomeComponent extends React.Component {
         }
       })
       .then(questions => this.setState({ questions }));
+  }
+
+  handleVote(question, n) {
+    const q = question;
+    q.votes += n;
+    if (n === 1) {
+      q.usersVoted.push(this.state.user.username);
+    } else {
+      remove(q.usersVoted, i => i === this.state.user.username);
+    }
+    putRequest(q)
+      .then(res => res.json())
+      .then((data) => {
+        this.setState((prevState) => {
+          const questions = prevState.questions;
+          updateQuestions(questions, data);
+          return { questions };
+        });
+      })
+      .catch((err) => {
+        q.votes -= n;
+      });
+    this.getQuestions();
   }
 
   handleUpvote(question) {
@@ -190,6 +218,21 @@ class HomeComponent extends React.Component {
         }
       });
   }
+
+  // Utility
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  }
+  closeSnackbar() {
+    this.setState({
+      snackbar: false,
+      snackMessage: '',
+    });
+  }
+
 
 	render() {
 		return (<MuiThemeProvider> 
