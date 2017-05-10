@@ -387,7 +387,6 @@ class App extends React.Component {
             autoHideDuration={4000}
             onRequestClose={this.closeSnackbar}
           />
-        </div>
       <div id="home-wrapper">
         <QueueComponent
           title="Pending Questions"
@@ -401,6 +400,8 @@ class App extends React.Component {
           user={this.state.user}
         />
       </div>
+      </div>
+
       </MuiThemeProvider>
     );
   }
