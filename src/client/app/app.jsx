@@ -9,10 +9,12 @@ import AdminComponent from './AdminComponent.jsx';
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 import SearchBar from './SearchBar.jsx';
 
+
 import NavBar from './navbar.component.jsx';
 
 
 const putRequest = (question) =>
+
   fetch('/api/questions', {
     credentials: 'include',
     method: 'PUT',
@@ -202,7 +204,8 @@ class App extends React.Component {
   }
   handleAnswered(question) {
     const q = question;
-    q.answered = true;
+    const current = question.answered;
+    q.answered = !current;
     putRequest(question)
       .then(res => res.json())
       .then((data) => {
@@ -217,7 +220,7 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        q.answered = false;
+        q.answered = current;
       });
   }
   handleDelete(question) {
@@ -384,10 +387,85 @@ class App extends React.Component {
             autoHideDuration={4000}
             onRequestClose={this.closeSnackbar}
           />
-        </div>
+      <div id="home-wrapper">
+        <QueueComponent
+          title="Pending Questions"
+          questions={this.state.questions}
+          handleUpvote={this.handleUpvote}
+          handleDownvote={this.handleDownvote}
+          handleAnswered={this.handleAnswered}
+          handleDelete={this.handleDelete}
+          handleEdit={this.handleEdit}
+          handleTagDelete={this.handleTagDelete}
+          user={this.state.user}
+        />
+      </div>
+      </div>
+
       </MuiThemeProvider>
     );
   }
 }
 
 export default App;
+
+// <MuiThemeProvider>
+//   <div>
+//     <AppBar title="Question Queue"
+//       showMenuIconButton={false}
+//       iconElementRight={
+//         <FlatButton label="Log Out"
+//           href="/auth/logout"
+//           />
+//       }
+//       />
+//     <div id="home-wrapper" className="app-body">
+//       <QuestionFormComponent
+//         handleSubmit={this.handleSubmit}
+//         user={this.state.user}
+//         />
+//       <SearchBar
+//         sortBy={this.state.sortBy}
+//         handleSortByChange={this.handleSortByChange}
+//         reverseSort={this.state.reverseSort}
+//         handleReverse={this.handleReverse}
+//         searchText={this.state.searchText}
+//         handleSearchChange={this.handleSearchChange}
+//         filterBy={this.state.filterBy}
+//         handleFilterByChange={this.handleFilterByChange}
+//         />
+//       <QueueComponent
+//         title="Pending Questions"
+//         expanded={true}
+//         questions={this.state.questions.filter(q => !q.answered && this.filterMethod(q))
+//           .sort(this.sortMethod)}
+//         handleUpvote={this.handleUpvote}
+//         handleDownvote={this.handleDownvote}
+//         handleAnswered={this.handleAnswered}
+//         handleDelete={this.handleDelete}
+//         handleEdit={this.handleEdit}
+//         handleTagDelete={this.handleTagDelete}
+//         user={this.state.user}
+//         />
+//       <QueueComponent
+//         title="Answered Questions"
+//         expanded={false}
+//         questions={this.state.questions.filter(q => q.answered && this.filterMethod(q))
+//           .sort(this.sortMethod)}
+//         handleDelete={this.handleDelete}
+//         handleTagDelete={this.handleTagDelete}
+//         user={this.state.user}
+//         />
+//     </div>
+//     <Snackbar
+//       bodyStyle={{ background: this.state.snackbackgroundColor }}
+//       open={this.state.snackbar}
+//       message={this.state.snackMessage}
+//       autoHideDuration={4000}
+//       onRequestClose={this.closeSnackbar}
+//     />
+//   </div>
+// </MuiThemeProvider>
+// // <MuiThemeProvider>
+// //   <Home/>
+// // </MuiThemeProvider>

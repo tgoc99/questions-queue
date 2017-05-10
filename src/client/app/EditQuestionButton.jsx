@@ -1,10 +1,12 @@
 import React from 'react';
+
+// material-ui
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 
-class EditComponent extends React.Component {
+class EditQuestionButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,15 +23,15 @@ class EditComponent extends React.Component {
     this.setState({ open: false });
   }
   handleEdit(question) {
-    this.props.handleEdit(question);
+    this.props.handlers.edit(question);
     this.handleClose();
   }
   render() {
     const buttons = [
     ];
     return (
-      <span>
-        <FlatButton label="Edit" onTouchTap={this.handleOpen} />
+      <span className="question-flex-1" style={{width:'100%',display:'inline-block'}}>
+        <button className="question-button" onTouchTap={this.handleOpen}>Edit</button>
         <Dialog
           title="Edit Question"
           modal={false}
@@ -46,4 +48,4 @@ class EditComponent extends React.Component {
   }
 }
 
-export default EditComponent;
+export default EditQuestionButton;

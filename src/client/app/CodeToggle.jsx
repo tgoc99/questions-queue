@@ -15,12 +15,12 @@ class CodeToggle extends React.Component {
   render() {
     const label = this.state.showCode ? 'Hide Code' : 'Show Code';
     const codeZone = this.state.showCode
-      ? (<CodeZone codeSnippet={this.props.codeSnippet} readOnly={this.props.readOnly} />)
+      ? (<CodeZone className="question-code-zone" codeSnippet={this.props.question.codeSnippet} readOnly={this.props.readOnly} />)
       : null;
 
     return (
       <div>
-        <FlatButton onClick={this.toggle} label={label} />
+        <button className="question-button" onClick={() => this.toggle()}>Code Editor</button>
         {codeZone}
       </div>
     )
