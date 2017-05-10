@@ -62,29 +62,29 @@ class NavBar extends React.Component {
 				onRequestChange={(open) => this.setState({open})}
 				>
 					<AppBar title="Question Queue" showMenuIconButton={false} />
-					<MenuItem href="#/home" onTouchTap={this.handleClose}>
+					<MenuItem className="navbarItem" href="#/home" onTouchTap={this.handleClose}>
 					  <i className="material-icons">home</i> 
-					  Home
+					  <span className="navbarText"> Home </span>
 					</MenuItem>
-					<MenuItem href="#/question" onTouchTap={this.handleClose}>
+					<MenuItem className="navbarItem" href="#/question" onTouchTap={this.handleClose}>
 					  <i className="material-icons">speaker_notes</i> 
-					  Ask Question
+					  <span className="navbarText"> Ask Question </span>
 					</MenuItem>
-					<MenuItem href="#/profile" onTouchTap={this.handleClose}>
+					<MenuItem className="navbarItem" href="#/profile" onTouchTap={this.handleClose}>
 					  <i className="material-icons">account_circle</i> 
-					  Profile
+					  <span className="navbarText"> Profile </span>
 					</MenuItem>
-					<MenuItem href="#/manage" onTouchTap={this.handleClose}>
+					<MenuItem className="navbarItem" href="#/manage" onTouchTap={this.handleClose}>
 					  <i className="material-icons">settings</i> 
-					  Manage
+					  <span className="navbarText"> Manage </span>
 					</MenuItem>
-					<MenuItem href="#/analytics" onTouchTap={this.handleClose}>
+					<MenuItem className="navbarItem" href="#/analytics" onTouchTap={this.handleClose}>
 					  <i className="material-icons">show_chart</i> 
-					  Analytics
+					  <span className="navbarText"> Analytics </span>
 					</MenuItem>
-					<MenuItem onTouchTap={this.handleClose}>
+					<MenuItem className="navbarItem" onTouchTap={this.handleClose}>
 					  <i className="material-icons">highlight_off</i>
-					  Close
+					  <span className="navbarText"> Close </span>
 					</MenuItem>
 				</Drawer>
 			</div>
