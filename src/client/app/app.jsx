@@ -164,6 +164,7 @@ class App extends React.Component {
       });
     });
   }
+
   handleVote(question, n) {
     const q = question;
     q.votes += n;
@@ -186,6 +187,7 @@ class App extends React.Component {
       });
     this.getQuestions();
   }
+  
   handleUpvote(question) {
     this.handleVote(question, 1);
     this.setState({
