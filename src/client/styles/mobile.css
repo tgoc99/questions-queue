@@ -151,6 +151,10 @@ body {
   cursor: default;
 }
 
+#queue-wrapper button:disabled:hover {
+  background-color: #fafbfc;
+}
+
 #queue-wrapper .answered {
   /*background-color: #eff9f1;*/
   background-color: green !important;

@@ -55,7 +55,6 @@ class App extends React.Component {
     this.handleUpvote = this.handleUpvote.bind(this);
     this.handleDownvote = this.handleDownvote.bind(this);
     this.handleAnswered = this.handleAnswered.bind(this);
-    this.handleUnanswered = this.handleUnanswered.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleTagDelete = this.handleTagDelete.bind(this);

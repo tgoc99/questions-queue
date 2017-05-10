@@ -8,7 +8,7 @@ class CodeZone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      readOnly: props.readOnly || false,
+      readOnly: props.readOnly || false
     };
     this.handleCodeChange = this.handleCodeChange.bind(this);
   }
@@ -51,7 +51,7 @@ class CodeZone extends React.Component {
 
   render() {
     return (
-      <textarea ref="codeZone" value={this.props.codeSnippet} />
+      <textarea ref="codeZone" readOnly={true} value={this.props.codeSnippet} />
     );
   }
 }

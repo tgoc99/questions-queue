@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import QuestionVoteComponent from './QuestionVoteComponent.jsx';
 import QuestionMenuComponent from './QuestionMenuComponent.jsx';
 
-function QuestionComponent({ key, user, question, handlers }) {
+function QuestionComponent({ user, question, handlers }) {
 
   var answeredBadge = question.answered ? <span className="question-badge answered">Answered</span> : null;
 
@@ -15,8 +15,8 @@ function QuestionComponent({ key, user, question, handlers }) {
         <div className="question-header-container">
           <div className="question-header">
             <div className="question-text">
-              {question.questionText.split('\n').map(function(line) {
-                return <p>{line}<br/></p>
+              {question.questionText.split('\n').map(function(line, idx) {
+                return <p key={idx}>{line}<br/></p>
               })}
             </div>
             <div className="question-info">
@@ -26,8 +26,8 @@ function QuestionComponent({ key, user, question, handlers }) {
           <p className="question-created">{moment(question.createdAt).fromNow()}</p>
           {answeredBadge}
           <div className="question-tags">
-            {question.tags.map(function(tag) {
-              return <span className="question-badge">{tag}</span>
+            {question.tags.map(function(tag, idx) {
+              return <span key={idx} className="question-badge">{tag}</span>
             })}
           </div>
         </div>

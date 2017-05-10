@@ -13,9 +13,10 @@ function QueueComponent(props) {
 
   return (
     <div id="queue-wrapper">
-      {props.questions.map(function(question) {
+      {props.questions.map(function(question, idx) {
         return (
           <QuestionComponent
+            key={idx}
             user={props.user}
             question={question}
             handlers={handlers}

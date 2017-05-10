@@ -7,6 +7,7 @@ class QuestionMenuComponent extends React.Component {
     super(props);
     this.state = {
       showCode: !!this.props.question.codeSnippet
+      // snippet: this.props.question.codeSnippet
       //answered: this.props.question.answered
     }
   }
@@ -26,10 +27,10 @@ class QuestionMenuComponent extends React.Component {
     var isAdmin = user.role === 'admin';
     var isAuthor = user.username === question.username;
 
-    var answerButton = (<button disabled={!isAdmin} className="question-button" onClick={() => handlers.answer(question)}>{(question.answered && isAdmin) ? 'Unanswer' : 'Answer'}</button>);
-    var deleteButton = (<button disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);
-    var editButton = (<EditQuestionButton question={question} handlers={handlers}/>);
-    var codeEditorButton = <button disabled={!question.codeSnippet} className="question-button" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
+    var codeEditorButton = <button key={1} disabled={!question.codeSnippet} className="question-button" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
+    var answerButton = (<button key={2} disabled={!isAdmin} className="question-button" onClick={() => handlers.answer(question)}>{(question.answered && isAdmin) ? 'Unanswer' : 'Answer'}</button>);
+    var editButton = (<EditQuestionButton key={3} question={question} handlers={handlers}/>);
+    var deleteButton = (<button key={4} disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);
 
     var codeZone = (
       <CodeZone
