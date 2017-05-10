@@ -8,6 +8,8 @@ import QuestionMenuComponent from './QuestionMenuComponent.jsx';
 
 function QuestionComponent({ key, user, question, handlers }) {
 
+  var answeredBadge = question.answered ? <span className="question-badge answered">Answered</span> : null;
+
   return (
       <div className="question-wrapper">
         <div className="question-header-container">
@@ -22,6 +24,7 @@ function QuestionComponent({ key, user, question, handlers }) {
             </div>
           </div>
           <p className="question-created">{moment(question.createdAt).fromNow()}</p>
+          {answeredBadge}
           <div className="question-tags">
             {question.tags.map(function(tag) {
               return <span className="question-badge">{tag}</span>

@@ -55,6 +55,7 @@ class App extends React.Component {
     this.handleUpvote = this.handleUpvote.bind(this);
     this.handleDownvote = this.handleDownvote.bind(this);
     this.handleAnswered = this.handleAnswered.bind(this);
+    this.handleUnanswered = this.handleUnanswered.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleTagDelete = this.handleTagDelete.bind(this);
@@ -154,7 +155,8 @@ class App extends React.Component {
   }
   handleAnswered(question) {
     const q = question;
-    q.answered = true;
+    const current = question.answered;
+    q.answered = !current;
     putRequest(question)
       .then(res => res.json())
       .then((data) => {
@@ -169,7 +171,7 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        q.answered = false;
+        q.answered = current;
       });
   }
   handleDelete(question) {

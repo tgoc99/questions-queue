@@ -23,14 +23,14 @@ class EditQuestionButton extends React.Component {
     this.setState({ open: false });
   }
   handleEdit(question) {
-    this.props.handleEdit(question);
+    this.props.handlers.edit(question);
     this.handleClose();
   }
   render() {
     const buttons = [
     ];
     return (
-      <span className="question-flex-1">
+      <span className="question-flex-1" style={{width:'100%',display:'inline-block'}}>
         <button className="question-button" onTouchTap={this.handleOpen}>Edit</button>
         <Dialog
           title="Edit Question"

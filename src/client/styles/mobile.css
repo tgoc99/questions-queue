@@ -1,5 +1,6 @@
 body {
-  background-color: #fafbfc;
+  /*background-color: #fafbfc;*/
+  background-color: #EEE;
   box-sizing: content-box;
 }
 
@@ -12,7 +13,8 @@ body {
 }
 
 #home-wrapper {
- background-color: #fafbfc;
+ background-color: #EEE;
+ /*background-color: #fafbfc;*/
  font-size: 13px;
  font-family: 'Roboto', sans-serif;
 }
@@ -28,7 +30,6 @@ body {
   background-color: #fff;
   /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
 }
-
 
 #queue-wrapper .question-header,
 #queue-wrapper .question-info,
@@ -48,15 +49,21 @@ body {
 }
 
 #queue-wrapper .question-badge {
+  /*display: inline-block;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 11px;
-  height: 16px;
+  min-height: 18px;
+  max-height: 18px;
   border-radius: 9px;
-  padding: 0 5px;
-  margin: 0 5px;
+  padding: 2px 5px;
+  margin: 0 6px;
   margin-top: 10px;
   background-color: #fafbfc;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   cursor: default;
+  /*text-transform: uppercase;*/
 }
 
 #queue-wrapper .question-header-container {
@@ -72,7 +79,7 @@ body {
 #queue-wrapper .question-upvote,
 #queue-wrapper i {
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #queue-wrapper .question-created {
@@ -113,8 +120,42 @@ body {
   padding: 10px 15px;
   width: 100%;
   height: 100%;
+  flex-grow: 1;
+  display: inline-block;
 }
 
-#queue-wrapper .question-flex-1 {
-  flex-grow: 1;
+#queue-wrapper .question-code-container {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+}
+
+#queue-wrapper button {
+  border: none;
+  border-left: 1px solid #ddd;
+  background-color: #fafbfc;
+  min-height: 40px;
+  max-height: 40px;
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+
+#queue-wrapper button:hover,
+#queue-wrapper button:active {
+  background-color: rgba(3, 102, 214, 0.30);
+  cursor: pointer;
+}
+
+#queue-wrapper button:disabled {
+  opacity: 0.20;
+  cursor: default;
+}
+
+#queue-wrapper .answered {
+  /*background-color: #eff9f1;*/
+  background-color: green !important;
+  color: white !important;
+  margin-top: 0;
+  width: 60px;
+  text-transform: uppercase;
 }

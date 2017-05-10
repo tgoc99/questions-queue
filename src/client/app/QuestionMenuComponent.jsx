@@ -1,24 +1,54 @@
 import React from 'react';
 import EditQuestionButton from './EditQuestionButton.jsx';
-import CodeToggle from './CodeToggle.jsx';
+import CodeZone from './CodeZone.jsx';
 
-function QuestionMenuComponent({question, user, handlers}) {
+class QuestionMenuComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCode: !!this.props.question.codeSnippet
+      //answered: this.props.question.answered
+    }
+  }
 
-  var isAdmin = user.role === 'admin';
-  var isAuthor = user.username === question.username;
+  toogleCode() {
+    var current = this.state.showCode;
+    this.setState({ showCode: !current })
+    //console.log(this.state.showCode);
+  }
 
-  var answerButton = isAdmin ? <button className="question-flex-1 question-button" onClick={() => handlers.answer(question)}>Answer</button> : null;
-  var deleteButton = isAdmin ? <button className="question-flex-1 question-button" onClick={() => handlers.delete(question)}>Delete</button> : null;
-  var editButton = isAdmin || isAuthor ? <EditQuestionButton question={question} handlers={handlers}/> : null;
-  var codeEditorButton = <CodeToggle question={question} readOnly="nocursor"/>;
+  render() {
 
-  return (
-    <div className="question-buttons">
-      {[codeEditorButton, answerButton, editButton, deleteButton]}
-    </div>
-  )
+    var question = this.props.question;
+    var user = this.props.user;
+    var handlers = this.props.handlers;
+
+    var isAdmin = user.role === 'admin';
+    var isAuthor = user.username === question.username;
+
+    var answerButton = (<button disabled={!isAdmin} className="question-button" onClick={() => handlers.answer(question)}>{(question.answered && isAdmin) ? 'Unanswer' : 'Answer'}</button>);
+    var deleteButton = (<button disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);
+    var editButton = (<EditQuestionButton question={question} handlers={handlers}/>);
+    var codeEditorButton = <button disabled={!question.codeSnippet} className="question-button" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
+
+    var codeZone = (
+      <CodeZone
+        codeSnippet={question.codeSnippet}
+        readOnly="true"
+      />
+    )
+
+    return (
+      <div>
+        <div className="question-code-container" style={{display: this.state.showCode ? 'block' : 'none'}}>
+          {codeZone}
+        </div>
+        <div className="question-buttons">
+          {[codeEditorButton, answerButton, editButton, deleteButton]}
+        </div>
+      </div>
+    )
+  }
 }
-
-//<CodeToggle question={question} readOnly="nocursor"/>
 
 export default QuestionMenuComponent;
