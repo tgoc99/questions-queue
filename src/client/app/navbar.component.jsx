@@ -58,7 +58,7 @@ class NavBar extends React.Component {
 			<MuiThemeProvider>
 			<div>
 			<AppBar
-			style={{position:'fixed',width:'100%', top:'0'}}
+				className="appbar"
 	            title="Question Queue"
 	            onLeftIconButtonTouchTap = {this.openDrawer}
 	            iconElementRight = {<IconMenu iconButtonElement={
