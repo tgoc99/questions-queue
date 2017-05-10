@@ -1,5 +1,6 @@
 body {
   background-color: #fafbfc;
+  box-sizing: content-box;
 }
 
 #home-wrapper .home-title{
@@ -55,6 +56,7 @@ body {
   margin-top: 10px;
   background-color: #fafbfc;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  cursor: default;
 }
 
 #queue-wrapper .question-header-container {
@@ -69,7 +71,8 @@ body {
 
 #queue-wrapper .question-upvote,
 #queue-wrapper i {
-  font-size: 14px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 #queue-wrapper .question-created {
@@ -86,5 +89,32 @@ body {
 
 #queue-wrapper .question-badge-container {
   padding: 10px 15px;
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
+}
+
+#queue-wrapper .question-buttons {
+  border-top: 1px solid #ddd;
+}
+
+#queue-wrapper .question-open-editor {
+  cursor: pointer;
+}
+
+#queue-wrapper .question-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#queue-wrapper .question-button {
+  font-size: 12px;
+  color: #0366d6;
+  text-transform: uppercase;
+  padding: 10px 15px;
+  width: 100%;
+  height: 100%;
+}
+
+#queue-wrapper .question-flex-1 {
+  flex-grow: 1;
 }

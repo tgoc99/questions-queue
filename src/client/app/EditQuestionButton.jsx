@@ -1,4 +1,6 @@
 import React from 'react';
+
+// material-ui
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -28,8 +30,8 @@ class EditQuestionButton extends React.Component {
     const buttons = [
     ];
     return (
-      <span>
-        <FlatButton label="Edit" onTouchTap={this.handleOpen} />
+      <span className="question-flex-1">
+        <button className="question-button" onTouchTap={this.handleOpen}>Edit</button>
         <Dialog
           title="Edit Question"
           modal={false}
