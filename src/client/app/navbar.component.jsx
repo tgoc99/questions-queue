@@ -12,9 +12,25 @@ import AppBar from 'material-ui/AppBar';
 class NavBar extends React.Component {
 	constructor(props) {
 	    super(props);
+
+	    // Parse cookie to set up a user object with user's name and role
+	    const user = {};
+
+	    document.cookie.split(';').forEach((str) => {
+			const [k, v] = str.split('=').map(s => s.trim());
+				if (k === 'username' || k === 'role' || k === 'img') {
+				user[k] = v;
+			}
+	    });
+
 	    this.state = {
-	    	open: false
+	    	open: false,
+			user,
 	    };
+
+	    this.state.user.img = unescape(this.state.user.img);
+
+	    console.log(user);
 
 	    // Navigation stuff
 	    this.openDrawer = this.openDrawer.bind(this);
@@ -74,14 +90,16 @@ class NavBar extends React.Component {
 					  <i className="material-icons">account_circle</i> 
 					  <span className="navbarText"> Profile </span>
 					</MenuItem>
-					<MenuItem className="navbarItem" href="#/manage" onTouchTap={this.handleClose}>
-					  <i className="material-icons">settings</i> 
-					  <span className="navbarText"> Manage </span>
-					</MenuItem>
-					<MenuItem className="navbarItem" href="#/analytics" onTouchTap={this.handleClose}>
-					  <i className="material-icons">show_chart</i> 
-					  <span className="navbarText"> Analytics </span>
-					</MenuItem>
+					{ this.state.user.role == "admin" ? (
+						<MenuItem className="navbarItem" href="#/manage" onTouchTap={this.handleClose}>
+						  <i className="material-icons">settings</i> 
+						  <span className="navbarText"> Manage </span>
+						</MenuItem> ) :  <span /> }
+					{ this.state.user.role == "admin" ? (
+						<MenuItem className="navbarItem" href="#/analytics" onTouchTap={this.handleClose}>
+						  <i className="material-icons">show_chart</i> 
+						  <span className="navbarText"> Analytics </span>
+						</MenuItem>) :  <span /> }
 					<MenuItem className="navbarItem" onTouchTap={this.handleClose}>
 					  <i className="material-icons">highlight_off</i>
 					  <span className="navbarText"> Close </span>

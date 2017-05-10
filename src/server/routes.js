@@ -9,7 +9,7 @@ routes.get('/auth/github/callback',
               (req, res) => {
                 User.findOne({ username: req.user.username })
                   .then((user) => {
-                    console.log(req.user._json.avatar_url);
+                    console.log(req.user);
                     res.cookie('username', user.username);
                     res.cookie('role', user.role);
                     res.cookie('img', req.user._json.avatar_url);
