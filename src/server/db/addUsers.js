@@ -2,18 +2,21 @@ const User = require('./user');
 
 const newUsers = [{
   username: 'tgoc99',
+  givenName: 'Thomas OConnor',
   role: 'admin',
-  cohort: 'hrnyc-7',
+  cohort: 7,
 },
 {
   username: 'aruvham',
+  givenName: 'Arturo Ruvalcaba',
   role: 'admin',
-  cohort: 'hrnyc-7',
+  cohort: 7,
 },
 {
   username: 'huawillian',
-  role: 'admin',
-  cohort: 'hrnyc-7',
+  givenName: 'Willian Hua',
+  role: 'student',
+  cohort: 7,
 }];
 
 const addUsers = () => {
