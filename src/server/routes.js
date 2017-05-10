@@ -9,8 +9,10 @@ routes.get('/auth/github/callback',
               (req, res) => {
                 User.findOne({ username: req.user.username })
                   .then((user) => {
+                    console.log(req.user._json.avatar_url);
                     res.cookie('username', user.username);
                     res.cookie('role', user.role);
+                    res.cookie('img', req.user._json.avatar_url);
                     res.cookie('loggedIn', '1');
                     res.redirect('/');
                   })
