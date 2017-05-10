@@ -51,8 +51,6 @@ class NavBar extends React.Component {
 	              targetOrigin={{horizontal: 'right', vertical: 'top'}}
 	              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
 	            >
-					<MenuItem href="#/manage" primaryText="Manage" />
-					<MenuItem href="#/analytics" primaryText="Analytics" />
 					<MenuItem href="/auth/logout" primaryText="Sign out" />
 	            </IconMenu>}
 	          />
@@ -76,9 +74,17 @@ class NavBar extends React.Component {
 					  <i className="material-icons">account_circle</i> 
 					  Profile
 					</MenuItem>
+					<MenuItem href="#/manage" onTouchTap={this.handleClose}>
+					  <i className="material-icons">settings</i> 
+					  Manage
+					</MenuItem>
+					<MenuItem href="#/analytics" onTouchTap={this.handleClose}>
+					  <i className="material-icons">show_chart</i> 
+					  Analytics
+					</MenuItem>
 					<MenuItem onTouchTap={this.handleClose}>
 					  <i className="material-icons">highlight_off</i>
-					  Close Drawer
+					  Close
 					</MenuItem>
 				</Drawer>
 			</div>
