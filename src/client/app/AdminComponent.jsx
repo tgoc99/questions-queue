@@ -23,10 +23,10 @@ class AdminComponent extends React.Component {
 
     return (
       !this.state.isAdmin ? <div></div> :
-      <Card className="admin" initiallyExpanded={false}>
+      <Card className="admin" initiallyExpanded={true}>
         <CardHeader title='Admin Dashboard'
-          actAsExpander={true}
-          showExpandableButton={true}
+          actAsExpander={false}
+          showExpandableButton={false}
           />
         <CardText expandable={true}>
           <AddUserComponent 
