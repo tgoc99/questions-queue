@@ -97,7 +97,9 @@ class HomeComponent extends React.Component {
           return null;
         }
       })
-      .then(questions => this.setState({ questions }));
+      .then(questions => {
+      		this.setState({questions})}
+      	);
   }
 
   handleVote(question, n) {
@@ -191,14 +193,13 @@ class HomeComponent extends React.Component {
       .then(res => res.json())
       .then((data) => {
         this.setState((prevState) => {
-          const questions = prevState.questions;
-          updateQuestions(questions, data);
-          return { questions,
+          return {
             snackMessage: 'Your Question was edited and applied to Queue',
             snackbackgroundColor: '#FBC02D',
             snackbar: true,
           };
         });
+        this.getQuestions()
       })
       .catch((err) => {
       });
@@ -232,7 +233,6 @@ class HomeComponent extends React.Component {
       snackMessage: '',
     });
   }
-
 
 	render() {
 		return (<MuiThemeProvider> 

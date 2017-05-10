@@ -6,6 +6,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 const DataComponent = (props) => {
   const users = props.users.map(q => (
       <UserRow 
+        key={q.username}
         username={q.username}
         givenName={q.givenName}
         role={q.role}
@@ -20,7 +21,7 @@ const DataComponent = (props) => {
         />
       <CardText expandable={true}>
         <Table>
-          <TableHeader>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn>Username</TableHeaderColumn>
               <TableHeaderColumn>Given Name</TableHeaderColumn>
