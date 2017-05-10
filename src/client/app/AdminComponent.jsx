@@ -9,7 +9,7 @@ import TagArray from './TagArray.jsx';
 
 const roles = ['admin', 'student'];
 
-class QuestionFormComponent extends React.Component {
+class AdminComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
