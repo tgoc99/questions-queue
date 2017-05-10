@@ -164,6 +164,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   height: 100%;
   outline: none; /* Prevent dragging from highlighting the element */
   position: relative;
+  background-color: #DDD;
 }
 .CodeMirror-sizer {
   position: relative;
@@ -338,3 +339,7 @@ div.CodeMirror-dragcursors {
 
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
+
+.cm-s-neo .CodeMirror-linenumber {
+  color: black !important;
+}

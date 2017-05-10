@@ -25,8 +25,9 @@ body {
   margin: auto !important;
 }
 .question-form {
-  margin: 15px 50px !important;
+  margin: 5% auto !important;
   padding: 10px 15px !important;
+  max-width: 500px;
 }
 .queston-text-box {
   width: 100% !important;
