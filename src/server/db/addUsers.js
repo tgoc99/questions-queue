@@ -15,7 +15,7 @@ const newUsers = [{
 {
   username: 'huawillian',
   givenName: 'Willian Hua',
-  role: 'admin',
+  role: 'student',
   cohort: 7,
 }];
 
