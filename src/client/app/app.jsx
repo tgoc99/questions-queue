@@ -9,7 +9,7 @@ import QueueComponent from './QueueComponent.jsx';
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 import SearchBar from './SearchBar.jsx';
 
-const putRequest = (question) =>
+const putRequest = question =>
   fetch('/api/questions', {
     credentials: 'include',
     method: 'PUT',
@@ -277,64 +277,90 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div>
-          <AppBar title="Question Queue"
-            showMenuIconButton={false}
-            iconElementRight={
-              <FlatButton label="Log Out"
-                href="/auth/logout"
-                />
-            }
-            />
-          <div className="app-body">
-            <QuestionFormComponent
-              handleSubmit={this.handleSubmit}
-              user={this.state.user}
-              />
-            <SearchBar
-              sortBy={this.state.sortBy}
-              handleSortByChange={this.handleSortByChange}
-              reverseSort={this.state.reverseSort}
-              handleReverse={this.handleReverse}
-              searchText={this.state.searchText}
-              handleSearchChange={this.handleSearchChange}
-              filterBy={this.state.filterBy}
-              handleFilterByChange={this.handleFilterByChange}
-              />
-            <QueueComponent
-              title="Pending Questions"
-              expanded={true}
-              questions={this.state.questions.filter(q => !q.answered && this.filterMethod(q))
-                .sort(this.sortMethod)}
-              handleUpvote={this.handleUpvote}
-              handleDownvote={this.handleDownvote}
-              handleAnswered={this.handleAnswered}
-              handleDelete={this.handleDelete}
-              handleEdit={this.handleEdit}
-              handleTagDelete={this.handleTagDelete}
-              user={this.state.user}
-              />
-            <QueueComponent
-              title="Answered Questions"
-              expanded={false}
-              questions={this.state.questions.filter(q => q.answered && this.filterMethod(q))
-                .sort(this.sortMethod)}
-              handleDelete={this.handleDelete}
-              handleTagDelete={this.handleTagDelete}
-              user={this.state.user}
-              />
-          </div>
-          <Snackbar
-            bodyStyle={{ background: this.state.snackbackgroundColor }}
-            open={this.state.snackbar}
-            message={this.state.snackMessage}
-            autoHideDuration={4000}
-            onRequestClose={this.closeSnackbar}
-          />
-        </div>
+      <div id="home-wrapper">
+        <QueueComponent
+          title="Pending Questions"
+          questions={this.state.questions.filter(q => !q.answered && this.filterMethod(q)).sort(this.sortMethod)}
+          handleUpvote={this.handleUpvote}
+          handleDownvote={this.handleDownvote}
+          handleAnswered={this.handleAnswered}
+          handleDelete={this.handleDelete}
+          handleEdit={this.handleEdit}
+          handleTagDelete={this.handleTagDelete}
+          user={this.state.user}
+        />
+        <Snackbar
+          bodyStyle={{ background: this.state.snackbackgroundColor }}
+          open={this.state.snackbar}
+          message={this.state.snackMessage}
+          autoHideDuration={4000}
+          onRequestClose={this.closeSnackbar}
+        />
+      </div>
       </MuiThemeProvider>
     );
   }
 }
 
 export default App;
+
+// <MuiThemeProvider>
+//   <div>
+//     <AppBar title="Question Queue"
+//       showMenuIconButton={false}
+//       iconElementRight={
+//         <FlatButton label="Log Out"
+//           href="/auth/logout"
+//           />
+//       }
+//       />
+//     <div id="home-wrapper" className="app-body">
+//       <QuestionFormComponent
+//         handleSubmit={this.handleSubmit}
+//         user={this.state.user}
+//         />
+//       <SearchBar
+//         sortBy={this.state.sortBy}
+//         handleSortByChange={this.handleSortByChange}
+//         reverseSort={this.state.reverseSort}
+//         handleReverse={this.handleReverse}
+//         searchText={this.state.searchText}
+//         handleSearchChange={this.handleSearchChange}
+//         filterBy={this.state.filterBy}
+//         handleFilterByChange={this.handleFilterByChange}
+//         />
+//       <QueueComponent
+//         title="Pending Questions"
+//         expanded={true}
+//         questions={this.state.questions.filter(q => !q.answered && this.filterMethod(q))
+//           .sort(this.sortMethod)}
+//         handleUpvote={this.handleUpvote}
+//         handleDownvote={this.handleDownvote}
+//         handleAnswered={this.handleAnswered}
+//         handleDelete={this.handleDelete}
+//         handleEdit={this.handleEdit}
+//         handleTagDelete={this.handleTagDelete}
+//         user={this.state.user}
+//         />
+//       <QueueComponent
+//         title="Answered Questions"
+//         expanded={false}
+//         questions={this.state.questions.filter(q => q.answered && this.filterMethod(q))
+//           .sort(this.sortMethod)}
+//         handleDelete={this.handleDelete}
+//         handleTagDelete={this.handleTagDelete}
+//         user={this.state.user}
+//         />
+//     </div>
+//     <Snackbar
+//       bodyStyle={{ background: this.state.snackbackgroundColor }}
+//       open={this.state.snackbar}
+//       message={this.state.snackMessage}
+//       autoHideDuration={4000}
+//       onRequestClose={this.closeSnackbar}
+//     />
+//   </div>
+// </MuiThemeProvider>
+// // <MuiThemeProvider>
+// //   <Home/>
+// // </MuiThemeProvider>

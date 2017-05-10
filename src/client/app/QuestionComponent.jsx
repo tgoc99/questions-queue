@@ -1,96 +1,56 @@
 import React from 'react';
-import FlatButton from 'material-ui/FlatButton';
-import { Card, CardActions, CardText, CardHeader } from 'material-ui/Card';
-import { grey200 } from 'material-ui/styles/colors';
-import TagArray from './TagArray.jsx';
-import EditComponent from './EditComponent.jsx';
+import EditQuestionButton from './EditComponent.jsx';
 import CodeToggle from './CodeToggle.jsx';
 
-const QuestionComponent = (props) => {
-  const question = props.question;
-  const user = props.user;
+function QuestionComponent({ key, user, question, handlers }) {
+  // helper
+  var isAdmin = user.role === 'admin';
+  var isAuthor = user.username === question.username;
 
-  const upVoteBtn = question.usersVoted.includes(user.username) ? (
-    <FlatButton onClick={() => props.handleDownvote(question)}
-      label="Voted"
-      style={{ backgroundColor: '#e0e0e0' }}
-      key={'vote'}
-      />
-  ) : (
-    <FlatButton onClick={() => props.handleUpvote(question)} label="Vote" key={'vote'}/>
-  );
-  const answerBtn = <FlatButton onClick={() => props.handleAnswered(question)} label="Clear" key={'answer'}/>;
-  const deleteBtn = <FlatButton onClick={() => props.handleDelete(question)} label={'delete'} key="delete"/>;
-  const editBtn = <EditComponent question={question} handleEdit={props.handleEdit} key={'edit'}/>;
+  // code editor
+  var codeEditor = question.codeSnippet ? (<CodeToggle codeSnippet={question.codeSnippet} readOnly='nocursor'/>) : null;
 
-  const buttons = [
-    !question.answered
-      ? upVoteBtn : null,
-    user.username === question.username ||
-      user.role === 'admin'
-      ? editBtn : null,
-    user.username === question.username ||
-      user.role === 'admin'
-      ? deleteBtn : null,
-    user.role === 'admin'
-      ? answerBtn : null,
-  ];
+  // buttons
+  var answerButton = isAdmin ? <button onClick={() => handlers.answer(question)}/> : null;
+  var deleteButton = isAdmin ? <button onClick={() => handlers.delete(question)}/> : null;
+  var editButton = isAdmin || isAuthor ? <EditQuestionButton question={question} handlers={handlers}/> : null;
 
-  const tags = user.username === question.username || user.role === 'admin' ? (
-    <TagArray tags={question.tags}
-      question={question}
-      handleTagDelete={props.handleTagDelete}
-      />
-  ) : (
-    <TagArray tags={question.tags}
-      question={question}
-      />
-  );
+  // votes
+  var userHasVoted = question.usersVoted.includes(user.username);
+  var votesIcon = currentUserHasVoted ? 'star' : 'star_border';
+  var votesColor = currentUserHasVoted ? 'green' : 'black';
+  var votesHandler = currentUserHasVoted ? handlers.downvote : handlers.upvote;
 
-  const snippet = question.codeSnippet ? (
-      <CodeToggle codeSnippet={question.codeSnippet}
-      readOnly='nocursor' />
-    ) : null;
-
-  const date = new Date(question.createdAt);
   return (
-      <Card className="question" initiallyExpanded={false}>
+      <div className="question-wrapper">
 
-        <CardText className="question-card-content">
-        <div className="question-body">
-          {question.questionText.split('\n').map((line, idx) => (
-            <span key={idx}>{line}<br/></span>
-          ))}
+        <div className="question-header-container">
+          <div className="question-header">
+            <div className="question-text">
+              {question.questionText.split('\n').map(function(line) {
+                return <p>{line}<br/></p>
+              })}
+            </div>
+            <div className="question-info">
+              <div className="question-upvote">
+                <p>{question.votes}</p>
+                <i className="material-icons">{icon}</i>
+              </div>
+            </div>
+          </div>
+          <p className="question-created">{moment(question.createdAt).fromNow()}</p>
+          <div className="question-tags">
+            {question.tags.map(function(tag) {
+              return <span className="question-badge">{tag}</span>
+            })}
+          </div>
         </div>
-        {snippet}
-        <div className="tag-bar">{tags}</div>
-        <div className="question-info-bar">
-          <span className="votes-span">Votes: {question.votes}</span>
-          <span className="timestamp-span">
-            Asked on {`${months[date.getMonth()]} ${date.getDate()}`}
-            </span>
-        </div>
-        </CardText>
-        <CardActions>
-          {buttons}
-        </CardActions>
-      </Card>
+
+        {codeEditor}
+        {[answerButton, deleteButton, editButton]}
+
+      </div>
   );
 };
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export default QuestionComponent;

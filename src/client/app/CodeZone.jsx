@@ -53,7 +53,7 @@ class CodeZone extends React.Component {
 
   render() {
     return (
-      <textarea ref="codeZone" value={this.props.codeSnippet} />
+      <textarea className="question-code-snippet" ref="codeZone" value={this.props.codeSnippet} />
     );
   }
 }

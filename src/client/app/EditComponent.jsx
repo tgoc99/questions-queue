@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 
-class EditComponent extends React.Component {
+class EditQuestionButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,4 +46,4 @@ class EditComponent extends React.Component {
   }
 }
 
-export default EditComponent;
+export default EditQuestionButton;

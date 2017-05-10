@@ -20,7 +20,10 @@ class CodeToggle extends React.Component {
 
     return (
       <div>
-        <FlatButton onClick={this.toggle} label={label} />
+        <div className="question-badge-container">
+          <span className="question-badge" onClick={this.toggle} label={label}>Code</span>
+          <span className="question-badge">Answered</span>
+        </div>
         {codeZone}
       </div>
     )
