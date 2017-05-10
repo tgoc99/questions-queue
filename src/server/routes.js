@@ -25,6 +25,13 @@ routes.get('/auth/logout', (req, res) => {
   res.clearCookie('loggedIn').redirect('/');
 });
 
+routes.route('/api/users')
+  .get(controllers.getUsers)
+  .post(controllers.postUsers)
+  // .put(controllers.updateUser)
+  // .delete(controllers.deleteUser)
+
+
 routes.route('/api/questions')
   .get(controllers.getQuestions)
   .post(controllers.postQuestion)

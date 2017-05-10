@@ -87,6 +87,22 @@ class App extends React.Component {
       })
       .then(questions => this.setState({ questions }));
   }
+  // method to update users
+  handleUserSubmit(username, givenName, role, cohort) {
+    fetch('/api/users', {
+      credentials: 'include',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        users: [{
+          username,
+          givenName,
+          role,
+          cohort,
+        }]
+      }),
+    })
+  }
 
   // Methods to update questions
   handleSubmit(text, code = null, tags = []) {
@@ -287,6 +303,9 @@ class App extends React.Component {
             }
             />
           <div className="app-body">
+            <AddUserComponent
+              handleUserSubmit={this.handleUserSubmit}
+              />
             <QuestionFormComponent
               handleSubmit={this.handleSubmit}
               user={this.state.user}
