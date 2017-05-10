@@ -6,9 +6,10 @@ class QuestionMenuComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCode: !!this.props.question.codeSnippet
+      //showCode: !!this.props.question.codeSnippet
       // snippet: this.props.question.codeSnippet
       //answered: this.props.question.answered
+      showCode: false
     }
   }
 
@@ -32,12 +33,12 @@ class QuestionMenuComponent extends React.Component {
     var editButton = (<EditQuestionButton isAdmin={isAdmin} isAuthor={isAuthor} key={3} question={question} handlers={handlers}/>);
     var deleteButton = (<button key={4} disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);
 
-    var codeZone = (
+    var codeZone = this.state.showCode ? (
       <CodeZone
         codeSnippet={question.codeSnippet}
         readOnly="true"
       />
-    )
+    ) : null;
 
     return (
       <div>

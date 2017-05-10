@@ -4,6 +4,7 @@ import NavBar from './navbar.component.jsx';
 import QueueComponent from './QueueComponent.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
+import SearchBar from './SearchBar.jsx'
 
 
 const putRequest = (question) =>
@@ -44,6 +45,9 @@ class HomeComponent extends React.Component {
 			snackMessage: 'Hello World',
 		    snackbackgroundColor: '#536DFE',
 		    snackbar: false,
+
+        searchIn: '*',
+        filterBy: '*'
 		}
 
 		this.handleVote = this.handleVote.bind(this);
@@ -230,25 +234,37 @@ class HomeComponent extends React.Component {
     this.setState({
       snackbar: false,
       snackMessage: '',
+
+      searchIn: '*',
+      filterBy: '*'
     });
   }
 
+  // Filter Functions
 
 	render() {
-		return (<MuiThemeProvider> 
+
+    var currentFilter = {
+      searchIn: this.state.searchIn,
+      filterBy: this.state.filterBy
+    }
+
+		return (<MuiThemeProvider>
 			<div className="app-body">
 			<NavBar />
 			<div id="home-wrapper">
-		        <QueueComponent
-			          title="Pending Questions"
-			          questions={this.state.questions}
-			          handleUpvote={this.handleUpvote}
-			          handleDownvote={this.handleDownvote}
-			          handleAnswered={this.handleAnswered}
-			          handleDelete={this.handleDelete}
-			          handleEdit={this.handleEdit}
-			          handleTagDelete={this.handleTagDelete}
-			          user={this.state.user}
+        <SearchBar
+          current={currentFilter}/>
+        <QueueComponent
+			    title="Pending Questions"
+			    questions={this.state.questions}
+			    handleUpvote={this.handleUpvote}
+			    handleDownvote={this.handleDownvote}
+			    handleAnswered={this.handleAnswered}
+			    handleDelete={this.handleDelete}
+			    handleEdit={this.handleEdit}
+			    handleTagDelete={this.handleTagDelete}
+			    user={this.state.user}
 			        />
 		    </div>
 		    <Snackbar
