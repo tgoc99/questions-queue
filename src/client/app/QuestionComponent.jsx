@@ -1,96 +1,39 @@
 import React from 'react';
+
+// material-ui
 import FlatButton from 'material-ui/FlatButton';
-import { Card, CardActions, CardText, CardHeader } from 'material-ui/Card';
-import { grey200 } from 'material-ui/styles/colors';
-import TagArray from './TagArray.jsx';
-import EditComponent from './EditComponent.jsx';
-import CodeToggle from './CodeToggle.jsx';
 
-const QuestionComponent = (props) => {
-  const question = props.question;
-  const user = props.user;
+import QuestionVoteComponent from './QuestionVoteComponent.jsx';
+import QuestionMenuComponent from './QuestionMenuComponent.jsx';
 
-  const upVoteBtn = question.usersVoted.includes(user.username) ? (
-    <FlatButton onClick={() => props.handleDownvote(question)}
-      label="Voted"
-      style={{ backgroundColor: '#e0e0e0' }}
-      key={'vote'}
-      />
-  ) : (
-    <FlatButton onClick={() => props.handleUpvote(question)} label="Vote" key={'vote'}/>
-  );
-  const answerBtn = <FlatButton onClick={() => props.handleAnswered(question)} label="Clear" key={'answer'}/>;
-  const deleteBtn = <FlatButton onClick={() => props.handleDelete(question)} label={'delete'} key="delete"/>;
-  const editBtn = <EditComponent question={question} handleEdit={props.handleEdit} key={'edit'}/>;
+function QuestionComponent({ user, question, handlers }) {
 
-  const buttons = [
-    !question.answered
-      ? upVoteBtn : null,
-    user.username === question.username ||
-      user.role === 'admin'
-      ? editBtn : null,
-    user.username === question.username ||
-      user.role === 'admin'
-      ? deleteBtn : null,
-    user.role === 'admin'
-      ? answerBtn : null,
-  ];
+  var answeredBadge = question.answered ? <span className="question-badge answered">Answered</span> : null;
 
-  const tags = user.username === question.username || user.role === 'admin' ? (
-    <TagArray tags={question.tags}
-      question={question}
-      handleTagDelete={props.handleTagDelete}
-      />
-  ) : (
-    <TagArray tags={question.tags}
-      question={question}
-      />
-  );
-
-  const snippet = question.codeSnippet ? (
-      <CodeToggle codeSnippet={question.codeSnippet}
-      readOnly='nocursor' />
-    ) : null;
-
-  const date = new Date(question.createdAt);
   return (
-      <Card className="question" initiallyExpanded={false}>
-
-        <CardText className="question-card-content">
-        <div className="question-body">
-          {question.questionText.split('\n').map((line, idx) => (
-            <span key={idx}>{line}<br/></span>
-          ))}
+      <div className="question-wrapper">
+        <div className="question-header-container">
+          <div className="question-header">
+            <div className="question-text">
+              {question.questionText.split('\n').map(function(line, idx) {
+                return <p key={idx}>{line}<br/></p>
+              })}
+            </div>
+            <div className="question-info">
+              <QuestionVoteComponent question={question} user={user} handlers={handlers}/>
+            </div>
+          </div>
+          <p className="question-created">{moment(question.createdAt).fromNow()}</p>
+          {answeredBadge}
+          <div className="question-tags">
+            {question.tags.map(function(tag, idx) {
+              return <span key={idx} className="question-badge">{tag}</span>
+            })}
+          </div>
         </div>
-        {snippet}
-        <div className="tag-bar">{tags}</div>
-        <div className="question-info-bar">
-          <span className="votes-span">Votes: {question.votes}</span>
-          <span className="timestamp-span">
-            Asked on {`${months[date.getMonth()]} ${date.getDate()}`}
-            </span>
-        </div>
-        </CardText>
-        <CardActions>
-          {buttons}
-        </CardActions>
-      </Card>
+        <QuestionMenuComponent question={question} user={user} handlers={handlers}/>
+      </div>
   );
 };
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export default QuestionComponent;

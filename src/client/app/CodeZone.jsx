@@ -4,16 +4,14 @@ import javascript from 'codemirror/mode/javascript/javascript';
 import closeBrackets from 'codemirror/addon/edit/closebrackets';
 import matchBrackets from 'codemirror/addon/edit/matchbrackets';
 
-
 class CodeZone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      readOnly: props.readOnly || false,
+      readOnly: props.readOnly || false
     };
     this.handleCodeChange = this.handleCodeChange.bind(this);
   }
-
 
   handleCodeChange() {
     const codeSnippet = this.codeEditor.getValue();
@@ -53,7 +51,7 @@ class CodeZone extends React.Component {
 
   render() {
     return (
-      <textarea ref="codeZone" value={this.props.codeSnippet} />
+      <textarea ref="codeZone" readOnly={true} value={this.props.codeSnippet} />
     );
   }
 }
