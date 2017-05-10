@@ -10,7 +10,8 @@ class EditQuestionButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      enableButton: props.isAdmin || props.isAuthor,
+      open: false
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -27,11 +28,10 @@ class EditQuestionButton extends React.Component {
     this.handleClose();
   }
   render() {
-    const buttons = [
-    ];
+    //console.log(this.props.isAdmin, this.props.isAuthor);
     return (
       <span className="question-flex-1" style={{width:'100%',display:'inline-block'}}>
-        <button className="question-button" onTouchTap={this.handleOpen}>Edit</button>
+        <button disabled={!this.state.enableButton} className="question-button" onClick={this.handleOpen}>Edit</button>
         <Dialog
           title="Edit Question"
           modal={false}
