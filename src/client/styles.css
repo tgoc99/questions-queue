@@ -11,6 +11,15 @@ body {
 .loginButton {
   align-items: center;
 }
+.add-user {
+  margin: 15px 50px !important;
+  margin-top: 5px !important;
+  background-color: white !important;
+}
+.admin {
+  margin: 15px 50px !important;
+  background-color: white !important;
+}
 .appbar {
   background-color: #2b9fda !important;
 }
@@ -105,4 +114,9 @@ body {
   margin-top: 30px !important;
   display: inline-flex !important;
   margin-left: auto; !important;
+}
+.user-input-field {
+  margin-left: 15px !important;
+  margin-right: 40px !important;
+  align-self: baseline !important;
 }

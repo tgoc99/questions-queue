@@ -1,83 +1,108 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Card, CardText, CardHeader, CardTitle } from 'material-ui/Card';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
-
-class AdminComponent extends React.Component {
+class AddUserComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       givenName: '',
+      role: 'admin',
+      cohort: 7,
+    }
+    this.handleUserSubmit = this.handleUserSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCohortChange = this.handleCohortChange.bind(this);
+    this.handleRoleChange = this.handleRoleChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleCohortChange(event, index, value) {
+    this.setState({ cohort:value });
+  }
+
+  handleRoleChange(event, index, value) {
+    this.setState({ role:value });
+  }
+
+  handleUserSubmit(event) {
+    event.preventDefault();
+    this.props.handleUserSubmit(this.state.username, this.state.givenName, this.state.role, this.state.cohort);
+    this.setState({
+      username: '',
+      givenName: '',
       role: '',
       cohort: '',
-    }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    });
+  }
 
-    handleInputChange(event) {
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-      this.setState({
-        [name]: value,
-      });
-    }
+  render() {
 
-    handleUserSubmit(event) {
-      event.preventDefault();
-      this.props.handleUserSubmit(this.state.username, this.state.givenName, this.state.role, this.state.cohort);
-      this.setState({
-        username: '',
-        givenName: '',
-        role: '',
-        cohort: '',
-      });
-    }
+    return (
+      <Card className="add-user" initiallyExpanded={false}>
+        <CardHeader title='Add New User'
+          actAsExpander={true}
+          showExpandableButton={true}
+          />
+        <CardText expandable={true}>
+          <form onSubmit={this.handleUserSubmit} >
+            {<div>
+              <TextField
+                name="username"
+                className="user-input-field" 
+                value={this.state.username}
+                floatingLabelText='Github Handle'
+                onChange={this.handleInputChange} />
+              <TextField
+                name="givenName"
+                className="user-input-field" 
+                value={this.state.givenName}
+                floatingLabelText='Given Name'
+                onChange={this.handleInputChange} />
+              <br />
+              <SelectField
+                className="user-input-field" 
+                value={this.state.role}
+                floatingLabelText='User Role'
+                onChange={this.handleRoleChange} 
+              >
+                <MenuItem value="admin" primaryText="admin" />
+                <MenuItem value="student" primaryText="student" />
+              </SelectField>
+              <SelectField
+                className="user-input-field" 
+                value={this.state.cohort}
+                floatingLabelText='User Cohort'
+                onChange={this.handleCohortChange} 
+              >
+                <MenuItem value={7} primaryText="hrnyc-7" />
+                <MenuItem value={8} primaryText="hrnyc-8" />
+                <MenuItem value={9} primaryText="hrnyc-9" />
+                <MenuItem value={10} primaryText="hrnyc-10" />
+                <MenuItem value={11} primaryText="hrnyc-11" />
+              </SelectField> 
+            </div>}
+              <RaisedButton type="submit" className="submit-button" disabled={!this.state.username || !this.state.role || !this.state.givenName} label="Submit" />
+          </form>
+        </CardText>
+      </Card>
 
-      render() {
-        // options for dialog pop-up
-        // there may be a better place to put these
 
-        return (
-          <Paper className="question-form" >
-            <form onSubmit={this.props.handleEdit ? this.handleEdit : this.handleSubmit} >
-              <div>
-                <TextField
-                  name="questionText"
-                  className="question-text-form"
-                  fullWidth={true}
-                  value={this.state.questionText}
-                  multiLine={true}
-                  floatingLabelText="Ask a question..."
-                  onChange={this.handleInputChange} />
-                <FlatButton onClick={this.toggleCode}
-                  label= {this.state.showCode ? 'Hide Code' : this.state.showButtonText} />
-                {this.state.showCode ? codeZone : null}
-                <br/>
-                <AutoComplete
-                  ref="tagBar"
-                  floatingLabelText="Add tags..."
-                  filter={AutoComplete.fuzzyFilter}
-                  dataSource={allTags}
-                  onNewRequest={chosenRequest => this.handleTagAdd(chosenRequest)}
-                  maxSearchResults={5}/>
-                <TagArray
-                  tags={this.state.appliedTags}
-                  handleTagDelete={this.handleTagDelete} />
-                </div>
-                <RaisedButton type="submit" className="submit-button" disabled={!this.state.questionText} label="Submit" />
-            </form>
-            <Dialog
-              actions={dialogActions}
-              modal={false}
-              open={this.state.dialogOpen}
-              onRequestClose={this.closeDialog}
-              >Are you sure you want to create a new tag?
-            </Dialog>
-          </Paper>
-        );
-      }
-    }
+    );
+  }
+}
 
-    export default QuestionFormComponent;
+export default AddUserComponent;

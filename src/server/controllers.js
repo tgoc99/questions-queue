@@ -17,22 +17,17 @@ exports.postUsers = (req, res) => {
   console.log(req.body);
   req.body.users.forEach(user => { 
     User.find({username:user.username}, (err, foundUser) => {
-      if (foundUser) res.status(404).send('user already exists', user);
-      else {
-        let newUser = new User(user)
-        newUser.save((err, user) => {
-          if (err) {
-            res.status(500);
-            console.log(err);
-          } else {
-            console.log('user created', user)
-          }
-        })
-      }
+      let newUser = new User(user)
+      newUser.save((err, user) => {
+        if (err) {
+          res.status(500);
+          console.log(err);
+        } else {
+          console.log('user created', user)
+        }
+      })
     })
   })
-  if(res.status === 500) res.send('error: not all users submitted');
-  res.status(200).send('success!')
 }
 
 // QUESTIONS

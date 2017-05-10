@@ -6,6 +6,7 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 import QueueComponent from './QueueComponent.jsx';
+import AdminComponent from './AdminComponent.jsx';
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 import SearchBar from './SearchBar.jsx';
 
@@ -42,6 +43,7 @@ class App extends React.Component {
     this.state = {
       questions: [],
       user,
+      users: [],
       sortBy: 'createdAt',
       reverseSort: false,
       searchText: '',
@@ -49,9 +51,14 @@ class App extends React.Component {
       snackMessage: '',
       snackbackgroundColor: '#536DFE',
       snackbar: false,
+      username: '',
+      givenName: '',
+      role: '',
+      cohort: 'hrnyc-7',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
+    this.getUsers = this.getUsers.bind(this);
     this.handleUpvote = this.handleUpvote.bind(this);
     this.handleDownvote = this.handleDownvote.bind(this);
     this.handleAnswered = this.handleAnswered.bind(this);
@@ -61,17 +68,37 @@ class App extends React.Component {
     this.handleSortByChange = this.handleSortByChange.bind(this);
     this.sortMethod = this.sortMethod.bind(this);
     this.handleReverse = this.handleReverse.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleFilterByChange = this.handleFilterByChange.bind(this);
     this.filterMethod = this.filterMethod.bind(this);
     this.closeSnackbar = this.closeSnackbar.bind(this);
   }
   componentDidMount() {
+    this.getUsers()
+    .then(users => {
+      this.setState({ users })
+      console.log(this.state.users)
+    });
     this.getQuestions();
-    this.interval = setInterval(() => this.getQuestions(), 2000);
+    this.interval = setInterval(() => {
+      this.getQuestions();
+    }, 2000);
   }
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+  getUsers() {
+    const props = this.props;
+    return fetch('/api/users', { credentials: 'include' })
+    .then((res) => {
+      if (res.status === 200 || res.status === 304) {
+        return res.json();
+      } else if (res.status === 403) {
+        this.props.logout(() => {});
+        return null;
+      }
+    })
   }
   getQuestions() {
     const props = this.props;
@@ -87,6 +114,8 @@ class App extends React.Component {
       })
       .then(questions => this.setState({ questions }));
   }
+
+
   // method to update users
   handleUserSubmit(username, givenName, role, cohort) {
     fetch('/api/users', {
@@ -102,6 +131,7 @@ class App extends React.Component {
         }]
       }),
     })
+    this.getUsers();
   }
 
   // Methods to update questions
@@ -262,6 +292,9 @@ class App extends React.Component {
   handleFilterByChange(filterBy) {
     this.setState({ filterBy });
   }
+  handleSelectChange(event, index, value) {
+    this.setState({ value });
+  }
   filterMethod(q) {
     const query = this.state.searchText.toLowerCase();
     const f = this.state.filterBy;
@@ -303,8 +336,13 @@ class App extends React.Component {
             }
             />
           <div className="app-body">
-            <AddUserComponent
+            <AdminComponent
               handleUserSubmit={this.handleUserSubmit}
+              handleSelectChange={this.handleSelectChange}
+              user={this.state.user}
+              users={this.state.users}
+              getUsers={this.getUsers}
+              questions={this.state.questions}
               />
             <QuestionFormComponent
               handleSubmit={this.handleSubmit}
