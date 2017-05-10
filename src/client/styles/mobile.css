@@ -1,6 +1,6 @@
 body {
   /*background-color: #fafbfc;*/
-  background-color: #EEE;
+  background-color: #EEE !important;
   box-sizing: content-box;
 }
 
