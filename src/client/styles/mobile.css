@@ -16,7 +16,7 @@ body {
  background-color: #EEE;
  /*background-color: #fafbfc;*/
  font-size: 13px;
- font-family: 'Roboto', sans-serif;
+ font-family: 'Roboto', sans-serif !important;
 }
 
 #queue-wrapper {
