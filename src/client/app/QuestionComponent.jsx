@@ -7,19 +7,16 @@ function QuestionComponent({ key, user, question, handlers }) {
   var isAdmin = user.role === 'admin';
   var isAuthor = user.username === question.username;
 
-  // code editor
-  var codeEditor = question.codeSnippet ? (<CodeToggle codeSnippet={question.codeSnippet} readOnly='nocursor'/>) : null;
-
   // buttons
-  var answerButton = isAdmin ? <button onClick={() => handlers.answer(question)}/> : null;
-  var deleteButton = isAdmin ? <button onClick={() => handlers.delete(question)}/> : null;
+  var answerButton = isAdmin ? <button onClick={() => handlers.answer(question)}>Answer</button> : null;
+  var deleteButton = isAdmin ? <button onClick={() => handlers.delete(question)}>Delete</button> : null;
   var editButton = isAdmin || isAuthor ? <EditQuestionButton question={question} handlers={handlers}/> : null;
 
   // votes
   var userHasVoted = question.usersVoted.includes(user.username);
-  var votesIcon = currentUserHasVoted ? 'star' : 'star_border';
-  var votesColor = currentUserHasVoted ? 'green' : 'black';
-  var votesHandler = currentUserHasVoted ? handlers.downvote : handlers.upvote;
+  var votesIcon = userHasVoted ? 'star' : 'star_border';
+  var votesColor = userHasVoted ? 'green' : 'black';
+  var votesHandler = userHasVoted ? handlers.downvote : handlers.upvote;
 
   return (
       <div className="question-wrapper">
@@ -32,9 +29,12 @@ function QuestionComponent({ key, user, question, handlers }) {
               })}
             </div>
             <div className="question-info">
-              <div className="question-upvote">
+              <div
+                className="question-upvote"
+                onClick={() => votesHandler(question)}
+                style={{color: votesColor}}>
                 <p>{question.votes}</p>
-                <i className="material-icons">{icon}</i>
+                <i className="material-icons">{votesIcon}</i>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ function QuestionComponent({ key, user, question, handlers }) {
           </div>
         </div>
 
-        {codeEditor}
+        <CodeToggle question={question} readOnly="nocursor"/>
         {[answerButton, deleteButton, editButton]}
 
       </div>

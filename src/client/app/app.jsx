@@ -280,7 +280,7 @@ class App extends React.Component {
       <div id="home-wrapper">
         <QueueComponent
           title="Pending Questions"
-          questions={this.state.questions.filter(q => !q.answered && this.filterMethod(q)).sort(this.sortMethod)}
+          questions={this.state.questions}
           handleUpvote={this.handleUpvote}
           handleDownvote={this.handleDownvote}
           handleAnswered={this.handleAnswered}
@@ -288,13 +288,6 @@ class App extends React.Component {
           handleEdit={this.handleEdit}
           handleTagDelete={this.handleTagDelete}
           user={this.state.user}
-        />
-        <Snackbar
-          bodyStyle={{ background: this.state.snackbackgroundColor }}
-          open={this.state.snackbar}
-          message={this.state.snackMessage}
-          autoHideDuration={4000}
-          onRequestClose={this.closeSnackbar}
         />
       </div>
       </MuiThemeProvider>

@@ -15,14 +15,17 @@ class CodeToggle extends React.Component {
   render() {
     const label = this.state.showCode ? 'Hide Code' : 'Show Code';
     const codeZone = this.state.showCode
-      ? (<CodeZone codeSnippet={this.props.codeSnippet} readOnly={this.props.readOnly} />)
+      ? (<CodeZone codeSnippet={this.props.question.codeSnippet} readOnly={this.props.readOnly} />)
       : null;
+
+    const answeredBadge = this.props.question.answered ? (<span className="question-badge">Answered</span>) : null;
+    const codeEditorBadge = this.props.question.codeSnippet ? (<span className="question-badge" onClick={this.toggle} label={label}>Code Editor</span>) : null;
 
     return (
       <div>
         <div className="question-badge-container">
-          <span className="question-badge" onClick={this.toggle} label={label}>Code</span>
-          <span className="question-badge">Answered</span>
+          {codeEditorBadge}
+          {answeredBadge}
         </div>
         {codeZone}
       </div>

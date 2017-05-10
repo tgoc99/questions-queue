@@ -2,27 +2,25 @@ import React from 'react';
 import QuestionComponent from './QuestionComponent.jsx';
 
 function QueueComponent(props) {
-
   var handlers = {
-    upvote: props.handleUpvote,
-    downvote: props.handleDownvote,
-    edit: props.handleEdit,
-    answer: props.handleAnswered,
-    delete: props.handleDelete,
-    deleteTag: props.handleTagDelete
+    'upvote': props.handleUpvote,
+    'downvote': props.handleDownvote,
+    'edit': props.handleEdit,
+    'answer': props.handleAnswered,
+    'delete': props.handleDelete,
+    'deleteTag': props.handleTagDelete
   }
 
   return (
     <div id="queue-wrapper">
-        {props.questions.map(function(question) {
-          return
-            <QuestionComponent
-              key={question._id}
-              user={props.user}
-              question={question}
-              handlers={handlers}
-            />
-        })}
+      {props.questions.map(function(question) {
+        return (
+          <QuestionComponent
+            user={props.user}
+            question={question}
+            handlers={handlers}
+          />);
+      })}
     </div>
   );
 };
