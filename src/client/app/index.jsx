@@ -14,7 +14,6 @@ import {
 } from 'react-router-dom';
 
 import LoginComponent from './Login.jsx';
-import AppComponent from './app.jsx';
 import HomeComponent from './home.component.jsx';
 import QuestionComponent from './question.component.jsx';
 import ProfileComponent from './profile.component.jsx';

@@ -3,12 +3,12 @@ import CodeMirror from 'codemirror';
 import javascript from 'codemirror/mode/javascript/javascript'
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import AutoComplete from 'material-ui/AutoComplete';
 import TagArray from './TagArray.jsx';
 import CodeZone from './CodeZone.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const allTags = ['Node', 'Express', 'React', 'Angular', 'Closures', 'Promises',
                   'Data Structures', 'Giancarlo', 'MongoDB', 'SQL', 'Git', 'Backbone',
@@ -169,7 +169,7 @@ class QuestionFormComponent extends React.Component {
               tags={this.state.appliedTags}
               handleTagDelete={this.handleTagDelete} />
             </div>
-            <RaisedButton type="submit" className="submit-button" disabled={!this.state.questionText} label="Submit" />
+            <RaisedButton type="submit" className="questionFormCodeButton" disabled={!this.state.questionText} label="Submit" />
         </form>
         <Dialog
           actions={dialogActions}
