@@ -1,3 +1,4 @@
+import { remove } from 'lodash';
 import React from 'react';
 import NavBar from './navbar.component.jsx';
 import AdminComponent from './AdminComponent.jsx';
@@ -20,18 +21,20 @@ class ManageComponent extends React.Component {
 	      questions: [],
 	      user,
 	      users: [],
+	      cohortChoice: 'All Cohorts'
 	    };
 
     	this.getUsers = this.getUsers.bind(this);
     	this.handleSelectChange = this.handleSelectChange.bind(this);
 	    this.handleUserSubmit = this.handleUserSubmit.bind(this);
+		this.handleUserDelete = this.handleUserDelete.bind(this);
+		 this.handleFilterByCohort = this.handleFilterByCohort.bind(this);
 	}
 	  componentDidMount() {
-	    this.getUsers()
-	    .then(users => {
-	      this.setState({ users })
-	      console.log(this.state.users)
-	    });
+	    this.getUsers();
+  		this.interval = setInterval(() => {
+   			this.getUsers();
+  		}, 2000);
 	  }
 	  componentWillUnmount() {
 	    clearInterval(this.interval);
@@ -47,28 +50,66 @@ class ManageComponent extends React.Component {
 	        return null;
 	      }
 	    })
+	    .then(users => {
+    	    this.setState({ users })
+        	return users;
+      	})
 	  }
 
 	  // method to update users
 	  handleUserSubmit(username, givenName, role, cohort) {
-	    fetch('/api/users', {
+	    let users = username.map(user => {
+  	      return {
+  	          username: user,
+  	          givenName,
+  	          role,
+  	          cohort,
+  	        }
+  	    })
+  	
+        return fetch('/api/users', {
 	      credentials: 'include',
 	      method: 'POST',
 	      headers: { 'Content-Type': 'application/json' },
 	      body: JSON.stringify({
-	        users: [{
-	          username,
-	          givenName,
-	          role,
-	          cohort,
-	        }]
+	        users: users
 	      }),
 	    })
-	    this.getUsers();
+	    .then((data)=>{
+	        this.getUsers();
+	        return data
+	    })
 	  }
 
 	  handleSelectChange(event, index, value) {
 	    this.setState({ value });
+	  }
+
+	handleUserDelete(user) {
+	    const _id = user._id;
+	    fetch('/api/users', {
+	      credentials: 'include',
+	      method: 'DELETE',
+	      headers: { 'Content-Type': 'application/json' },
+	      body: JSON.stringify({ _id }),
+	    })
+	    .then(() => {
+	      this.setState((prevState) => {
+	        const users = prevState.users;
+	        remove(users, (q) => q._id === _id);
+	        return {
+	          users,
+	          snackMessage: 'User permission was removed',
+	          snackbackgroundColor: '#E53935',
+	          snackbar: true,
+	        };
+	      });
+	    });
+	    this.getUsers();
+	  }
+
+	  handleFilterByCohort(cohortChoice) {
+	    this.setState({ cohortChoice })
 	  }
 
 
@@ -77,10 +118,13 @@ class ManageComponent extends React.Component {
 			<div className="app-body">
 			<NavBar />
 			<AdminComponent
+			  cohortChoice={this.state.cohortChoice}
+			  handleFilterByCohort={this.handleFilterByCohort}
               handleUserSubmit={this.handleUserSubmit}
+              handleUserDelete={this.handleUserDelete}
               handleSelectChange={this.handleSelectChange}
               user={this.state.user}
-              users={this.state.users}
+              users={this.state.cohortChoice === 'All Cohorts' ? this.state.users : this.state.users.filter(u => u.cohort === this.state.cohortChoice)}
               getUsers={this.getUsers}
               questions={this.state.questions}
               />
