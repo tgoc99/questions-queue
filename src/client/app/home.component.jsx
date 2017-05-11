@@ -46,7 +46,7 @@ class HomeComponent extends React.Component {
 		    snackbar: false,
 		}
 
-		this.handleVote = this.handleVote.bind(this);
+		  this.handleVote = this.handleVote.bind(this);
 	    this.handleUpvote = this.handleUpvote.bind(this);
 	    this.handleDownvote = this.handleDownvote.bind(this);
 	    this.handleAnswered = this.handleAnswered.bind(this);
@@ -54,6 +54,7 @@ class HomeComponent extends React.Component {
 	    this.handleEdit = this.handleEdit.bind(this);
 	    this.handleTagDelete = this.handleTagDelete.bind(this);
 	    this.closeSnackbar = this.closeSnackbar.bind(this);
+      this.getQuestions = this.getQuestions.bind(this);
 	}
 
   componentDidMount() {
@@ -99,7 +100,7 @@ class HomeComponent extends React.Component {
       })
       .then(questions => {
       		this.setState({questions})}
-      	);
+      );
   }
 
   handleVote(question, n) {

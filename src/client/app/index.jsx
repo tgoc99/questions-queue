@@ -40,7 +40,6 @@ class Main extends React.Component {
     this.setState({
       loggedIn: false,
     });
-    this.getQuestions();
     cb();
   }
   render() {
@@ -53,17 +52,6 @@ class Main extends React.Component {
             ) : (
               <Redirect push to="/login" />
             )
-          )} />
-
-          <Route path="/questions"
-            render={ () => (
-              this.state.loggedIn ? (
-                <AppComponent logout={this.logout}
-                  login={this.login}
-                />
-              ) : (
-                <Redirect to="/" />
-              )
           )} />
 
           <Route path="/home"
