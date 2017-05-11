@@ -12,12 +12,11 @@ class AdminComponent extends React.Component {
     super(props);
     this.state = {
       isAdmin: this.props.user.role === 'admin',
-      users: this.props.users
+      users: this.props.users,
+      cohortChoice: 'All Cohorts'
     }
   }
-  componentDidMount() {
-    this.props.getUsers().then(users => this.setState({ users }))
-  }
+
 
   render() {
 
@@ -33,8 +32,12 @@ class AdminComponent extends React.Component {
             handleUserSubmit={this.props.handleUserSubmit} 
             handleSelectChange={this.props.handleSelectChange}
           />
-          <DataComponent 
+          <DataComponent
+            questions={this.props.questions}
             users={this.props.users}
+            cohortChoice={this.props.cohortChoice}
+            handleFilterByCohort={this.props.handleFilterByCohort}
+            handleUserDelete={this.props.handleUserDelete}
           />
         </CardText>
       </Card>

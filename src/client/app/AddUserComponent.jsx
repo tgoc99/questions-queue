@@ -12,13 +12,15 @@ class AddUserComponent extends React.Component {
     this.state = {
       username: '',
       givenName: '',
-      role: 'admin',
+      role: 'student',
       cohort: 7,
+      bulkSubmit: ''
     }
     this.handleUserSubmit = this.handleUserSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCohortChange = this.handleCohortChange.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
+
   }
 
   handleInputChange(event) {
@@ -40,12 +42,16 @@ class AddUserComponent extends React.Component {
 
   handleUserSubmit(event) {
     event.preventDefault();
-    this.props.handleUserSubmit(this.state.username, this.state.givenName, this.state.role, this.state.cohort);
+    if(this.state.username) {
+      this.props.handleUserSubmit([this.state.username], this.state.givenName || null, this.state.role, this.state.cohort)
+    } else if (this.state.bulkSubmit) {
+      const users = this.state.bulkSubmit.split(' ');
+      this.props.handleUserSubmit(users, null, this.state.role, this.state.cohort)
+    }
     this.setState({
       username: '',
       givenName: '',
-      role: '',
-      cohort: '',
+      bulkSubmit: '',
     });
   }
 
@@ -53,17 +59,19 @@ class AddUserComponent extends React.Component {
 
     return (
       <Card className="add-user" initiallyExpanded={false}>
-        <CardHeader title='Add New User'
+        <CardHeader title='Add New Users'
           actAsExpander={true}
           showExpandableButton={true}
           />
         <CardText expandable={true}>
           <form onSubmit={this.handleUserSubmit} >
             {<div>
+              Add One New User: <br/>
               <TextField
                 name="username"
                 className="user-input-field" 
                 value={this.state.username}
+                errorText={(this.state.username && this.state.bulkSubmit) ? "Enter either one user or a bulk user submission, not both" : ""}
                 floatingLabelText='Github Handle'
                 onChange={this.handleInputChange} />
               <TextField
@@ -73,6 +81,16 @@ class AddUserComponent extends React.Component {
                 floatingLabelText='Given Name'
                 onChange={this.handleInputChange} />
               <br />
+              Bulk User Submission: <br/>
+              <TextField
+                name='bulkSubmit'
+                className="user-input-field"
+                value={this.state.bulkSubmit}
+                floatingLabelText="Enter GitHub Usernames separated by spaces..."
+                errorText={(this.state.username && this.state.bulkSubmit) ? "Enter either one user or a bulk user submission, not both" : ""}
+                fullWidth={true}
+                onChange={this.handleInputChange} />
+                <br />
               <SelectField
                 className="user-input-field" 
                 value={this.state.role}
@@ -95,7 +113,7 @@ class AddUserComponent extends React.Component {
                 <MenuItem value={11} primaryText="hrnyc-11" />
               </SelectField> 
             </div>}
-              <RaisedButton type="submit" className="submit-button" disabled={!this.state.username || !this.state.role || !this.state.givenName} label="Submit" />
+              <RaisedButton type="submit" className="submit-button" disabled={(!this.state.username && !this.state.bulkSubmit) || (this.state.username && this.state.bulkSubmit) } label="Submit" />
           </form>
         </CardText>
       </Card>
