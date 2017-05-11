@@ -45,12 +45,12 @@ class HomeComponent extends React.Component {
 			snackMessage: 'Hello World',
 		  snackbackgroundColor: '#536DFE',
 		  snackbar: false,
-
+      
       // filter states
       location: "in *",
       query: '',
       by: "Upvotes : High to Low",
-      reversed: false
+      in: "All Questions"
 		}
 
 		this.handleVote = this.handleVote.bind(this);
@@ -66,7 +66,7 @@ class HomeComponent extends React.Component {
       'location': this.handleChangeInFilterLocation.bind(this),
       'query': this.handleChangeInFilterQuery.bind(this),
       'by': this.handleChangeInFilterBy.bind(this),
-      'reversed': this.handleChangeInFilterReversed.bind(this)
+      'in': this.handleChangeInFilterIn.bind(this)
     }
 	}
 
@@ -301,11 +301,27 @@ class HomeComponent extends React.Component {
     return sorted;
   }
 
+  questionsIn(questions) {
+    var filtered = questions;
+    var In = this.state.in;
+    // filter!
+    switch(In) {
+      case "Answered":
+        filtered = questions.filter(question => question.answered);
+        break;
+      case "Unanswered":
+        filtered = questions.filter(question => !question.answered);
+        break;
+    }
+    return filtered;
+  }
+
   // townhall
 
   // put everything together!
   questionsSearch() {
     var questions = this.state.questions;
+    questions = this.questionsIn(questions);
     questions = this.questionsSearchIn(questions);
     questions = this.questionsSortBy(questions);
     return questions;
@@ -315,7 +331,7 @@ class HomeComponent extends React.Component {
     return {
       'location': this.state.location,
       'by': this.state.by,
-      'reversed': this.state.reversed
+      'in': this.state.in
     }
   }
 
@@ -327,6 +343,9 @@ class HomeComponent extends React.Component {
   }
   handleChangeInFilterBy(by) {
     this.setState({by: by});
+  }
+  handleChangeInFilterIn(val) {
+    this.setState({in: val});
   }
   handleChangeInFilterReversed(reversed) {
     this.setState({reversed: reversed});
@@ -346,7 +365,8 @@ class HomeComponent extends React.Component {
         <p>{`LOCATION: ${this.state.location}`}</p><br></br>
         <p>{`QUERY: ${this.state.query}`}</p><br></br>
         <p>{`BY: ${this.state.by}`}</p><br></br>
-        <p>{`REVERSED: ${this.state.reversed}`}</p><br></br>
+        <p>{`IN: ${this.state.in}`}</p><br></br>
+
 
         <QueueComponent
 			    title="Pending Questions"

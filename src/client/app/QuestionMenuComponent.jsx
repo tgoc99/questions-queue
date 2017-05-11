@@ -29,7 +29,7 @@ class QuestionMenuComponent extends React.Component {
     var isAuthor = user.username == question.username;
 
     var codeEditorButton = <button key={1} disabled={!question.codeSnippet} className="question-button" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
-    var answerButton = (<button key={2} disabled={!isAdmin} className="question-button" onClick={() => handlers.answer(question)}>{(question.answered && isAdmin) ? 'Unanswer' : 'Answer'}</button>);
+    var answerButton = (<button key={2} disabled={!isAdmin} className="question-button" onClick={() => handlers.answer(question)}>{(question.answered && isAdmin) ? 'Remove Answer' : 'Answer'}</button>);
     var editButton = (<EditQuestionButton isAdmin={isAdmin} isAuthor={isAuthor} key={3} question={question} handlers={handlers}/>);
     var deleteButton = (<button key={4} disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);
 

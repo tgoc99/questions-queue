@@ -35,6 +35,14 @@ function SearchBar(props) {
         <MenuItem value="Time Created : New First" primaryText="Time Created : New First"/>
         <MenuItem value="Time Created : Old First" primaryText="Time Created : Old First"/>
       </DropDownMenu>
+
+      <DropDownMenu
+        value={filterState.in}
+        onChange={(e, idx, val) => handlers.in(val)} >
+        <MenuItem value="All Questions" primaryText="All Questions" />
+        <MenuItem value="Answered" primaryText="Answered"/>
+        <MenuItem value="Unanswered" primaryText="Unanswered"/>
+      </DropDownMenu>
     </div>
   )
 }
