@@ -173,3 +173,21 @@ td, th {
   margin-right: 40px !important;
   align-self: baseline !important;
 }
+.question-admin-header {
+  min-height: 30px;
+  background-color: #2b9fda;
+  border: 1px solid black;
+  padding: 10px;
+}
+.question-admin-title {
+  font-size: 1.5em !important;
+  font-weight: bold;
+  color: white;
+}
+.question-admin-button {
+  position: absolute;
+  right: 30px;
+  display: inline !important;
+  min-height: 30px !important;
+  font-weight: bold;
+}

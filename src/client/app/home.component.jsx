@@ -55,6 +55,8 @@ class HomeComponent extends React.Component {
 	    this.handleTagDelete = this.handleTagDelete.bind(this);
 	    this.closeSnackbar = this.closeSnackbar.bind(this);
       this.getQuestions = this.getQuestions.bind(this);
+      this.handleKeep = this.handleKeep.bind(this);
+      this.handleUnkeep = this.handleUnkeep.bind(this);
 	}
 
   componentDidMount() {
@@ -221,6 +223,14 @@ class HomeComponent extends React.Component {
       });
   }
 
+  handleKeep() {
+
+  }
+
+  handleUnkeep() {
+    
+  }
+
   // Utility
 
   handleRequestClose() {
@@ -249,6 +259,8 @@ class HomeComponent extends React.Component {
 			          handleDelete={this.handleDelete}
 			          handleEdit={this.handleEdit}
 			          handleTagDelete={this.handleTagDelete}
+                handleKeep={this.handleKeep}
+                handleUnkeep={this.handleUnkeep}
 			          user={this.state.user}
 			        />
 		    </div>
