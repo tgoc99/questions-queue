@@ -3,6 +3,15 @@ import NavBar from './navbar.component.jsx';
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
+import {
+  HashRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+  IndexRoute
+} from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class QuestionComponent extends React.Component {
 	constructor(props) {
@@ -84,6 +93,11 @@ class QuestionComponent extends React.Component {
 	              handleSubmit={this.handleSubmit}
 	              user={this.state.user}
 	            />
+
+	            <Link style={{padding: '4%', textAlign: 'center'}} to="/home">
+	                <RaisedButton style={{width: '92%'}} label="BACK TO QUESTIONS" />
+	            </Link>
+
 	            <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}
 			        open={this.state.snackbar}
