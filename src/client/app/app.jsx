@@ -51,6 +51,7 @@ class App extends React.Component {
       sortBy: 'createdAt',
       reverseSort: false,
       searchText: '',
+      cohortChoice: 'All Cohorts',
       filterBy: 'all',
       snackMessage: '',
       snackbackgroundColor: '#536DFE',
@@ -66,6 +67,7 @@ class App extends React.Component {
     this.handleUpvote = this.handleUpvote.bind(this);
     this.handleDownvote = this.handleDownvote.bind(this);
     this.handleAnswered = this.handleAnswered.bind(this);
+    this.handleUserDelete = this.handleUserDelete.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleTagDelete = this.handleTagDelete.bind(this);
@@ -73,19 +75,19 @@ class App extends React.Component {
     this.sortMethod = this.sortMethod.bind(this);
     this.handleReverse = this.handleReverse.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleFilterByCohort = this.handleFilterByCohort.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleFilterByChange = this.handleFilterByChange.bind(this);
     this.filterMethod = this.filterMethod.bind(this);
     this.closeSnackbar = this.closeSnackbar.bind(this);
   }
   componentDidMount() {
-    this.getUsers()
-    .then(users => {
-      this.setState({ users })
-      //console.log(this.state.users)
-    });
+
+    this.getUsers();
+
     this.getQuestions();
     this.interval = setInterval(() => {
+      this.getUsers();
       this.getQuestions();
     }, 2000);
   }
@@ -102,6 +104,10 @@ class App extends React.Component {
         this.props.logout(() => {});
         return null;
       }
+    })
+    .then(users => {
+      this.setState({ users })
+      return users;
     })
   }
   getQuestions() {
@@ -122,20 +128,27 @@ class App extends React.Component {
 
   // method to update users
   handleUserSubmit(username, givenName, role, cohort) {
-    fetch('/api/users', {
+    let users = username.map(user => {
+      return {
+          username: user,
+          givenName,
+          role,
+          cohort,
+        }
+    })
+
+    return fetch('/api/users', {
       credentials: 'include',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        users: [{
-          username,
-          givenName,
-          role,
-          cohort,
-        }]
+        users: users
       }),
     })
-    this.getUsers();
+    .then((data)=>{
+      this.getUsers();
+      return data
+    })
   }
 
   // Methods to update questions
@@ -225,6 +238,28 @@ class App extends React.Component {
         q.answered = current;
       });
   }
+  handleUserDelete(user) {
+    const _id = user._id;
+    fetch('/api/users', {
+      credentials: 'include',
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ _id }),
+    })
+    .then(() => {
+      this.setState((prevState) => {
+        const users = prevState.users;
+        remove(users, (q) => q._id === _id);
+        return {
+          users,
+          snackMessage: 'User permission was removed',
+          snackbackgroundColor: '#E53935',
+          snackbar: true,
+        };
+      });
+    });
+    this.getUsers();
+  }
   handleDelete(question) {
     const _id = question._id;
     fetch('/api/questions', {
@@ -283,6 +318,9 @@ class App extends React.Component {
   handleSortByChange(sortBy) {
     this.setState({ sortBy });
   }
+  handleFilterByCohort(cohortChoice) {
+    this.setState({ cohortChoice })
+  }
   sortMethod(a, b) {
     let order = a[this.state.sortBy] - b[this.state.sortBy];
     if (this.state.sortBy === 'votes') order = -order;
@@ -338,10 +376,13 @@ class App extends React.Component {
           <div className="app-body">
             <NavBar />
             <AdminComponent
+              cohortChoice={this.state.cohortChoice}
+              handleFilterByCohort={this.handleFilterByCohort}
               handleUserSubmit={this.handleUserSubmit}
+              handleUserDelete={this.handleUserDelete}
               handleSelectChange={this.handleSelectChange}
               user={this.state.user}
-              users={this.state.users}
+              users={this.state.cohortChoice === 'All Cohorts' ? this.state.users : this.state.users.filter(u => u.cohort === this.state.cohortChoice)}
               getUsers={this.getUsers}
               questions={this.state.questions}
               />

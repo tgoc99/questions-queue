@@ -8,7 +8,9 @@ function QueueComponent(props) {
     'edit': props.handleEdit,
     'answer': props.handleAnswered,
     'delete': props.handleDelete,
-    'deleteTag': props.handleTagDelete
+    'deleteTag': props.handleTagDelete,
+    'keep': props.handleKeep,
+    'unkeep': props.handleUnkeep
   }
 
   return (

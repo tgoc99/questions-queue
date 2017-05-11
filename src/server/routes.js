@@ -31,7 +31,13 @@ routes.route('/api/users')
   .get(controllers.getUsers)
   .post(controllers.postUsers)
   // .put(controllers.updateUser)
+  .delete(controllers.deleteUser);
+
+routes.route('/api/townHall')
+  .get(controllers.getTownHall)
+  // .post(controllers.postUsers)
   // .delete(controllers.deleteUser)
+  // .put(controllers.updateUser);
 
 
 routes.route('/api/questions')

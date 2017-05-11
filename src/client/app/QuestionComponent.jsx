@@ -5,7 +5,8 @@ import FlatButton from 'material-ui/FlatButton';
 
 import QuestionVoteComponent from './QuestionVoteComponent.jsx';
 import QuestionMenuComponent from './QuestionMenuComponent.jsx';
-
+import QuestionAdminComponent from './QuestionAdminComponent.jsx';
+ 
 function QuestionComponent({ user, question, handlers }) {
 
   var isAdmin = user.role === 'admin';
@@ -15,6 +16,7 @@ function QuestionComponent({ user, question, handlers }) {
 
   return (
       <div className="question-wrapper">
+        <QuestionAdminComponent question={question} user={user} handlers={handlers}/>
         <div className="question-header-container">
           <div className="question-header">
             <div className="question-text">

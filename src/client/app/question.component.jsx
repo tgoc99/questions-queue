@@ -13,7 +13,7 @@ class QuestionComponent extends React.Component {
 
 	    document.cookie.split(';').forEach((str) => {
 			const [k, v] = str.split('=').map(s => s.trim());
-				if (k === 'username' || k === 'role' || k === 'img') {
+				if (k === 'username' || k === 'role' || k === 'img' || k === 'cohort') {
 				user[k] = v;
 			}
 	    });
@@ -23,13 +23,18 @@ class QuestionComponent extends React.Component {
 			snackMessage: 'Hello World',
 		    snackbackgroundColor: '#536DFE',
 		    snackbar: false,
+		    townHall: 0
 	    };
 
 	    this.handleSubmit = this.handleSubmit.bind(this);
+	    this.getTownhall = this.getTownhall.bind(this);
+
+	    this.getTownhall();
 	}
 
 	// Methods to update questions
 	handleSubmit(text, code = null, tags = []) {
+		console.log(this.state.townhall);
 		fetch('/api/questions', {
 		  credentials: 'include',
 		  method: 'POST',
@@ -39,10 +44,12 @@ class QuestionComponent extends React.Component {
 		    code,
 		    tags,
 		    username: this.state.user.username,
+		    townHall: this.state.townHall
 		  }),
 		})
 		.then(res => res.json())
 		.then((data) => {
+			console.log(data);
 		  this.setState({
 		      snackMessage: 'Your Question was added to Queue',
 		      snackbackgroundColor: '#536DFE',
@@ -50,6 +57,24 @@ class QuestionComponent extends React.Component {
 		  });
 		});
 	}
+
+	getTownhall() {
+	    const props = this.props;
+	    fetch('/api/townhall', { credentials: 'include' })
+	      .then((res) => {
+	        if (res.status === 200 || res.status === 304) {
+	          // props.login(() => {});
+	          return res.json();
+	        } else if (res.status === 403) {
+	          this.props.logout(() => {});
+	          return null;
+	        }
+	      })
+	      .then(res => {
+	      		console.log(res);
+	      		this.setState({townHall: res.townHall})}
+	      );
+	  }
 
 	render() {
 		return (<MuiThemeProvider>

@@ -45,7 +45,7 @@ class HomeComponent extends React.Component {
 			snackMessage: 'Hello World',
 		  snackbackgroundColor: '#536DFE',
 		  snackbar: false,
-      
+
       // filter states
       location: "in *",
       query: '',
@@ -53,21 +53,25 @@ class HomeComponent extends React.Component {
       in: "All Questions"
 		}
 
-		this.handleVote = this.handleVote.bind(this);
-	  this.handleUpvote = this.handleUpvote.bind(this);
-	  this.handleDownvote = this.handleDownvote.bind(this);
-	  this.handleAnswered = this.handleAnswered.bind(this);
-	  this.handleDelete = this.handleDelete.bind(this);
-	  this.handleEdit = this.handleEdit.bind(this);
-	  this.handleTagDelete = this.handleTagDelete.bind(this);
-	  this.closeSnackbar = this.closeSnackbar.bind(this);
-
     this.filterHandlers = {
       'location': this.handleChangeInFilterLocation.bind(this),
       'query': this.handleChangeInFilterQuery.bind(this),
       'by': this.handleChangeInFilterBy.bind(this),
       'in': this.handleChangeInFilterIn.bind(this)
     }
+
+		  this.handleVote = this.handleVote.bind(this);
+	    this.handleUpvote = this.handleUpvote.bind(this);
+	    this.handleDownvote = this.handleDownvote.bind(this);
+	    this.handleAnswered = this.handleAnswered.bind(this);
+	    this.handleDelete = this.handleDelete.bind(this);
+	    this.handleEdit = this.handleEdit.bind(this);
+	    this.handleTagDelete = this.handleTagDelete.bind(this);
+	    this.closeSnackbar = this.closeSnackbar.bind(this);
+      this.getQuestions = this.getQuestions.bind(this);
+      this.handleKeep = this.handleKeep.bind(this);
+      this.handleUnkeep = this.handleUnkeep.bind(this);
+
 	}
 
   componentDidMount() {
@@ -113,7 +117,7 @@ class HomeComponent extends React.Component {
       })
       .then(questions => {
       		this.setState({questions})}
-      	);
+      );
   }
 
   handleVote(question, n) {
@@ -232,6 +236,28 @@ class HomeComponent extends React.Component {
           });
         }
       });
+  }
+
+  handleKeep(question) {
+    console.log('keep');
+    question.keep = true;
+    putRequest(question).then(this.getQuestions);
+    this.setState({
+      snackMessage: 'Pinning the Question!',
+      snackbackgroundColor: '#388E3C',
+      snackbar: true,
+    });
+  }
+
+  handleUnkeep(question) {
+    console.log('unkeep');
+    question.keep = false;
+    putRequest(question).then(this.getQuestions);
+    this.setState({
+      snackMessage: 'Unpinning the Question!',
+      snackbackgroundColor: '#FBC02D',
+      snackbar: true,
+    });
   }
 
   // Utility
@@ -357,27 +383,26 @@ class HomeComponent extends React.Component {
 			<div className="app-body">
 			<NavBar />
 			<div id="home-wrapper">
+
         <SearchBar
           filterState={this.returnFilterState()}
           filterHandlers={this.filterHandlers}
           />
 
-        <p>{`LOCATION: ${this.state.location}`}</p><br></br>
-        <p>{`QUERY: ${this.state.query}`}</p><br></br>
-        <p>{`BY: ${this.state.by}`}</p><br></br>
-        <p>{`IN: ${this.state.in}`}</p><br></br>
+		        <QueueComponent
+			          title="Pending Questions"
+			          questions={this.state.questions}
+			          handleUpvote={this.handleUpvote}
+			          handleDownvote={this.handleDownvote}
+			          handleAnswered={this.handleAnswered}
+			          handleDelete={this.handleDelete}
+			          handleEdit={this.handleEdit}
+			          handleTagDelete={this.handleTagDelete}
+                handleKeep={this.handleKeep}
+                handleUnkeep={this.handleUnkeep}
+			          user={this.state.user}
+			        />
 
-
-        <QueueComponent
-			    title="Pending Questions"
-			    questions={this.questionsSearch()}
-			    handleUpvote={this.handleUpvote}
-			    handleDownvote={this.handleDownvote}
-			    handleAnswered={this.handleAnswered}
-			    handleDelete={this.handleDelete}
-			    handleEdit={this.handleEdit}
-			    handleTagDelete={this.handleTagDelete}
-			    user={this.state.user}/>
 		    </div>
 		    <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}
