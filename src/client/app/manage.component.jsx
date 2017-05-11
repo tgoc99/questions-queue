@@ -72,19 +72,30 @@ class ManageComponent extends React.Component {
 	          cohort,
 	        }
 	    })
+    console.log(username.length, 'users')
 	
-      return fetch('/api/users', {
-      credentials: 'include',
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        users: users
-      }),
-    })
-    .then((data)=>{
+      fetch('/api/users', {
+        credentials: 'include',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          users: users
+        }),
+      })
+      .then((res)=>{
         this.getUsers();
-        return data
-    })
+        return res.json();
+      })
+      .then(data => {
+        console.log(data)
+        if(data[1]){
+          this.setState({
+            snackMessage: data[1] + ' User permission(s) rejected!',
+            snackbackgroundColor: '#E53935',
+            snackbar: true,
+          })
+        }
+      })
   }
 
   handleSelectChange(event, index, value) {
