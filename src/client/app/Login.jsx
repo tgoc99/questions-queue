@@ -26,11 +26,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const LoginComponent = props => (
   props.loggedIn ? (
-    <Redirect to="/questions" />
+    <Redirect to="/home" />
   ) : (
       <MuiThemeProvider>
         <div>
-          <AppBar title="Question Queue" showMenuIconButton={false}/>
+          <AppBar style={{backgroundColor: '#2b9fda'}} title="Question Queue" showMenuIconButton={false}/>
           <div className="loginContent" style={{padding: '25% 25%'}}>
             <h1 className='welcomeText' style= {{width: '100%'}}>Log in with your github account</h1>
             <div className="loginButton" style={{margin: 'auto', textAlign: 'left'}}>

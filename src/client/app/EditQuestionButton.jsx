@@ -3,6 +3,7 @@ import React from 'react';
 // material-ui
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import QuestionFormComponent from './QuestionFormComponent.jsx';
 
@@ -42,6 +43,7 @@ class EditQuestionButton extends React.Component {
           <QuestionFormComponent
             question={this.props.question}
             handleEdit={this.handleEdit}/>
+          <RaisedButton style={{width: '92%', margin: '4%'}} onClick={this.handleClose} label="BACK TO QUESTIONS" />
         </Dialog>
       </span>
     );
