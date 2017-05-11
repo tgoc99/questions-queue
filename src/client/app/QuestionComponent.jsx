@@ -9,7 +9,10 @@ import QuestionAdminComponent from './QuestionAdminComponent.jsx';
  
 function QuestionComponent({ user, question, handlers }) {
 
+  var isAdmin = user.role === 'admin';
+  var isAuthor = user.username == question.username;
   var answeredBadge = question.answered ? <span className="question-badge answered">Answered</span> : null;
+  var authorMessage = isAdmin || isAuthor ? `by ${question.username}` : '';
 
   return (
       <div className="question-wrapper">
@@ -25,7 +28,7 @@ function QuestionComponent({ user, question, handlers }) {
               <QuestionVoteComponent question={question} user={user} handlers={handlers}/>
             </div>
           </div>
-          <p className="question-created">{moment(question.createdAt).fromNow()}</p>
+          <p className="question-created">{`${moment(question.createdAt).fromNow()} ${authorMessage}`}</p>
           {answeredBadge}
           <div className="question-tags">
             {question.tags.map(function(tag, idx) {

@@ -1,6 +1,6 @@
 body {
   /*background-color: #fafbfc;*/
-  background-color: #EEE;
+  background-color: #EEE !important;
   box-sizing: content-box;
 }
 
@@ -162,4 +162,14 @@ body {
   margin-top: 0;
   width: 60px;
   text-transform: uppercase;
+}
+
+/* SEARCH BAR */
+
+#home-wrapper .search-wrapper {
+  /*width: 100%;*/
+  height: 200px;
+  margin: 15px;
+  background-color: white;
+  border: 1px solid #ddd;
 }

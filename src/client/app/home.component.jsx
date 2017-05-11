@@ -4,6 +4,7 @@ import NavBar from './navbar.component.jsx';
 import QueueComponent from './QueueComponent.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
+import SearchBar from './SearchBar.jsx'
 
 
 const putRequest = (question) =>
@@ -42,9 +43,22 @@ class HomeComponent extends React.Component {
 			questions: [],
 			user,
 			snackMessage: 'Hello World',
-		    snackbackgroundColor: '#536DFE',
-		    snackbar: false,
+		  snackbackgroundColor: '#536DFE',
+		  snackbar: false,
+
+      // filter states
+      location: "in *",
+      query: '',
+      by: "Upvotes : High to Low",
+      in: "All Questions"
 		}
+
+    this.filterHandlers = {
+      'location': this.handleChangeInFilterLocation.bind(this),
+      'query': this.handleChangeInFilterQuery.bind(this),
+      'by': this.handleChangeInFilterBy.bind(this),
+      'in': this.handleChangeInFilterIn.bind(this)
+    }
 
 		  this.handleVote = this.handleVote.bind(this);
 	    this.handleUpvote = this.handleUpvote.bind(this);
@@ -57,13 +71,14 @@ class HomeComponent extends React.Component {
       this.getQuestions = this.getQuestions.bind(this);
       this.handleKeep = this.handleKeep.bind(this);
       this.handleUnkeep = this.handleUnkeep.bind(this);
+
 	}
 
   componentDidMount() {
     this.getUsers()
     .then(users => {
       this.setState({ users })
-      console.log(this.state.users)
+      //console.log(this.state.users)
     });
     this.getQuestions();
     this.interval = setInterval(() => {
@@ -101,7 +116,7 @@ class HomeComponent extends React.Component {
         }
       })
       .then(questions => {
-      		this.setState({questions})}
+      		this.setState({questions: questions})}
       );
   }
 
@@ -255,18 +270,128 @@ class HomeComponent extends React.Component {
   closeSnackbar() {
     this.setState({
       snackbar: false,
-      snackMessage: '',
+      snackMessage: ''
     });
   }
 
+  // Filter Functions
+  questionsSearchIn(questions) {
+    //console.log(questions);
+    var filtered = questions;
+    var query = this.state.query;
+    if(!!query) {
+      // filter!
+      switch(this.state.location) {
+        case "in *":
+          filtered = questions.filter(question => {
+            var questionText = `${question.questionText} ${question.codeSnippet} ${question.tags.join('')}`
+            return questionText.includes(query);
+          });
+          break;
+        case "in Question":
+          filtered = questions.filter(question => question.questionText.includes(query));
+          break;
+        case "in Code Snippet":
+          filtered = questions.filter(question => question.codeSnippet.includes(query));
+          break;
+        case "in Tags":
+          filtered = questions.filter(question => {
+            var queryList = query.split(' '); // ['moto', 'Node']
+            var found = false;
+            queryList.forEach(q => {
+              // not empty
+              if(!!q) {question.tags.forEach(tag => found = found || tag.includes(q))}
+            })
+            return found;
+          });
+          break;
+      }
+    }
+    return filtered;
+  }
+
+  questionsSortBy(questions) {
+    var sorted = questions;
+    // sort!
+    switch(this.state.by) {
+      case "Upvotes : High to Low":
+        sorted = questions.sort((a, b) => a.votes < b.votes);
+        break;
+      case "Time Created : New First":
+        sorted = questions.sort((a, b) => a.createdAt < b.createdAt);
+        break;
+      case "Time Created : Old First":
+        sorted = questions.sort((a, b) => a.createdAt > b.createdAt);
+        break;
+    }
+    return sorted;
+  }
+
+  questionsIn(questions) {
+    var filtered = questions;
+    var In = this.state.in;
+    // filter!
+    switch(In) {
+      case "Answered":
+        filtered = questions.filter(question => question.answered);
+        break;
+      case "Unanswered":
+        filtered = questions.filter(question => !question.answered);
+        break;
+    }
+    return filtered;
+  }
+
+  // townhall
+
+  // put everything together!
+  questionsSearch() {
+    var questions = this.state.questions;
+    questions = this.questionsIn(questions);
+    questions = this.questionsSearchIn(questions);
+    questions = this.questionsSortBy(questions);
+    return questions;
+  }
+
+  returnFilterState() {
+    return {
+      'location': this.state.location,
+      'by': this.state.by,
+      'in': this.state.in
+    }
+  }
+
+  handleChangeInFilterLocation(location) {
+    this.setState({location: location});
+  }
+  handleChangeInFilterQuery(event) {
+    this.setState({query: event.target.value});
+  }
+  handleChangeInFilterBy(by) {
+    this.setState({by: by});
+  }
+  handleChangeInFilterIn(val) {
+    this.setState({in: val});
+  }
+  handleChangeInFilterReversed(reversed) {
+    this.setState({reversed: reversed});
+  }
+
 	render() {
-		return (<MuiThemeProvider> 
+
+		return (<MuiThemeProvider>
 			<div className="app-body">
 			<NavBar />
 			<div id="home-wrapper">
+
+        <SearchBar
+          filterState={this.returnFilterState()}
+          filterHandlers={this.filterHandlers}
+          />
+
 		        <QueueComponent
 			          title="Pending Questions"
-			          questions={this.state.questions}
+			          questions={this.questionsSearch()}
 			          handleUpvote={this.handleUpvote}
 			          handleDownvote={this.handleDownvote}
 			          handleAnswered={this.handleAnswered}
@@ -277,6 +402,7 @@ class HomeComponent extends React.Component {
                 handleUnkeep={this.handleUnkeep}
 			          user={this.state.user}
 			        />
+
 		    </div>
 		    <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}

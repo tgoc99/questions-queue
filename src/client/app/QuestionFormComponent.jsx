@@ -13,7 +13,7 @@ import CodeZone from './CodeZone.jsx';
 const allTags = ['Node', 'Express', 'React', 'Angular', 'Closures', 'Promises',
                   'Data Structures', 'Giancarlo', 'MongoDB', 'SQL', 'Git', 'Backbone',
                   'Callback Functions', 'ES6', 'Leo\'s Magnificent Beard', 'Optimization',
-                  'Corgis'];
+                  'Corgis', 'Bob & Alice'];
 
 class QuestionFormComponent extends React.Component {
   constructor(props) {
@@ -103,6 +103,9 @@ class QuestionFormComponent extends React.Component {
     this.refs.tagBar.setState({ searchText: '' });
   }
   handleEdit(event) {
+    var currentTime = Date.now();
+    console.log(currentTime);
+
     event.preventDefault();
     const question = this.props.question;
     question.questionText = this.state.questionText;

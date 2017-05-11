@@ -82,7 +82,9 @@ class App extends React.Component {
     this.closeSnackbar = this.closeSnackbar.bind(this);
   }
   componentDidMount() {
+
     this.getUsers();
+
     this.getQuestions();
     this.interval = setInterval(() => {
       this.getUsers();
@@ -198,7 +200,7 @@ class App extends React.Component {
       });
     this.getQuestions();
   }
-  
+
   handleUpvote(question) {
     this.handleVote(question, 1);
     this.setState({
