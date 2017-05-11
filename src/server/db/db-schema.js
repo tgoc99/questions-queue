@@ -5,7 +5,7 @@ const questionSchema = new mongoose.Schema({
   questionText: String,
   codeSnippet: String,
   votes: Number,
-  keep: Boolean,
+  keep: {type:Boolean, default: false},
   answered: Boolean,
   createdAt: { type: Number, default: Date.now() },
   tags: Array,

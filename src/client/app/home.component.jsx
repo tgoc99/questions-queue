@@ -2,6 +2,7 @@ import { remove } from 'lodash';
 import React from 'react';
 import NavBar from './navbar.component.jsx';
 import QueueComponent from './QueueComponent.jsx';
+import NextTownHallButton from './NextTownHallButton.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 import SearchBar from './SearchBar.jsx'
@@ -31,17 +32,23 @@ class HomeComponent extends React.Component {
 	    super(props);
 
 	    // Parse cookie to set up a user object with user's name and role
-	    const user = {};
+      const user = {};
+	    let isAdmin;
 	    document.cookie.split(';').forEach((str) => {
 	      const [k, v] = str.split('=').map(s => s.trim());
 	      if (k === 'username' || k === 'role') {
 	        user[k] = v;
 	      }
+        console.log(user.role)
+        if (user.role === 'admin') isAdmin = true;
+        else isAdmin = false;
 	    });
 
 	    this.state = {
 			questions: [],
 			user,
+      isAdmin, 
+      townHall: 'tbd',
 			snackMessage: 'Hello World',
 		  snackbackgroundColor: '#536DFE',
 		  snackbar: false,
@@ -65,7 +72,8 @@ class HomeComponent extends React.Component {
 	    this.handleDownvote = this.handleDownvote.bind(this);
 	    this.handleAnswered = this.handleAnswered.bind(this);
 	    this.handleDelete = this.handleDelete.bind(this);
-	    this.handleEdit = this.handleEdit.bind(this);
+      this.handleEdit = this.handleEdit.bind(this);
+	    this.handleNextTownHall = this.handleNextTownHall.bind(this);
 	    this.handleTagDelete = this.handleTagDelete.bind(this);
 	    this.closeSnackbar = this.closeSnackbar.bind(this);
       this.getQuestions = this.getQuestions.bind(this);
@@ -75,6 +83,7 @@ class HomeComponent extends React.Component {
 	}
 
   componentDidMount() {
+    this.getTownHall();
     this.getUsers()
     .then(users => {
       this.setState({ users })
@@ -88,6 +97,16 @@ class HomeComponent extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+
+  getTownHall() {
+    fetch('api/townHall', {credentials: 'include'})
+    .then(res => {
+      return res.json()
+    })
+    .then(th => {
+      this.setState({townHall:th.townHall}) 
+    })
   }
 
   getUsers() {
@@ -118,6 +137,20 @@ class HomeComponent extends React.Component {
       .then(questions => {
       		this.setState({questions: questions})}
       );
+  }
+
+  handleNextTownHall() {
+    fetch('api/townHall', {
+      credentials: 'include',
+      method: 'PUT',
+      body: 'next TownHall!'
+    })
+
+    this.setState ({
+      snackMessage: 'Next Town Hall Set!',
+      snackbackgroundColor: '#E53935',
+      snackbar: true,
+    })  
   }
 
   handleVote(question, n) {
@@ -402,8 +435,11 @@ class HomeComponent extends React.Component {
                 handleUnkeep={this.handleUnkeep}
 			          user={this.state.user}
 			        />
-
-		    </div>
+        </div>
+        <NextTownHallButton 
+          isAdmin={this.state.isAdmin}
+          handleNextTownHall={this.handleNextTownHall}
+        />
 		    <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}
 			        open={this.state.snackbar}
