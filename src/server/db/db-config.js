@@ -12,4 +12,6 @@ db.once('open', () => {
   console.log('Mongodb connection open');
 });
 
+
 module.exports = db;
+const townHallSchema = require('./townHall.js');
