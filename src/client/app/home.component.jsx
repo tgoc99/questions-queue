@@ -55,6 +55,8 @@ class HomeComponent extends React.Component {
 	    this.handleTagDelete = this.handleTagDelete.bind(this);
 	    this.closeSnackbar = this.closeSnackbar.bind(this);
       this.getQuestions = this.getQuestions.bind(this);
+      this.handleKeep = this.handleKeep.bind(this);
+      this.handleUnkeep = this.handleUnkeep.bind(this);
 	}
 
   componentDidMount() {
@@ -221,6 +223,28 @@ class HomeComponent extends React.Component {
       });
   }
 
+  handleKeep(question) {
+    console.log('keep');
+    question.keep = true;
+    putRequest(question).then(this.getQuestions);
+    this.setState({
+      snackMessage: 'Pinning the Question!',
+      snackbackgroundColor: '#388E3C',
+      snackbar: true,
+    });
+  }
+
+  handleUnkeep(question) {
+    console.log('unkeep');
+    question.keep = false;
+    putRequest(question).then(this.getQuestions);
+    this.setState({
+      snackMessage: 'Unpinning the Question!',
+      snackbackgroundColor: '#FBC02D',
+      snackbar: true,
+    });
+  }
+
   // Utility
 
   handleRequestClose() {
@@ -249,6 +273,8 @@ class HomeComponent extends React.Component {
 			          handleDelete={this.handleDelete}
 			          handleEdit={this.handleEdit}
 			          handleTagDelete={this.handleTagDelete}
+                handleKeep={this.handleKeep}
+                handleUnkeep={this.handleUnkeep}
 			          user={this.state.user}
 			        />
 		    </div>

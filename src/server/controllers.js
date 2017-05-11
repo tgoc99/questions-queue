@@ -102,6 +102,7 @@ exports.postQuestion = (req, res) => {
     answered: false,
     tags: req.body.tags,
     username: req.body.username,
+    townHall: req.body.townHall
   });
   newQuestion.markModified('tags');
   newQuestion.save((err, question) => {
