@@ -37,9 +37,10 @@ exports.getUsers = (req, res) => {
 
 // ACCEPTS ARRAY, send obj with users property of array of users
 exports.postUsers = (req, res) => {
-  let accepted, denied;
+  let [accepted, denied] = [0,0]
+  let flag = false;
   console.log(req.body);
-  req.body.users.forEach(user => { 
+  req.body.users.forEach((user, idx) => { 
     User.findOne({username:user.username}, (err, foundUser) => {
       if(foundUser !== null) denied++;
       let newUser = new User(user)
@@ -56,37 +57,41 @@ exports.postUsers = (req, res) => {
           useData=JSON.parse(data)
           console.log('gh data name', useData.name)
           if(useData.name) newUser.givenName = useData.name;
+          accepted++
           newUser.save((err, user) => {
             if (err) {
+              accepted--
               denied++
               res.status(500);
               console.log(err);
             } else {
-              accepted++
               console.log('user created', user)
             }
           })
         })
         .catch(err => {
           denied++
-          console.log(err)
+          console.log('github error')
         })
       } else {
+        accepted++
         newUser.save((err, user) => {
           if (err) {
+            accepted--
             denied++
             res.status(500);
             console.log(err);
           } else {
-            accepted++
             console.log('user created', user)
           }
         })
       }
+      if(idx === req.body.users.length-1) flag = true;
     })
     .then(()=> {
+      if(!flag) return;
       console.log('right before res send', accepted, denied)
-      res.send('users created')
+      res.json([accepted, denied])
     })
   })
 }
