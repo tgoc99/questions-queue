@@ -169,6 +169,11 @@ td, th {
   position: absolute;
   top: -4px;
 }
+.town-hall-button {
+  align-self: center !important;
+  margin: 25px !important;
+  background-color: red !important;
+}
 .user-input-field {
   margin-left: 15px !important;
   margin-right: 40px !important;
