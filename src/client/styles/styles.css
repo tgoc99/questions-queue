@@ -9,6 +9,7 @@ body {
   margin-bottom: 50px;
   font-size: 20pt;
   font-weight: bold;
+  font-family: 'Roboto', sans-serif !important;
 }
 .githubIcon {
   background: url("./assets/github.svg");
