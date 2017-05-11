@@ -57,14 +57,16 @@ class HomeComponent extends React.Component {
       location: "in *",
       query: '',
       by: "Upvotes : High to Low",
-      in: "All Questions"
+      in: "All Questions",
+      currentTownHall: "All TownHalls"
 		}
 
     this.filterHandlers = {
       'location': this.handleChangeInFilterLocation.bind(this),
       'query': this.handleChangeInFilterQuery.bind(this),
       'by': this.handleChangeInFilterBy.bind(this),
-      'in': this.handleChangeInFilterIn.bind(this)
+      'in': this.handleChangeInFilterIn.bind(this),
+      'townHall': this.handleChangeInCurrentTownHall.bind(this)
     }
 
 		  this.handleVote = this.handleVote.bind(this);
@@ -93,6 +95,8 @@ class HomeComponent extends React.Component {
     this.interval = setInterval(() => {
       this.getQuestions();
     }, 2000);
+
+    this.getTownhall();
   }
 
   componentWillUnmount() {
@@ -360,6 +364,13 @@ class HomeComponent extends React.Component {
     return sorted;
   }
 
+  questionsFilterByTownHall(questions) {
+    // TownHall #18 => 18
+    var currentTownHall = this.state.currentTownHall;
+    // filter!
+    return questions.filter(question => currentTownHall === 'All TownHalls' || question.keep || `TownHall #${question.townHall}` === currentTownHall);
+  }
+
   questionsIn(questions) {
     var filtered = questions;
     var In = this.state.in;
@@ -371,6 +382,9 @@ class HomeComponent extends React.Component {
       case "Unanswered":
         filtered = questions.filter(question => !question.answered);
         break;
+      case "Bookmarked":
+        filtered = questions.filter(question => question.keep);
+        break;
     }
     return filtered;
   }
@@ -380,6 +394,7 @@ class HomeComponent extends React.Component {
   // put everything together!
   questionsSearch() {
     var questions = this.state.questions;
+    questions = this.questionsFilterByTownHall(questions);
     questions = this.questionsIn(questions);
     questions = this.questionsSearchIn(questions);
     questions = this.questionsSortBy(questions);
@@ -390,7 +405,9 @@ class HomeComponent extends React.Component {
     return {
       'location': this.state.location,
       'by': this.state.by,
-      'in': this.state.in
+      'in': this.state.in,
+      'townHall': this.state.townHall,
+      'currentTownHall': this.state.currentTownHall
     }
   }
 
@@ -406,9 +423,28 @@ class HomeComponent extends React.Component {
   handleChangeInFilterIn(val) {
     this.setState({in: val});
   }
-  handleChangeInFilterReversed(reversed) {
-    this.setState({reversed: reversed});
+  handleChangeInCurrentTownHall(townHall) {
+    this.setState({currentTownHall: townHall});
   }
+
+  getTownhall() {
+	    const props = this.props;
+	    fetch('/api/townhall', { credentials: 'include' })
+	      .then((res) => {
+	        if (res.status === 200 || res.status === 304) {
+	          // props.login(() => {});
+	          return res.json();
+	        } else if (res.status === 403) {
+	          this.props.logout(() => {});
+	          return null;
+	        }
+	      })
+	      .then(res => {
+	      		console.log(res);
+	      		this.setState({townHall: res.townHall})
+            this.setState({currentTownHall: `TownHall #${this.state.townHall}`})}
+	      );
+	  }
 
 	render() {
 
@@ -421,7 +457,7 @@ class HomeComponent extends React.Component {
           filterState={this.returnFilterState()}
           filterHandlers={this.filterHandlers}
           />
-
+          
 		        <QueueComponent
 			          title="Pending Questions"
 			          questions={this.questionsSearch()}

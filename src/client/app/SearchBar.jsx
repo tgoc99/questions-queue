@@ -11,7 +11,24 @@ function SearchBar(props) {
   var filterState = props.filterState;
   var handlers = props.filterHandlers;
 
-  //console.log('Loading SearchBar', handlers)
+  var townHall = filterState.townHall;
+  var currentTownHall = filterState.currentTownHall;
+
+  var townHallOptions = [];
+  for(var i = 1; i <= townHall; i++) {
+    townHallOptions.push(
+      <MenuItem value={`TownHall #${i}`} primaryText={`TownHall #${i}`}/>
+    )
+  }
+  var selectTownHall = (
+    <DropDownMenu
+      value={filterState.currentTownHall}
+      onChange={(e, idx, val) => handlers.townHall(val)} >
+      {[townHallOptions]}
+      <MenuItem value={"All TownHalls"} primaryText={"All TownHalls"}/>
+    </DropDownMenu>
+  )
+
 
   return (
     <div className="search-wrapper">
@@ -42,7 +59,10 @@ function SearchBar(props) {
         <MenuItem value="All Questions" primaryText="All Questions" />
         <MenuItem value="Answered" primaryText="Answered"/>
         <MenuItem value="Unanswered" primaryText="Unanswered"/>
+        <MenuItem value="Bookmarked" primaryText="Bookmarked"/>
       </DropDownMenu>
+
+      {selectTownHall}
     </div>
   )
 }
