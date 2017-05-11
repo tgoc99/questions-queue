@@ -1,9 +1,9 @@
 const Question = require('./db/db-schema');
 const User = require('./db/user');
+const rp = require('request-promise');
 
 // USERS
 exports.getUsers = (req, res) => {
-  console.log(req.headers);
   User.find({}, (err, users) => {
     if (err) res.status(404).send(err);
     else {
@@ -18,16 +18,45 @@ exports.postUsers = (req, res) => {
   req.body.users.forEach(user => { 
     User.find({username:user.username}, (err, foundUser) => {
       let newUser = new User(user)
-      newUser.save((err, user) => {
-        if (err) {
-          res.status(500);
-          console.log(err);
-        } else {
-          console.log('user created', user)
-        }
-      })
+      console.log('gn', newUser.givenName===null)
+      if(newUser.givenName == null){
+        console.log('just before rp')
+        rp.get({
+          uri:'https://api.github.com/users/'+newUser.username,
+          headers:{
+            'User-Agent':'Questions-Queue-App'
+          }
+        })
+        .then(data => {
+          useData=JSON.parse(data)
+          console.log('gh data name', useData.name)
+          if(useData.name) newUser.givenName = useData.name;
+          newUser.save((err, user) => {
+            if (err) {
+              res.status(500);
+              console.log(err);
+            } else {
+              console.log('user created', user)
+            }
+          })
+        })
+      } else {
+        newUser.save((err, user) => {
+          if (err) {
+            res.status(500);
+            console.log(err);
+          } else {
+            console.log('user created', user)
+          }
+        })
+      }
     })
   })
+}
+
+exports.deleteUser = (req,res) => {
+  User.findByIdAndRemove(req.body)
+  .then(() => res.status(202).send());
 }
 
 // QUESTIONS
