@@ -37,7 +37,7 @@ routes.route('/api/townHall')
   .get(controllers.getTownHall)
   // .post(controllers.postUsers)
   // .delete(controllers.deleteUser)
-  // .put(controllers.updateUser);
+  .put(controllers.nextTownHall);
 
 
 routes.route('/api/questions')
