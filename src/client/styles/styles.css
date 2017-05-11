@@ -38,7 +38,7 @@ td, th {
 }
 .app-body {
   padding-top: 80px;
-  max-width: 1000px !important;
+  max-width: 100% !important;
   min-width: 300px !important;
   width: 100% !important;
   margin: auto !important;

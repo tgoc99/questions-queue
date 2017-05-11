@@ -8,42 +8,33 @@ import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
 
 function SearchBar(props) {
+  var filterState = props.filterState;
+  var handlers = props.filterHandlers;
 
-  var searchIn = props.searchIn;
-  var filterBy = props.filterBy;
-
-  console.log(searchIn, typeof searchIn)
+  console.log('Loading SearchBar')
 
   return (
     <div className="search-wrapper">
       <TextField
-        onChange={() => true}
+        onChange={handlers.query}
         floatingLabelText="Seach Questions..." />
 
       <DropDownMenu
-        value={searchIn}
-        onChange={() => true} >
-        <MenuItem value="*" primaryText = "*" />
-        <MenuItem value="questionText" primaryText="Question Text" />
-        <MenuItem value="codeSnippets" primaryText="Code Snippets" />
-        <MenuItem value="tags" primaryText="Tags" />
+        value={filterState.location}
+        onChange={(e, idx, val) => handlers.location(val)} >
+        <MenuItem value="in *" primaryText = "in *" />
+        <MenuItem value="in Question" primaryText="in Question" />
+        <MenuItem value="in Code Snippet" primaryText="in Code Snippet" />
+        <MenuItem value="in Tags" primaryText="in Tags" />
       </DropDownMenu>
 
       <DropDownMenu
-        value={filterBy}
-        onChange={() => true} >
-        <MenuItem value="*" primaryText="*"/>
-        <MenuItem value="upvotes" primaryText="Upvotes" />
-        <MenuItem value="dateCreated" primaryText="dateCreated"/>
+        value={filterState.by}
+        onChange={(e, idx, val) => handlers.by(val)} >
+        <MenuItem value="Upvotes : High to Low" primaryText="Upvotes : High to Low" />
+        <MenuItem value="Time Created : New First" primaryText="Time Created : New First"/>
+        <MenuItem value="Time Created : Old First" primaryText="Time Created : Old First"/>
       </DropDownMenu>
-
-      <IconButton
-        tooltip="Reverse Order"
-        onClick={() => true}>
-        <FontIcon className="material-icons">
-          {true ? 'arrow_upward' : 'arrow_downward'}
-        </FontIcon>
-      </IconButton>
     </div>
   )
 }

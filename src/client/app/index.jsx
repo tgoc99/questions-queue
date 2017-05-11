@@ -92,7 +92,7 @@ class Main extends React.Component {
               ) : (
                 <Redirect to="/" />
               )
-          )} />  
+          )} />
 
           <Route path="/manage"
             render={ () => (
@@ -101,7 +101,7 @@ class Main extends React.Component {
               ) : (
                 <Redirect to="/" />
               )
-          )} />  
+          )} />
 
           <Route path="/analytics"
             render={ () => (
@@ -110,7 +110,7 @@ class Main extends React.Component {
               ) : (
                 <Redirect to="/" />
               )
-          )} />  
+          )} />
 
           <Route path="/login" render={() => (
             <LoginComponent

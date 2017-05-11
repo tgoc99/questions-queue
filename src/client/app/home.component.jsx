@@ -43,28 +43,38 @@ class HomeComponent extends React.Component {
 			questions: [],
 			user,
 			snackMessage: 'Hello World',
-		    snackbackgroundColor: '#536DFE',
-		    snackbar: false,
+		  snackbackgroundColor: '#536DFE',
+		  snackbar: false,
 
-        searchIn: '*',
-        filterBy: '*'
+      // filter states
+      location: "in *",
+      query: '',
+      by: "Upvotes : High to Low",
+      reversed: false
 		}
 
 		this.handleVote = this.handleVote.bind(this);
-	    this.handleUpvote = this.handleUpvote.bind(this);
-	    this.handleDownvote = this.handleDownvote.bind(this);
-	    this.handleAnswered = this.handleAnswered.bind(this);
-	    this.handleDelete = this.handleDelete.bind(this);
-	    this.handleEdit = this.handleEdit.bind(this);
-	    this.handleTagDelete = this.handleTagDelete.bind(this);
-	    this.closeSnackbar = this.closeSnackbar.bind(this);
+	  this.handleUpvote = this.handleUpvote.bind(this);
+	  this.handleDownvote = this.handleDownvote.bind(this);
+	  this.handleAnswered = this.handleAnswered.bind(this);
+	  this.handleDelete = this.handleDelete.bind(this);
+	  this.handleEdit = this.handleEdit.bind(this);
+	  this.handleTagDelete = this.handleTagDelete.bind(this);
+	  this.closeSnackbar = this.closeSnackbar.bind(this);
+
+    this.filterHandlers = {
+      'location': this.handleChangeInFilterLocation.bind(this),
+      'query': this.handleChangeInFilterQuery.bind(this),
+      'by': this.handleChangeInFilterBy.bind(this),
+      'reversed': this.handleChangeInFilterReversed.bind(this)
+    }
 	}
 
   componentDidMount() {
     this.getUsers()
     .then(users => {
       this.setState({ users })
-      console.log(this.state.users)
+      //console.log(this.state.users)
     });
     this.getQuestions();
     this.interval = setInterval(() => {
@@ -234,39 +244,120 @@ class HomeComponent extends React.Component {
   closeSnackbar() {
     this.setState({
       snackbar: false,
-      snackMessage: '',
-
-      searchIn: '*',
-      filterBy: '*'
+      snackMessage: ''
     });
   }
 
   // Filter Functions
+  questionsSearchIn(questions) {
+    //console.log(questions);
+    var filtered = questions;
+    var query = this.state.query;
+    if(!!query) {
+      // filter!
+      switch(this.state.location) {
+        case "in *":
+          filtered = questions.filter(question => {
+            var questionText = `${question.questionText} ${question.codeSnippet} ${question.tags.join('')}`
+            return questionText.includes(query);
+          });
+          break;
+        case "in Question":
+          filtered = questions.filter(question => question.questionText.includes(query));
+          break;
+        case "in Code Snippet":
+          filtered = questions.filter(question => question.codeSnippet.includes(query));
+          break;
+        case "in Tags":
+          filtered = questions.filter(question => {
+            var queryList = query.split(' '); // ['moto', 'Node']
+            var found = false;
+            queryList.forEach(q => {
+              // not empty
+              if(!!q) {question.tags.forEach(tag => found = found || tag.includes(q))}
+            })
+            return found;
+          });
+          break;
+      }
+    }
+    return filtered;
+  }
+
+  questionsSortBy(questions) {
+    var sorted = questions;
+    // sort!
+    switch(this.state.by) {
+      case "Upvotes : High to Low":
+        sorted = questions.sort((a, b) => a.votes < b.votes);
+        break;
+      case "Time Created : New First":
+        sorted = questions.sort((a, b) => a.createdAt < b.createdAt);
+        break;
+      case "Time Created : Old First":
+        sorted = questions.sort((a, b) => a.createdAt > b.createdAt);
+        break;
+    }
+    return sorted;
+  }
+
+  // townhall
+
+  // put everything together!
+  questionsSearch() {
+    var questions = this.state.questions;
+    questions = this.questionsSearchIn(questions);
+    questions = this.questionsSortBy(questions);
+    return questions;
+  }
+
+  returnFilterState() {
+    return {
+      'location': this.state.location,
+      'by': this.state.by,
+      'reversed': this.state.reversed
+    }
+  }
+
+  handleChangeInFilterLocation(location) {
+    this.setState({location: location});
+  }
+  handleChangeInFilterQuery(event) {
+    this.setState({query: event.target.value});
+  }
+  handleChangeInFilterBy(by) {
+    this.setState({by: by});
+  }
+  handleChangeInFilterReversed(reversed) {
+    this.setState({reversed: reversed});
+  }
 
 	render() {
-
-    var currentFilter = {
-      searchIn: this.state.searchIn,
-      filterBy: this.state.filterBy
-    }
 
 		return (<MuiThemeProvider>
 			<div className="app-body">
 			<NavBar />
 			<div id="home-wrapper">
         <SearchBar
-          current={currentFilter}/>
+          filterState={this.returnFilterState()}
+          filterHandlers={this.filterHandlers}
+          />
+
+        <p>{`LOCATION: ${this.state.location}`}</p><br></br>
+        <p>{`QUERY: ${this.state.query}`}</p><br></br>
+        <p>{`BY: ${this.state.by}`}</p><br></br>
+        <p>{`REVERSED: ${this.state.reversed}`}</p><br></br>
+
         <QueueComponent
 			    title="Pending Questions"
-			    questions={this.state.questions}
+			    questions={this.questionsSearch()}
 			    handleUpvote={this.handleUpvote}
 			    handleDownvote={this.handleDownvote}
 			    handleAnswered={this.handleAnswered}
 			    handleDelete={this.handleDelete}
 			    handleEdit={this.handleEdit}
 			    handleTagDelete={this.handleTagDelete}
-			    user={this.state.user}
-			        />
+			    user={this.state.user}/>
 		    </div>
 		    <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}

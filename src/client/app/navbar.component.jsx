@@ -30,7 +30,7 @@ class NavBar extends React.Component {
 
 	    this.state.user.img = unescape(this.state.user.img);
 
-	    console.log(user);
+	    //console.log(user);
 
 	    // Navigation stuff
 	    this.openDrawer = this.openDrawer.bind(this);
@@ -39,7 +39,7 @@ class NavBar extends React.Component {
 	}
 
 
-	// Navigation 
+	// Navigation
 	openDrawer() {
 		console.log("open drawer");
 		this.setState({open: true});
@@ -79,25 +79,25 @@ class NavBar extends React.Component {
 				>
 					<AppBar title="Question Queue" showMenuIconButton={false} />
 					<MenuItem className="navbarItem" href="#/home" onTouchTap={this.handleClose}>
-					  <i className="material-icons">home</i> 
+					  <i className="material-icons">home</i>
 					  <span className="navbarText"> Home </span>
 					</MenuItem>
 					<MenuItem className="navbarItem" href="#/question" onTouchTap={this.handleClose}>
-					  <i className="material-icons">speaker_notes</i> 
+					  <i className="material-icons">speaker_notes</i>
 					  <span className="navbarText"> Ask Question </span>
 					</MenuItem>
 					<MenuItem className="navbarItem" href="#/profile" onTouchTap={this.handleClose}>
-					  <i className="material-icons">account_circle</i> 
+					  <i className="material-icons">account_circle</i>
 					  <span className="navbarText"> Profile </span>
 					</MenuItem>
 					{ this.state.user.role == "admin" ? (
 						<MenuItem className="navbarItem" href="#/manage" onTouchTap={this.handleClose}>
-						  <i className="material-icons">settings</i> 
+						  <i className="material-icons">settings</i>
 						  <span className="navbarText"> Manage </span>
 						</MenuItem> ) :  <span /> }
 					{ this.state.user.role == "admin" ? (
 						<MenuItem className="navbarItem" href="#/analytics" onTouchTap={this.handleClose}>
-						  <i className="material-icons">show_chart</i> 
+						  <i className="material-icons">show_chart</i>
 						  <span className="navbarText"> Analytics </span>
 						</MenuItem>) :  <span /> }
 					<MenuItem className="navbarItem" onTouchTap={this.handleClose}>

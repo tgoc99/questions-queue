@@ -82,7 +82,7 @@ class App extends React.Component {
     this.getUsers()
     .then(users => {
       this.setState({ users })
-      console.log(this.state.users)
+      //console.log(this.state.users)
     });
     this.getQuestions();
     this.interval = setInterval(() => {
@@ -187,7 +187,7 @@ class App extends React.Component {
       });
     this.getQuestions();
   }
-  
+
   handleUpvote(question) {
     this.handleVote(question, 1);
     this.setState({
