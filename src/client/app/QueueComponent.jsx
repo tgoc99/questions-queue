@@ -10,7 +10,7 @@ function QueueComponent(props) {
     'delete': props.handleDelete,
     'deleteTag': props.handleTagDelete,
     'keep': props.handleKeep,
-    'unkeep': props.handleUnkepp
+    'unkeep': props.handleUnkeep
   }
 
   return (

@@ -223,12 +223,26 @@ class HomeComponent extends React.Component {
       });
   }
 
-  handleKeep() {
-
+  handleKeep(question) {
+    console.log('keep');
+    question.keep = true;
+    putRequest(question).then(this.getQuestions);
+    this.setState({
+      snackMessage: 'Pinning the Question!',
+      snackbackgroundColor: '#388E3C',
+      snackbar: true,
+    });
   }
 
-  handleUnkeep() {
-    
+  handleUnkeep(question) {
+    console.log('unkeep');
+    question.keep = false;
+    putRequest(question).then(this.getQuestions);
+    this.setState({
+      snackMessage: 'Unpinning the Question!',
+      snackbackgroundColor: '#FBC02D',
+      snackbar: true,
+    });
   }
 
   // Utility
