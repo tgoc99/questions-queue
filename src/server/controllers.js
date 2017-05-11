@@ -20,7 +20,7 @@ exports.nextTownHall = (req, res) => {
       TH.townHall++;
       TH.startDate = new Date();
       TH.save(err => {
-        throw(err)
+        if(err) throw(err);
       });
       console.log('updated TH', TH)
     }
@@ -37,9 +37,11 @@ exports.getUsers = (req, res) => {
 
 // ACCEPTS ARRAY, send obj with users property of array of users
 exports.postUsers = (req, res) => {
+  let accepted, denied;
   console.log(req.body);
   req.body.users.forEach(user => { 
-    User.find({username:user.username}, (err, foundUser) => {
+    User.findOne({username:user.username}, (err, foundUser) => {
+      if(foundUser !== null) denied++;
       let newUser = new User(user)
       console.log('gn', newUser.givenName===null)
       if(newUser.givenName == null){
@@ -56,30 +58,42 @@ exports.postUsers = (req, res) => {
           if(useData.name) newUser.givenName = useData.name;
           newUser.save((err, user) => {
             if (err) {
+              denied++
               res.status(500);
               console.log(err);
             } else {
+              accepted++
               console.log('user created', user)
             }
           })
         })
+        .catch(err => {
+          denied++
+          console.log(err)
+        })
       } else {
         newUser.save((err, user) => {
           if (err) {
+            denied++
             res.status(500);
             console.log(err);
           } else {
+            accepted++
             console.log('user created', user)
           }
         })
       }
+    })
+    .then(()=> {
+      console.log('right before res send', accepted, denied)
+      res.send('users created')
     })
   })
 }
 
 exports.deleteUser = (req,res) => {
   User.findByIdAndRemove(req.body)
-  .then(() => res.status(202).send());
+  .then(() => res.status(202).send('boo'));
 }
 
 // QUESTIONS-------------------------------->
@@ -102,6 +116,7 @@ exports.postQuestion = (req, res) => {
     answered: false,
     tags: req.body.tags,
     username: req.body.username,
+    townhall: req.body.townHall,
   });
   newQuestion.markModified('tags');
   newQuestion.save((err, question) => {

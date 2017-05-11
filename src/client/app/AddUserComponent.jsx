@@ -113,7 +113,7 @@ class AddUserComponent extends React.Component {
                 <MenuItem value={11} primaryText="hrnyc-11" />
               </SelectField> 
             </div>}
-              <RaisedButton type="submit" className="submit-button" disabled={(!this.state.username && !this.state.bulkSubmit) || (this.state.username && this.state.bulkSubmit) } label="Submit" />
+              <RaisedButton type="submit" className="submit-button" disabled={!this.state.username && !this.state.bulkSubmit || this.state.username && this.state.bulkSubmit} label="Submit" />
           </form>
         </CardText>
       </Card>
