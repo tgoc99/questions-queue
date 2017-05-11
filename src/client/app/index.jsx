@@ -79,7 +79,7 @@ class Main extends React.Component {
           <Route path="/question"
             render={ () => (
               this.state.loggedIn ? (
-                <QuestionComponent />
+                <QuestionComponent logout={this.logout} />
               ) : (
                 <Redirect to="/" />
               )
@@ -88,7 +88,7 @@ class Main extends React.Component {
           <Route path="/profile"
             render={ () => (
               this.state.loggedIn ? (
-                <ProfileComponent />
+                <ProfileComponent logout={this.logout} />
               ) : (
                 <Redirect to="/" />
               )
@@ -97,7 +97,7 @@ class Main extends React.Component {
           <Route path="/manage"
             render={ () => (
               this.state.loggedIn ? (
-                <ManageComponent />
+                <ManageComponent logout={this.logout} />
               ) : (
                 <Redirect to="/" />
               )
@@ -106,7 +106,7 @@ class Main extends React.Component {
           <Route path="/analytics"
             render={ () => (
               this.state.loggedIn ? (
-                <AnalyticsComponent />
+                <AnalyticsComponent logout={this.logout} />
               ) : (
                 <Redirect to="/" />
               )
