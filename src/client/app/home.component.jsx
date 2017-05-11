@@ -116,7 +116,7 @@ class HomeComponent extends React.Component {
         }
       })
       .then(questions => {
-      		this.setState({questions})}
+      		this.setState({questions: questions})}
       );
   }
 
@@ -391,7 +391,7 @@ class HomeComponent extends React.Component {
 
 		        <QueueComponent
 			          title="Pending Questions"
-			          questions={this.state.questions}
+			          questions={this.questionsSearch()}
 			          handleUpvote={this.handleUpvote}
 			          handleDownvote={this.handleDownvote}
 			          handleAnswered={this.handleAnswered}

@@ -11,7 +11,7 @@ function SearchBar(props) {
   var filterState = props.filterState;
   var handlers = props.filterHandlers;
 
-  console.log('Loading SearchBar')
+  //console.log('Loading SearchBar', handlers)
 
   return (
     <div className="search-wrapper">
