@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   givenName: { type: String},
   role: { type: String, required: true },
-  cohort: Number,
+  cohort: { type: String, required:true },
   avatarURL: String,
   lastLogin: Date
 });
