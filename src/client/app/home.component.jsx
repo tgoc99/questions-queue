@@ -93,7 +93,6 @@ class HomeComponent extends React.Component {
     this.getUsers()
     .then(users => {
       this.setState({ users })
-      //console.log(this.state.users)
     });
     this.getQuestions();
     this.interval = setInterval(() => {
@@ -106,14 +105,22 @@ class HomeComponent extends React.Component {
   }
 
   getTownHall() {
-    fetch('api/townHall', {credentials: 'include'})
-    .then(res => {
-      return res.json()
-    })
-    .then(th => {
-      this.setState({townHall:th.townHall}) 
-    })
-  }
+      const props = this.props;
+      fetch('/api/townhall', { credentials: 'include' })
+        .then((res) => {
+          if (res.status === 200 || res.status === 304) {
+            return res.json();
+          } else if (res.status === 403) {
+            this.props.logout(() => {});
+            return null;
+          }
+        })
+        .then(res => {
+            console.log(res);
+            this.setState({townHall: res.townHall})
+            this.setState({currentTownHall: `TownHall #${this.state.townHall}`})}
+        );
+    }
 
   getUsers() {
     const props = this.props;
@@ -371,7 +378,7 @@ class HomeComponent extends React.Component {
     // TownHall #18 => 18
     var currentTownHall = this.state.currentTownHall;
     // filter!
-    return questions.filter(question => currentTownHall === 'All TownHalls' || question.keep || `TownHall #${question.townHall}` === currentTownHall);
+    return questions.filter(question => question.cohort === this.state.user.cohort && currentTownHall === 'All TownHalls' || question.keep || `TownHall #${question.townHall}` === currentTownHall);
   }
 
   questionsIn(questions) {
@@ -429,25 +436,6 @@ class HomeComponent extends React.Component {
   handleChangeInCurrentTownHall(townHall) {
     this.setState({currentTownHall: townHall});
   }
-
-  getTownhall() {
-	    const props = this.props;
-	    fetch('/api/townhall', { credentials: 'include' })
-	      .then((res) => {
-	        if (res.status === 200 || res.status === 304) {
-	          // props.login(() => {});
-	          return res.json();
-	        } else if (res.status === 403) {
-	          this.props.logout(() => {});
-	          return null;
-	        }
-	      })
-	      .then(res => {
-	      		console.log(res);
-	      		this.setState({townHall: res.townHall})
-            this.setState({currentTownHall: `TownHall #${this.state.townHall}`})}
-	      );
-	  }
 
 	render() {
 
