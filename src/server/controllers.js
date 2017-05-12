@@ -3,7 +3,7 @@ const User = require('./db/user');
 const Cohort = require('./db/cohort.js');
 const rp = require('request-promise');
 
-//TOWN HALL --------------------->
+//TOWN HALL / COHORT --------------------->
 
 exports.getCohort = (req, res) => {
   console.log('th cookie', req.cookies)
