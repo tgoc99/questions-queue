@@ -99,7 +99,6 @@ console.log(user);
 	render() {
 		return (<MuiThemeProvider>
 			<div className="app-body">
-				<NavBar />
 				<QuestionFormComponent
 	              handleSubmit={this.handleSubmit}
 	              user={this.state.user}

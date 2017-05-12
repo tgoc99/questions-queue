@@ -62,7 +62,8 @@ class HomeComponent extends React.Component {
       query: '',
       by: "Upvotes : High to Low",
       in: "All Questions",
-      currentTownHall: "All TownHalls"
+      currentTownHall: "All TownHalls",
+      showFilters: false
 		}
 
     this.filterHandlers = {
@@ -85,7 +86,7 @@ class HomeComponent extends React.Component {
       this.getQuestions = this.getQuestions.bind(this);
       this.handleKeep = this.handleKeep.bind(this);
       this.handleUnkeep = this.handleUnkeep.bind(this);
-
+      this.toggleFilter = this.toggleFilter.bind(this);
 	}
 
   componentDidMount() {
@@ -450,12 +451,16 @@ class HomeComponent extends React.Component {
 	      );
 	  }
 
+  toggleFilter() {
+    console.log('toggle');
+    var current = this.state.showFilters;
+    this.setState({showFilters: !current})
+  }
+
 	render() {
 
 		return (<MuiThemeProvider>
-			<div className="app-body">
-
-			<NavBar/>
+			<div className="app-body desktopBody">
 
       <div className="desktopView" style={{marginTop: "50px"}}>
         {this.state.isAdmin ? (<h1 className="desktopHeader"> Manage Users </h1>) : (<span />)}
@@ -470,6 +475,8 @@ class HomeComponent extends React.Component {
         <SearchBar
           filterState={this.returnFilterState()}
           filterHandlers={this.filterHandlers}
+          toggleFilter={this.toggleFilter}
+          showFilters={this.state.showFilters}
           />
           
 		        <QueueComponent
