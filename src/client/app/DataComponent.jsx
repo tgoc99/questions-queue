@@ -20,6 +20,7 @@ class DataComponent extends React.Component {
           key={u.id}
           user={u}
           handleUserDelete={this.props.handleUserDelete}
+          handleUserModify={this.props.handleUserModify}
           />
       ));
     const cohorts = this.props.allCohorts.map(c => {
@@ -49,7 +50,7 @@ class DataComponent extends React.Component {
                 <TableHeaderColumn>Given Name</TableHeaderColumn>
                 <TableHeaderColumn>Role</TableHeaderColumn>
                 <TableHeaderColumn>Cohort</TableHeaderColumn>
-                <TableHeaderColumn>Delete User</TableHeaderColumn>
+                <TableHeaderColumn> Modify / Delete</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody>
