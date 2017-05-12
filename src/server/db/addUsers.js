@@ -16,7 +16,7 @@ const newUsers = [{
   username: 'huawillian',
   givenName: 'Willian Hua',
   role: 'student',
-  cohort: 'HRNYC-7',
+  cohort: 'HRNYC-8',
 }];
 
 const addUsers = () => {
