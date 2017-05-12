@@ -36,10 +36,10 @@ class HomeComponent extends React.Component {
 	    let isAdmin;
 	    document.cookie.split(';').forEach((str) => {
 	      const [k, v] = str.split('=').map(s => s.trim());
-	      if (k === 'username' || k === 'role') {
+	      if (k === 'username' || k === 'role' || k === 'cohort') {
 	        user[k] = v;
 	      }
-        console.log(user.role)
+        console.log(user.cohort)
         if (user.role === 'admin') isAdmin = true;
         else isAdmin = false;
 	    });
@@ -47,8 +47,8 @@ class HomeComponent extends React.Component {
 	    this.state = {
 			questions: [],
 			user,
-      isAdmin, 
-      townHall: 'tbd',
+      isAdmin,
+      townHall: 'TBD',
 			snackMessage: 'Hello World',
 		  snackbackgroundColor: '#536DFE',
 		  snackbar: false,
@@ -95,8 +95,6 @@ class HomeComponent extends React.Component {
     this.interval = setInterval(() => {
       this.getQuestions();
     }, 2000);
-
-    this.getTownhall();
   }
 
   componentWillUnmount() {
@@ -154,7 +152,8 @@ class HomeComponent extends React.Component {
       snackMessage: 'Next Town Hall Set!',
       snackbackgroundColor: '#E53935',
       snackbar: true,
-    })  
+    })
+    window.location.reload();
   }
 
   handleVote(question, n) {

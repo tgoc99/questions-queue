@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 //   password: process.env.MLABPWORD,
 // } : require('../../../config');
 
-mongoose.connect('mongodb://europa:europa@ds113628.mlab.com:13628/europa-two');
+mongoose.connect('mongodb://localhost/qq-test');
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -14,4 +14,4 @@ db.once('open', () => {
 
 
 module.exports = db;
-const townHallSchema = require('./townHall.js');
+const cohortSchema = require('./cohort.js');

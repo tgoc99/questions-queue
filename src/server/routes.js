@@ -12,6 +12,7 @@ routes.get('/auth/github/callback',
                     console.log(req.user);
                     res.cookie('username', user.username);
                     res.cookie('role', user.role);
+                    res.cookie('cohort', user.cohort);
                     res.cookie('img', req.user._json.avatar_url);
                     res.cookie('loggedIn', '1');
                     res.redirect('/');
@@ -33,8 +34,14 @@ routes.route('/api/users')
   // .put(controllers.updateUser)
   .delete(controllers.deleteUser);
 
+routes.route('/api/cohort')
+  .get(controllers.getAllCohorts)
+  .post(controllers.createCohort);
+  // .delete(controllers.deleteUser)
+  // .put(controllers.nextTownHall);
+
 routes.route('/api/townHall')
-  .get(controllers.getTownHall)
+  .get(controllers.getCohort)
   // .post(controllers.postUsers)
   // .delete(controllers.deleteUser)
   .put(controllers.nextTownHall);
