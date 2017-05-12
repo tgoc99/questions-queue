@@ -35,12 +35,22 @@ exports.getUsers = (req, res) => {
   });
 };
 
+// USER PROFILE -------------------------->
+
+exports.getCurrentUser = (req, res) => {
+  User.find({username: req.params.username}, (err, users) => {
+    if (err) res.status(404).send(err);
+    // array looks like [ { user } ] 
+    else res.status(200).send(users[0]);
+  });
+};
+
 // ACCEPTS ARRAY, send obj with users property of array of users
 exports.postUsers = (req, res) => {
   let [accepted, denied] = [0,0]
   let flag = false;
   console.log(req.body);
-  req.body.users.forEach((user, idx) => { 
+  req.body.users.forEach((user, idx) => {
     User.findOne({username:user.username}, (err, foundUser) => {
       if(foundUser !== null) denied++;
       let newUser = new User(user)

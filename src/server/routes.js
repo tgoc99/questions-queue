@@ -34,6 +34,12 @@ routes.route('/api/users')
   // .put(controllers.updateUser)
   .delete(controllers.deleteUser);
 
+routes.route('/api/user/:username')
+  .get(controllers.getCurrentUser);
+  // .post(controllers.postUsers)
+  // .put(controllers.updateUser)
+  // .delete(controllers.deleteUser);
+
 routes.route('/api/townHall')
   .get(controllers.getTownHall)
   // .post(controllers.postUsers)
