@@ -32,7 +32,14 @@ class EditQuestionButton extends React.Component {
     //console.log(this.props.isAdmin, this.props.isAuthor);
     return (
       <span className="question-flex-1" style={{width:'100%',display:'inline-block'}}>
-        <button disabled={!this.state.enableButton} className="question-button" onClick={this.handleOpen}>Edit</button>
+        <button
+          disabled={!this.state.enableButton}
+          className="question-button"
+          onClick={() => {
+            this.handleOpen();
+            this.props.closeCodeEditor();
+          }}>
+        Edit</button>
         <Dialog
           title="Edit Question"
           modal={false}
