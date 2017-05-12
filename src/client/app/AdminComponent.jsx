@@ -62,6 +62,7 @@ class AdminComponent extends React.Component {
           <DataComponent
             questions={this.props.questions}
             users={this.props.users}
+            allCohorts={this.state.allCohorts}
             cohortChoice={this.props.cohortChoice}
             handleFilterByCohort={this.props.handleFilterByCohort}
             handleUserDelete={this.props.handleUserDelete}

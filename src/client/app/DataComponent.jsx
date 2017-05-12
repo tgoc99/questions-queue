@@ -22,6 +22,9 @@ class DataComponent extends React.Component {
           handleUserDelete={this.props.handleUserDelete}
           />
       ));
+    const cohorts = this.props.allCohorts.map(c => {
+      return <MenuItem key={c[0]} value={c[1]} primaryText={c[1]} />
+    })
     
     return (
       <Card className="queue" initiallyExpanded={true}>
@@ -30,18 +33,15 @@ class DataComponent extends React.Component {
           showExpandableButton={true}
           />
         <CardText expandable={true}>
-          <SelectField
-            floatingLabelText="Select Cohort"
-            value={this.props.cohortChoice}
-            onChange={(e, idx, val)=> this.props.handleFilterByCohort(val)}
-          >
-            <MenuItem value={'All Cohorts'} primaryText="All Cohorts" />
-            <MenuItem value={7} primaryText="HRNYC-7" />
-            <MenuItem value={8} primaryText="HRNYC-8" />
-            <MenuItem value={9} primaryText="HRNYC-9" />
-            <MenuItem value={10} primaryText="HRNYC-10" />
-            <MenuItem value={11} primaryText="HRNYC-11" />
-          </SelectField>
+              <SelectField
+                className="user-input-field" 
+                value={this.props.cohortChoice}
+                floatingLabelText='Filter By Cohort'
+                onChange={(e, idx, val)=> this.props.handleFilterByCohort(val)}
+              >
+                <MenuItem value={'All Cohorts'} primaryText='All Cohorts' />
+                {cohorts}
+              </SelectField> 
           <Table>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
