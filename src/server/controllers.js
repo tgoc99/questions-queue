@@ -40,8 +40,17 @@ exports.getUsers = (req, res) => {
 exports.getCurrentUser = (req, res) => {
   User.find({username: req.params.username}, (err, users) => {
     if (err) res.status(404).send(err);
-    // array looks like [ { user } ] 
+    // array looks like [ { user } ]
     else res.status(200).send(users[0]);
+  });
+};
+
+exports.updateCurrentUser = (req, res) => {
+  id = req.body.id;
+  console.log('UPDATE USER!!!!!', id, req.body)
+  User.findByIdAndUpdate(id, req.body.user, (err, user) => {
+    if (err) res.status(404).send(err);
+    else res.status(200).send(user);
   });
 };
 
