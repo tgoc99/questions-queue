@@ -10,6 +10,7 @@ const questionSchema = new mongoose.Schema({
   createdAt: { type: Number, default: Date.now() },
   tags: Array,
   username: { type: String, required: true },
+  cohort: { type: String, required: true },
   townHall: { type: Number, required: true },
   usersVoted: { type: [String], default: [] },
 });
