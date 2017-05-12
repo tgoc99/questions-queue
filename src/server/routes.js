@@ -32,7 +32,7 @@ routes.get('/auth/logout', (req, res) => {
 routes.route('/api/users')
   .get(controllers.getUsers)
   .post(controllers.postUsers)
-  // .put(controllers.updateUser)
+  .put(controllers.updateCurrentUser)
   .delete(controllers.deleteUser);
 
 routes.route('/api/user/:username')

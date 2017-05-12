@@ -67,6 +67,11 @@ class AdminComponent extends React.Component {
             cohortChoice={this.props.cohortChoice}
             handleFilterByCohort={this.props.handleFilterByCohort}
             handleUserDelete={this.props.handleUserDelete}
+            handleUserModify={this.props.handleUserModify}
+          />
+          <NextTownHallButton 
+            isAdmin={this.props.isAdmin}
+            handleNextTownHall={this.props.handleNextTownHall}
           />
           <NextTownHallButton 
             isAdmin={this.props.isAdmin}

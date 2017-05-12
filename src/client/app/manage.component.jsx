@@ -110,6 +110,7 @@ class ManageComponent extends React.Component {
         return res.json();
       })
       .then(data => {
+        this.getUsers();
         console.log(data)
         if(data[1]){
           this.setState({
@@ -147,6 +148,29 @@ class ManageComponent extends React.Component {
       });
       this.getUsers();
     }
+
+    handleUserModify(user) {
+        // const _id = user._id;
+        // fetch('/api/users', {
+        //   credentials: 'include',
+        //   method: 'DELETE',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({ _id }),
+        // })
+        // .then(() => {
+        //   this.setState((prevState) => {
+        //     const users = prevState.users;
+        //     remove(users, (q) => q._id === _id);
+        //     return {
+        //       users,
+        //       snackMessage: 'User permission was removed',
+        //       snackbackgroundColor: '#E53935',
+        //       snackbar: true,
+        //     };
+        //   });
+        // });
+        // this.getUsers();
+      }
 
   handleFilterByCohort(cohortChoice) {
     this.setState({ cohortChoice })
