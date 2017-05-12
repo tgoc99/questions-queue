@@ -138,7 +138,7 @@ class ManageComponent extends React.Component {
 	render() {
 		return (<MuiThemeProvider> 
 			<div className="app-body">
-  			<NavBar />
+  			<NavBar/>
   			<AdminComponent
   			  cohortChoice={this.state.cohortChoice}
   			  handleFilterByCohort={this.handleFilterByCohort}

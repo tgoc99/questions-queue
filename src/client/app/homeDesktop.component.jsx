@@ -7,10 +7,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 import SearchBar from './SearchBar.jsx'
 
-// integration
-import ManageComponent from './manage.component.jsx'
-import QuestionComponent from './question.component.jsx'
-
 
 const putRequest = (question) =>
 
@@ -31,7 +27,7 @@ const updateQuestions = (questions, newQ) => {
 };
 
 
-class HomeComponent extends React.Component {
+class HomeDesktopComponent extends React.Component {
 	constructor(props) {
 	    super(props);
 
@@ -454,19 +450,9 @@ class HomeComponent extends React.Component {
 
 		return (<MuiThemeProvider>
 			<div className="app-body">
-
-			<NavBar/>
-
-      <div className="desktopView" style={{marginTop: "50px"}}>
-        {this.state.isAdmin ? (<h1 className="desktopHeader"> Manage Users </h1>) : (<span />)}
-        {this.state.isAdmin ? (<ManageComponent logout={this.props.logout} />) : (<span />)}
-
-        <h1 className="desktopHeader"> Ask New Question </h1>
-        <QuestionComponent logout={this.props.logout} />
-        <h1 className="desktopHeader"> Questions </h1>
-      </div>
-
+			<NavBar />
 			<div id="home-wrapper">
+
         <SearchBar
           filterState={this.returnFilterState()}
           filterHandlers={this.filterHandlers}
@@ -502,4 +488,4 @@ class HomeComponent extends React.Component {
 	}
 }
 
-export default HomeComponent;
+export default HomeDesktopComponent;
