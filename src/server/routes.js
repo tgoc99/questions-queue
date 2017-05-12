@@ -35,6 +35,11 @@ routes.route('/api/users')
   // .put(controllers.updateUser)
   .delete(controllers.deleteUser);
 
+routes.route('/api/user/:username')
+  .get(controllers.getCurrentUser)
+  // .post(controllers.postUsers)
+  .put(controllers.updateCurrentUser);
+
 routes.route('/api/cohort')
   .get(controllers.getAllCohorts)
   .post(controllers.createCohort);

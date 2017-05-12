@@ -9,6 +9,14 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import {
+  HashRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+  IndexRoute
+} from 'react-router-dom';
 
 class NavBar extends React.Component {
 	constructor(props) {
@@ -61,7 +69,7 @@ class NavBar extends React.Component {
 				<div className="mobileView">
 				<AppBar
 					className="appbar"
-		            title="Question Queue"
+		            title={(<MenuItem className="logo-button" href="/#/home" primaryText="Question Queue" />)}
 		            onLeftIconButtonTouchTap = {this.openDrawer}
 		            iconElementRight = {<IconMenu iconButtonElement={
 		                <IconButton><MoreVertIcon /></IconButton>

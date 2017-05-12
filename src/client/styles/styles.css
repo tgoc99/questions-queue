@@ -221,6 +221,14 @@ td, th {
   font-family: 'Roboto', sans-serif !important;
 }
 
+.logo-button {
+  width: 230px;
+  font-size: 20pt !important;
+  font-weight: bold !important;
+  color: white !important;
+  margin-top: 8px !important;
+}
+
 @media screen and (min-width: 1000px){
   .mobileView {
     display: none;
@@ -235,8 +243,12 @@ td, th {
   }
 
   .desktopBody {
-    padding-left: 15%;
-    padding-right: 15%;
-    width: 70% !important;
+    padding-left: 12%;
+    padding-right: 12%;
+    width: 76% !important;
+  }
+
+  .question-admin-button  {
+    right: 18%;
   }
 }
