@@ -122,7 +122,7 @@ exports.postQuestion = (req, res) => {
     tags: req.body.tags,
     username: req.body.username,
     townHall: req.body.townHall,
-
+    cohort: req.body.cohort
   });
   newQuestion.markModified('tags');
   newQuestion.save((err, question) => {

@@ -26,7 +26,7 @@ class QuestionComponent extends React.Component {
 				user[k] = v;
 			}
 	    });
-
+console.log(user);
 	    this.state = {
 			user,
 			snackMessage: 'Hello World',
@@ -43,7 +43,8 @@ class QuestionComponent extends React.Component {
 
 	// Methods to update questions
 	handleSubmit(text, code = null, tags = []) {
-		console.log(this.state.townhall);
+		console.log(this.state.townHall, this.state.user.cohort);
+
 		fetch('/api/questions', {
 		  credentials: 'include',
 		  method: 'POST',
@@ -53,7 +54,8 @@ class QuestionComponent extends React.Component {
 		    code,
 		    tags,
 		    username: this.state.user.username,
-		    townHall: this.state.townHall
+		    townHall: this.state.townHall,
+		    cohort: this.state.user.cohort
 		  }),
 		})
 		.then(res => res.json())

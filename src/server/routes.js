@@ -14,6 +14,7 @@ routes.get('/auth/github/callback',
                     res.cookie('role', user.role);
                     res.cookie('img', req.user._json.avatar_url);
                     res.cookie('loggedIn', '1');
+                    res.cookie('cohort', user.cohort);
                     res.redirect('/');
                   })
                   .catch(() => {
