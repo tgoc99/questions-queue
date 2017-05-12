@@ -66,7 +66,6 @@ class AddUserComponent extends React.Component {
 
   handleNewCohortSubmit(event) {
     event.preventDefault();
-    //console.log('new cohort:', this.state.cohortCity + this.state.cohortNumber)
     fetch('/api/cohort', {
       credentials: 'include',
       method: 'POST',
