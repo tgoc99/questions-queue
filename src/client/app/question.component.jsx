@@ -55,7 +55,8 @@ console.log(user);
 		    tags,
 		    username: this.state.user.username,
 		    townHall: this.state.townHall,
-		    cohort: this.state.user.cohort
+		    cohort: this.state.user.cohort,
+		    createdAt: Date.now()
 		  }),
 		})
 		.then(res => res.json())
