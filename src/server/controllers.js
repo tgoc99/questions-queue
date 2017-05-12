@@ -22,7 +22,6 @@ exports.getAllCohorts = (req, res) => {
 }
 
 exports.createCohort = (req, res) => {
-  console.log('cc body', req.body)
   Cohort.Cohort.create(req.body, (err, newCohort) => {
     if (err) res.status(404).send(err);
     else res.status(200).send(newCohort)
@@ -71,7 +70,6 @@ exports.postUsers = (req, res) => {
         })
         .then(data => {
           useData=JSON.parse(data)
-          console.log('gh data name', useData.name)
           if(useData.name) newUser.givenName = useData.name;
           accepted++
           newUser.save((err, user) => {

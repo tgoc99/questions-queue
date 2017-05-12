@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardText, CardHeader, CardTitle } from 'material-ui/Card';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Snackbar from 'material-ui/Snackbar';
+
 
 class AddUserComponent extends React.Component {
   constructor(props) {
@@ -17,7 +19,10 @@ class AddUserComponent extends React.Component {
       cohortCity: 'HRNYC',
       cohortNumber: 7,
       bulkSubmit: '',
-      allCohorts: []
+      allCohorts: [],
+      snackMessage: 'Hello World',
+        snackbackgroundColor: '#536DFE',
+        snackbar: false,
     }
     this.getAllCohorts = this.getAllCohorts.bind(this);
     this.handleUserSubmit = this.handleUserSubmit.bind(this);
@@ -60,6 +65,7 @@ class AddUserComponent extends React.Component {
   }
 
   handleNewCohortSubmit(event) {
+    event.preventDefault();
     console.log('new cohort:', this.state.cohortCity + this.state.cohortNumber)
     fetch('/api/cohort', {
       credentials: 'include',
@@ -68,8 +74,17 @@ class AddUserComponent extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({cohort: this.state.cohortCity + '-' + this.state.cohortNumber}),
-    }).then(() => {
+    })
+    .then(res => {
       this.getAllCohorts();
+      return res.json()
+    })
+    .then(data => {
+      this.setState({
+        snackMessage: 'New Cohort Submitted: ' + data.cohort,
+        snackbackgroundColor: '#FBC02D',
+        snackbar: true,
+      })
     })
   }
 
@@ -87,6 +102,12 @@ class AddUserComponent extends React.Component {
       bulkSubmit: '',
     });
   }
+  closeSnackbar() {
+    this.setState({
+      snackbar: false,
+      snackMessage: '',
+    });
+  }
 
   render() {
     const cohorts = this.props.allCohorts.map(c => {
@@ -94,8 +115,9 @@ class AddUserComponent extends React.Component {
     })
 
     return (
+    <div>
       <Card className="add-user" initiallyExpanded={false}>
-        <CardHeader title='Add New Users'
+        <CardHeader title='Add New Users & Cohorts'
           actAsExpander={true}
           showExpandableButton={true}
           />
@@ -148,7 +170,6 @@ class AddUserComponent extends React.Component {
               <RaisedButton type="submit" className="submit-button" disabled={!this.state.username && !this.state.bulkSubmit || this.state.username && this.state.bulkSubmit} label="Submit" />
           </form>
           <form onSubmit={this.handleNewCohortSubmit} >
-            {<div>
               Create New Cohort: <br/>
               
               <SelectField
@@ -170,13 +191,18 @@ class AddUserComponent extends React.Component {
                 value={this.state.cohortNumber}
                 floatingLabelText='Enter Cohort Number'
                 onChange={this.handleInputChange} />
-            </div>}
               <RaisedButton type="submit" className="submit-button" disabled={!this.state.cohortCity || !this.state.cohortNumber || typeof +this.state.cohortNumber !== 'number'} label="Submit" />
           </form>
         </CardText>
       </Card>
-
-
+        <Snackbar
+              bodyStyle={{ background: this.state.snackbackgroundColor }}
+              open={this.state.snackbar}
+              message={this.state.snackMessage}
+              autoHideDuration={4000}
+              onRequestClose={this.closeSnackbar}
+          />
+    </div>
     );
   }
 }
