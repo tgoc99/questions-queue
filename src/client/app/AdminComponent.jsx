@@ -13,8 +13,33 @@ class AdminComponent extends React.Component {
     this.state = {
       isAdmin: this.props.user.role === 'admin',
       users: this.props.users,
-      cohortChoice: 'All Cohorts'
+      cohortChoice: 'All Cohorts',
+      allCohorts: [],
     }
+    this.getAllCohorts = this.getAllCohorts.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllCohorts();
+  }
+
+  getAllCohorts() {
+    const props = this.props;
+    return fetch('/api/cohort', { credentials: 'include' })
+    .then((res) => {
+      if (res.status === 200 || res.status === 304) {
+        return res.json();
+      } else if (res.status === 403) {
+        this.props.logout(() => {});
+        return null;
+      }
+    })
+    .then(data => {
+      console.log(data)
+      let allCohorts = data.map(item => [item._id, item.cohort])
+      this.setState({allCohorts,}) 
+      console.log(this.state.allCohorts)
+    })
   }
 
 
@@ -29,6 +54,8 @@ class AdminComponent extends React.Component {
           />
         <CardText expandable={true}>
           <AddUserComponent 
+            getAllCohorts={this.getAllCohorts}
+            allCohorts={this.state.allCohorts}
             handleUserSubmit={this.props.handleUserSubmit} 
             handleSelectChange={this.props.handleSelectChange}
           />

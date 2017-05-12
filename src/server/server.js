@@ -4,6 +4,7 @@ const session = require('express-session');
 const path = require('path');
 const passport = require('passport');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser')
 
 const routes = require('./routes');
 const auth = require('./auth');
@@ -21,6 +22,7 @@ app.use('/api', auth.checkAuth);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(routes);
 
