@@ -37,7 +37,8 @@ console.log(user);
 
 	    this.handleSubmit = this.handleSubmit.bind(this);
 	    this.getTownhall = this.getTownhall.bind(this);
-
+	    this.closeSnackbar = this.closeSnackbar.bind(this);
+	    
 	    this.getTownhall();
 	}
 
@@ -88,6 +89,13 @@ console.log(user);
 	      );
 	  }
 
+	  closeSnackbar() {
+	    this.setState({
+	      snackbar: false,
+	      snackMessage: ''
+	    });
+	  }
+
 	render() {
 		return (<MuiThemeProvider>
 			<div className="app-body">
@@ -97,15 +105,18 @@ console.log(user);
 	              user={this.state.user}
 	            />
 
-	            <Link style={{padding: '4%', textAlign: 'center'}} to="/home">
-	                <RaisedButton style={{width: '92%'}} label="BACK TO QUESTIONS" />
-	            </Link>
+	            <div className="mobileView">
+		            <Link style={{padding: '4%', textAlign: 'center'}} to="/home">
+		                <RaisedButton style={{width: '92%'}} label="BACK TO QUESTIONS" />
+		            </Link>
+	            </div>
 
 	            <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}
 			        open={this.state.snackbar}
 			        message={this.state.snackMessage}
 			        autoHideDuration={4000}
+			        onRequestClose={this.closeSnackbar}
 			    />
 			</div>
 		</MuiThemeProvider>)

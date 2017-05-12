@@ -202,3 +202,37 @@ td, th {
   padding: 4px !important;
   font-weight: bold !important;
 }
+
+
+
+.mobileView {
+  display: block;
+}
+
+.desktopView {
+  display: none;
+}
+
+.desktopHeader {
+  margin-left: 20px;
+  margin-top: 20px;
+  padding-top: 30px;
+  width: 100%;
+  font-size: 30pt;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+@media screen and (min-width: 1000px){
+  .mobileView {
+    display: none;
+  }
+
+  .desktopView {
+    display: block;
+  }
+
+  .app-body {
+    padding-top: 20px;
+  }
+}
