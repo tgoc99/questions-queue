@@ -4,6 +4,7 @@ import NavBar from './navbar.component.jsx';
 import AdminComponent from './AdminComponent.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
+import NextTownHallButton from './NextTownHallButton.jsx';
 
 
 class ManageComponent extends React.Component {
@@ -12,17 +13,21 @@ class ManageComponent extends React.Component {
 
     // Parse cookie to set up a user object with user's name and role
     const user = {};
+    let isAdmin;
     document.cookie.split(';').forEach((str) => {
       const [k, v] = str.split('=').map(s => s.trim());
       if (k === 'username' || k === 'role') {
         user[k] = v;
       }
+      if (user.role === 'admin') isAdmin = true;
+      else isAdmin = false;
     });
 
     this.state = {
       questions: [],
       user,
       users: [],
+      isAdmin,
       cohortChoice: 'All Cohorts',
       snackMessage: 'Hello World',
         snackbackgroundColor: '#536DFE',
@@ -34,13 +39,16 @@ class ManageComponent extends React.Component {
   	this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleUserSubmit = this.handleUserSubmit.bind(this);
 		this.handleUserDelete = this.handleUserDelete.bind(this);
-	  this.handleFilterByCohort = this.handleFilterByCohort.bind(this);
+    this.handleFilterByCohort = this.handleFilterByCohort.bind(this);
+	  this.handleNextTownHall = this.handleNextTownHall.bind(this);
 	}
   componentDidMount() {
     this.getUsers();
-		this.interval = setInterval(() => {
- 			this.getUsers();
-		}, 2000);
+		if(this.state.isAdmin) {
+      this.interval = setInterval(() => {
+   			this.getUsers();
+  		}, 2000);
+    }
   }
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -60,6 +68,21 @@ class ManageComponent extends React.Component {
   	    this.setState({ users })
       	return users;
     	})
+  }
+
+  handleNextTownHall() {
+    fetch('api/townHall', {
+      credentials: 'include',
+      method: 'PUT',
+      body: 'next TownHall!'
+    })
+
+    this.setState ({
+      snackMessage: 'Next Town Hall Set!',
+      snackbackgroundColor: '#E53935',
+      snackbar: true,
+    })
+    window.location.reload();
   }
 
   // method to update users
@@ -148,6 +171,8 @@ class ManageComponent extends React.Component {
                 users={this.state.cohortChoice === 'All Cohorts' ? this.state.users : this.state.users.filter(u => u.cohort === this.state.cohortChoice)}
                 getUsers={this.getUsers}
                 questions={this.state.questions}
+                isAdmin={this.state.isAdmin}
+                handleNextTownHall={this.handleNextTownHall}
                 />
         <Snackbar
               bodyStyle={{ background: this.state.snackbackgroundColor }}
@@ -156,7 +181,7 @@ class ManageComponent extends React.Component {
               autoHideDuration={4000}
               onRequestClose={this.closeSnackbar}
           />
-		  </div>
+      </div>
 		</MuiThemeProvider> )
 	}
 }
