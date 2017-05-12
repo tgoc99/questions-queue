@@ -1,30 +1,46 @@
 const Question = require('./db/db-schema');
 const User = require('./db/user');
-const getTH = require('./db/townHall.js');
+const Cohort = require('./db/cohort.js');
 const rp = require('request-promise');
 
 //TOWN HALL --------------------->
 
-exports.getTownHall = (req, res) => {
-  getTH((err, TH) => {
+exports.getCohort = (req, res) => {
+  console.log('th cookie', req.cookies)
+  Cohort.oneCohort((err, Cohort) => {
     if(err) res.status(500).send(err);
-    else res.status(200).send(TH);
-    console.log('cth get', TH)
+    else res.status(200).send(Cohort);
+    console.log('Cohort get', Cohort)
+  }, req.cookies.cohort)
+}
+
+exports.getAllCohorts = (req, res) => {
+  Cohort.Cohort.find({}, (err, cohorts) => {
+    if (err) res.status(404).send(err);
+    else res.status(200).send(cohorts)
+  })
+}
+
+exports.createCohort = (req, res) => {
+  console.log('cc body', req.body)
+  Cohort.Cohort.create(req.body, (err, newCohort) => {
+    if (err) res.status(404).send(err);
+    else res.status(200).send(newCohort)
   })
 }
 
 exports.nextTownHall = (req, res) => {
-  getTH((err, TH)=>{
+  Cohort.oneCohort((err, Cohort)=>{
     if(err) res.status(500).send(err);
     else {
-      TH.townHall++;
-      TH.startDate = new Date();
-      TH.save(err => {
+      Cohort.townHall++;
+      Cohort.startDate = new Date();
+      Cohort.save(err => {
         if(err) throw(err);
       });
-      console.log('updated TH', TH)
+      console.log('updated Cohort', Cohort)
     }
-  })
+  }, req.cookies.cohort)
 }
 
 // USERS-------------------------->
