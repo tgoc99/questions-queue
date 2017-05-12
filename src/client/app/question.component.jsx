@@ -53,7 +53,8 @@ class QuestionComponent extends React.Component {
 		    code,
 		    tags,
 		    username: this.state.user.username,
-		    townHall: this.state.townHall
+		    townHall: this.state.townHall,
+		    createdAt: Date.now()
 		  }),
 		})
 		.then(res => res.json())
