@@ -13,12 +13,19 @@ class AddUserComponent extends React.Component {
       username: '',
       givenName: '',
       role: 'student',
-      cohort: 7,
-      bulkSubmit: ''
+      cohort: 'HRNYC-7',
+      cohortCity: 'HRNYC',
+      cohortNumber: 7,
+      bulkSubmit: '',
+      allCohorts: []
     }
+    this.getAllCohorts = this.getAllCohorts.bind(this);
     this.handleUserSubmit = this.handleUserSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCohortChange = this.handleCohortChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCohortNumberChange = this.handleCohortNumberChange.bind(this);
+    this.handleCohortCityChange = this.handleCohortCityChange.bind(this);
+    this.handleNewCohortSubmit = this.handleNewCohortSubmit.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
 
   }
@@ -35,9 +42,35 @@ class AddUserComponent extends React.Component {
   handleCohortChange(event, index, value) {
     this.setState({ cohort:value });
   }
+  
+  getAllCohorts() {
+    this.props.getAllCohorts();
+  }
+
+  handleCohortCityChange(event, index, value) {
+    this.setState({ cohortCity:value });
+  }
+
+  handleCohortNumberChange(event, index, value) {
+    this.setState({ cohortNumber:value });
+  }
 
   handleRoleChange(event, index, value) {
     this.setState({ role:value });
+  }
+
+  handleNewCohortSubmit(event) {
+    console.log('new cohort:', this.state.cohortCity + this.state.cohortNumber)
+    fetch('/api/cohort', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({cohort: this.state.cohortCity + '-' + this.state.cohortNumber}),
+    }).then(() => {
+      this.getAllCohorts();
+    })
   }
 
   handleUserSubmit(event) {
@@ -56,6 +89,9 @@ class AddUserComponent extends React.Component {
   }
 
   render() {
+    const cohorts = this.props.allCohorts.map(c => {
+      return <MenuItem key={c[0]} value={c[1]} primaryText={c[1]} />
+    })
 
     return (
       <Card className="add-user" initiallyExpanded={false}>
@@ -106,14 +142,36 @@ class AddUserComponent extends React.Component {
                 floatingLabelText='User Cohort'
                 onChange={this.handleCohortChange} 
               >
-                <MenuItem value={7} primaryText="hrnyc-7" />
-                <MenuItem value={8} primaryText="hrnyc-8" />
-                <MenuItem value={9} primaryText="hrnyc-9" />
-                <MenuItem value={10} primaryText="hrnyc-10" />
-                <MenuItem value={11} primaryText="hrnyc-11" />
+                {cohorts}
               </SelectField> 
             </div>}
               <RaisedButton type="submit" className="submit-button" disabled={!this.state.username && !this.state.bulkSubmit || this.state.username && this.state.bulkSubmit} label="Submit" />
+          </form>
+          <form onSubmit={this.handleNewCohortSubmit} >
+            {<div>
+              Create New Cohort: <br/>
+              
+              <SelectField
+                className="user-input-field" 
+                value={this.state.cohortCity}
+                floatingLabelText='User Cohort City'
+                onChange={this.handleCohortCityChange} 
+              >
+                <MenuItem value={'HRNYC'} primaryText="New York" />
+                <MenuItem value={'HRSFO'} primaryText="San Francisco" />
+                <MenuItem value={'HRLAX'} primaryText="Los Angeles" />
+                <MenuItem value={'HRAUS'} primaryText="Austin" />
+                <MenuItem value={'HRREM'} primaryText="Remote" />
+              </SelectField> 
+              <TextField
+                name="cohortNumber"
+                errorText={(+this.state.cohortNumber < 0 || +this.state.cohortNumber >400 || isNaN(+this.state.cohortNumber)) ? "Please enter a valid cohort number" : ""}
+                className="user-input-field" 
+                value={this.state.cohortNumber}
+                floatingLabelText='Enter Cohort Number'
+                onChange={this.handleInputChange} />
+            </div>}
+              <RaisedButton type="submit" className="submit-button" disabled={!this.state.cohortCity || !this.state.cohortNumber || typeof +this.state.cohortNumber !== 'number'} label="Submit" />
           </form>
         </CardText>
       </Card>

@@ -14,9 +14,11 @@ class DataComponent extends React.Component {
 
 
   render() {
-    const users = this.props.users.map(q => (
+    const users = this.props.users.map(u => (
+
         <UserRow
-          user={q}
+          key={u.id}
+          user={u}
           handleUserDelete={this.props.handleUserDelete}
           />
       ));

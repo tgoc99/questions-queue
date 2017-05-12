@@ -14,4 +14,4 @@ db.once('open', () => {
 
 
 module.exports = db;
-const townHallSchema = require('./townHall.js');
+const cohortSchema = require('./cohort.js');

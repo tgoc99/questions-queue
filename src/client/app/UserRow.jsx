@@ -16,7 +16,7 @@ const UserRow = (props) => {
       <TableRowColumn className="user-row">{username}</TableRowColumn>
       <TableRowColumn className="user-row">{givenName}</TableRowColumn>
       <TableRowColumn className="user-row">{role}</TableRowColumn>
-      <TableRowColumn className="user-row">HRNYC-{cohort}</TableRowColumn>
+      <TableRowColumn className="user-row">{cohort}</TableRowColumn>
       <TableRowColumn className="user-row">{deleteIcon}</TableRowColumn>
     </TableRow>
   );

@@ -56,8 +56,7 @@ class Main extends React.Component {
           <Route path="/home"
             render={ () => (
               this.state.loggedIn ? (
-                <HomeComponent logout={this.logout}
-                  login={this.login} />
+                <HomeComponent logout={this.logout} />
               ) : (
                 <Redirect to="/" />
               )
