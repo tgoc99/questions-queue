@@ -103,10 +103,10 @@ class ProfileComponent extends React.Component {
 	}
 
 	render() {
+
 		return (
 			<MuiThemeProvider>
 			<div className="app-body">
-			<NavBar />
 			<div className="profileContent">
 				<img className="profilePic" src={this.state.user.avatarURL}/>
 

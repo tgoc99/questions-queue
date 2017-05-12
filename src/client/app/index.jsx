@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import AppBar from 'material-ui/AppBar';
+import NavBar from './navbar.component.jsx';
 
 import {
   HashRouter as Router,
@@ -43,6 +44,8 @@ class Main extends React.Component {
   }
   render() {
     return (
+      <div>
+      <NavBar/>
       <Router>
         <div>
           <Route exact path="/" render={() => (
@@ -105,6 +108,7 @@ class Main extends React.Component {
           )}/>
           </div>
       </Router>
+      </div>
     );
   }
 }

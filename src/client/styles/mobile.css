@@ -168,8 +168,45 @@ body {
 
 #home-wrapper .search-wrapper {
   /*width: 100%;*/
-  height: 200px;
   margin: 15px;
+  padding: 0px 15px 30px 15px;
   background-color: white;
   border: 1px solid #ddd;
+}
+
+#home-wrapper .search-text {
+  width: 70% !important;
+}
+
+#home-wrapper .search-icon {
+  margin-right: 15px;
+}
+
+#home-wrapper .search-header {
+  width: 100%;
+}
+
+#home-wrapper .expand-icon {
+  position: absolute;
+  margin-top: 35px;
+  right: 0;
+  font-size: 200%;
+}
+
+#home-wrapper .expand-icon:hover {
+  background-color: grey;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#home-wrapper .search-menu {
+  margin: 0px;
+  padding: 0px;
+  width: 50% !important;
+}
+
+@media screen and (min-width: 1000px){
+  #home-wrapper .expand-icon {
+    margin-right: 20%;
+  }
 }

@@ -203,8 +203,6 @@ td, th {
   font-weight: bold !important;
 }
 
-
-
 .mobileView {
   display: block;
 }
@@ -234,5 +232,11 @@ td, th {
 
   .app-body {
     padding-top: 20px;
+  }
+
+  .desktopBody {
+    padding-left: 15%;
+    padding-right: 15%;
+    width: 70% !important;
   }
 }
