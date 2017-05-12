@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardText, CardHeader, CardTitle } from 'material-ui/Card';
 import AddUserComponent from './AddUserComponent.jsx';
 import DataComponent from './DataComponent.jsx';
+import NextTownHallButton from './NextTownHallButton.jsx';
 
 
 class AdminComponent extends React.Component {
@@ -66,6 +67,10 @@ class AdminComponent extends React.Component {
             cohortChoice={this.props.cohortChoice}
             handleFilterByCohort={this.props.handleFilterByCohort}
             handleUserDelete={this.props.handleUserDelete}
+          />
+          <NextTownHallButton 
+            isAdmin={this.props.isAdmin}
+            handleNextTownHall={this.props.handleNextTownHall}
           />
         </CardText>
       </Card>
