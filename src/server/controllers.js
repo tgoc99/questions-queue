@@ -46,9 +46,9 @@ exports.getCurrentUser = (req, res) => {
 };
 
 exports.updateCurrentUser = (req, res) => {
-  id = req.body.id;
-  console.log('UPDATE USER!!!!!', id, req.body)
-  User.findByIdAndUpdate(id, req.body.user, (err, user) => {
+  // id = req.body.user._id;
+  console.log('UPDATE USER!!!!!', req.body, typeof req.body)
+  User.findByIdAndUpdate(req.body._id, req.body, (err, user) => {
     if (err) res.status(404).send(err);
     else res.status(200).send(user);
   });
