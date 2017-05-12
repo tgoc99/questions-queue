@@ -20,8 +20,10 @@ function SearchBar(props) {
       <MenuItem value={`TownHall #${i}`} primaryText={`TownHall #${i}`}/>
     )
   }
+
   var selectTownHall = (
     <DropDownMenu
+      className="search-menu"
       value={filterState.currentTownHall}
       onChange={(e, idx, val) => handlers.townHall(val)} >
       {[townHallOptions]}
@@ -29,40 +31,51 @@ function SearchBar(props) {
     </DropDownMenu>
   )
 
-
   return (
     <div className="search-wrapper">
-      <TextField
+      <div className="search-header">
+        <i className="material-icons search-icon">search</i>
+        <TextField className="search-text"
         onChange={handlers.query}
         floatingLabelText="Seach Questions..." />
+        { props.showFilters ? (<i onClick={function(){props.toggleFilter()}} className="material-icons expand-icon">expand_less</i>) : 
+        (<i onClick={function(){props.toggleFilter()}} className="material-icons expand-icon">expand_more</i>)}
+      </div>
 
-      <DropDownMenu
-        value={filterState.location}
-        onChange={(e, idx, val) => handlers.location(val)} >
-        <MenuItem value="in *" primaryText = "in *" />
-        <MenuItem value="in Question" primaryText="in Question" />
-        <MenuItem value="in Code Snippet" primaryText="in Code Snippet" />
-        <MenuItem value="in Tags" primaryText="in Tags" />
-      </DropDownMenu>
+      { props.showFilters ? (
+        <div className="search-filters">
+          <DropDownMenu
+            className="search-menu"
+            value={filterState.location}
+            onChange={(e, idx, val) => handlers.location(val)} >
+            <MenuItem value="in *" primaryText = "in *" />
+            <MenuItem value="in Question" primaryText="in Question" />
+            <MenuItem value="in Code Snippet" primaryText="in Code Snippet" />
+            <MenuItem value="in Tags" primaryText="in Tags" />
+          </DropDownMenu>
 
-      <DropDownMenu
-        value={filterState.by}
-        onChange={(e, idx, val) => handlers.by(val)} >
-        <MenuItem value="Upvotes : High to Low" primaryText="Upvotes : High to Low" />
-        <MenuItem value="Time Created : New First" primaryText="Time Created : New First"/>
-        <MenuItem value="Time Created : Old First" primaryText="Time Created : Old First"/>
-      </DropDownMenu>
+          <DropDownMenu
+            className="search-menu"
+            value={filterState.by}
+            onChange={(e, idx, val) => handlers.by(val)} >
+            <MenuItem value="Upvotes : High to Low" primaryText="Upvotes : High to Low" />
+            <MenuItem value="Time Created : New First" primaryText="Time Created : New First"/>
+            <MenuItem value="Time Created : Old First" primaryText="Time Created : Old First"/>
+          </DropDownMenu>
 
-      <DropDownMenu
-        value={filterState.in}
-        onChange={(e, idx, val) => handlers.in(val)} >
-        <MenuItem value="All Questions" primaryText="All Questions" />
-        <MenuItem value="Answered" primaryText="Answered"/>
-        <MenuItem value="Unanswered" primaryText="Unanswered"/>
-        <MenuItem value="Bookmarked" primaryText="Bookmarked"/>
-      </DropDownMenu>
+          <DropDownMenu
+            className="search-menu"
+            value={filterState.in}
+            onChange={(e, idx, val) => handlers.in(val)} >
+            <MenuItem value="All Questions" primaryText="All Questions" />
+            <MenuItem value="Answered" primaryText="Answered"/>
+            <MenuItem value="Unanswered" primaryText="Unanswered"/>
+            <MenuItem value="Bookmarked" primaryText="Bookmarked"/>
+          </DropDownMenu>
 
-      {selectTownHall}
+          {selectTownHall}
+        </div>
+      ): <span />}
     </div>
   )
 }

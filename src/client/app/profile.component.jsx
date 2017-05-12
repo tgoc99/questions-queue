@@ -25,7 +25,6 @@ class ProfileComponent extends React.Component {
 	}
 	render() {
 		return (<div className="app-body">
-			<NavBar />
 			<div className="profileContent">
 				<img className="profilePic" src={this.state.user.img} />
 				<div className="profileHeading"> Username </div>
