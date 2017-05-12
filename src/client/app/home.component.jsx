@@ -33,29 +33,29 @@ const updateQuestions = (questions, newQ) => {
 
 class HomeComponent extends React.Component {
 	constructor(props) {
-	    super(props);
+    super(props);
 
-	    // Parse cookie to set up a user object with user's name and role
-      const user = {};
-	    let isAdmin;
-	    document.cookie.split(';').forEach((str) => {
-	      const [k, v] = str.split('=').map(s => s.trim());
-	      if (k === 'username' || k === 'role' || k === 'cohort') {
-	        user[k] = v;
-	      }
-        console.log(user.cohort)
-        if (user.role === 'admin') isAdmin = true;
-        else isAdmin = false;
-	    });
+    // Parse cookie to set up a user object with user's name and role
+    const user = {};
+    let isAdmin;
+    document.cookie.split(';').forEach((str) => {
+      const [k, v] = str.split('=').map(s => s.trim());
+      if (k === 'username' || k === 'role' || k === 'cohort') {
+        user[k] = v;
+      }
+      console.log(user.cohort)
+      if (user.role === 'admin') isAdmin = true;
+      else isAdmin = false;
+    });
 
-	    this.state = {
-			questions: [],
-			user,
+    this.state = {
+  		questions: [],
+  		user,
       isAdmin,
       townHall: 'TBD',
-			snackMessage: 'Hello World',
-		  snackbackgroundColor: '#536DFE',
-		  snackbar: false,
+  		snackMessage: 'Hello World',
+  	  snackbackgroundColor: '#536DFE',
+  	  snackbar: false,
 
       // filter states
       location: "in *",
@@ -74,19 +74,19 @@ class HomeComponent extends React.Component {
       'townHall': this.handleChangeInCurrentTownHall.bind(this)
     }
 
-		  this.handleVote = this.handleVote.bind(this);
-	    this.handleUpvote = this.handleUpvote.bind(this);
-	    this.handleDownvote = this.handleDownvote.bind(this);
-	    this.handleAnswered = this.handleAnswered.bind(this);
-	    this.handleDelete = this.handleDelete.bind(this);
-      this.handleEdit = this.handleEdit.bind(this);
-	    this.handleNextTownHall = this.handleNextTownHall.bind(this);
-	    this.handleTagDelete = this.handleTagDelete.bind(this);
-	    this.closeSnackbar = this.closeSnackbar.bind(this);
-      this.getQuestions = this.getQuestions.bind(this);
-      this.handleKeep = this.handleKeep.bind(this);
-      this.handleUnkeep = this.handleUnkeep.bind(this);
-      this.toggleFilter = this.toggleFilter.bind(this);
+	  this.handleVote = this.handleVote.bind(this);
+    this.handleUpvote = this.handleUpvote.bind(this);
+    this.handleDownvote = this.handleDownvote.bind(this);
+    this.handleAnswered = this.handleAnswered.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleNextTownHall = this.handleNextTownHall.bind(this);
+    this.handleTagDelete = this.handleTagDelete.bind(this);
+    this.closeSnackbar = this.closeSnackbar.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
+    this.handleKeep = this.handleKeep.bind(this);
+    this.handleUnkeep = this.handleUnkeep.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
 	}
 
   componentDidMount() {
@@ -94,7 +94,6 @@ class HomeComponent extends React.Component {
     this.getUsers()
     .then(users => {
       this.setState({ users })
-      //console.log(this.state.users)
     });
     this.getQuestions();
     this.interval = setInterval(() => {
@@ -107,14 +106,22 @@ class HomeComponent extends React.Component {
   }
 
   getTownHall() {
-    fetch('api/townHall', {credentials: 'include'})
-    .then(res => {
-      return res.json()
-    })
-    .then(th => {
-      this.setState({townHall:th.townHall}) 
-    })
-  }
+      const props = this.props;
+      fetch('/api/townhall', { credentials: 'include' })
+        .then((res) => {
+          if (res.status === 200 || res.status === 304) {
+            return res.json();
+          } else if (res.status === 403) {
+            this.props.logout(() => {});
+            return null;
+          }
+        })
+        .then(res => {
+            console.log(res);
+            this.setState({townHall: res.townHall})
+            this.setState({currentTownHall: `TownHall #${this.state.townHall}`})}
+        );
+    }
 
   getUsers() {
     const props = this.props;
@@ -372,7 +379,7 @@ class HomeComponent extends React.Component {
     // TownHall #18 => 18
     var currentTownHall = this.state.currentTownHall;
     // filter!
-    return questions.filter(question => currentTownHall === 'All TownHalls' || question.keep || `TownHall #${question.townHall}` === currentTownHall);
+    return questions.filter(question => question.cohort === this.state.user.cohort && currentTownHall === 'All TownHalls' || question.keep || `TownHall #${question.townHall}` === currentTownHall);
   }
 
   questionsIn(questions) {
@@ -430,25 +437,6 @@ class HomeComponent extends React.Component {
   handleChangeInCurrentTownHall(townHall) {
     this.setState({currentTownHall: townHall});
   }
-
-  getTownhall() {
-	    const props = this.props;
-	    fetch('/api/townhall', { credentials: 'include' })
-	      .then((res) => {
-	        if (res.status === 200 || res.status === 304) {
-	          // props.login(() => {});
-	          return res.json();
-	        } else if (res.status === 403) {
-	          this.props.logout(() => {});
-	          return null;
-	        }
-	      })
-	      .then(res => {
-	      		console.log(res);
-	      		this.setState({townHall: res.townHall})
-            this.setState({currentTownHall: `TownHall #${this.state.townHall}`})}
-	      );
-	  }
 
   toggleFilter() {
     console.log('toggle');
