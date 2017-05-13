@@ -27,7 +27,7 @@ class DataComponent extends React.Component {
     })
     
     return (
-      <Card className="queue" initiallyExpanded={true}>
+      <Card className="queue" initiallyExpanded={false}>
         <CardHeader title='Data'
           actAsExpander={true}
           showExpandableButton={true}
