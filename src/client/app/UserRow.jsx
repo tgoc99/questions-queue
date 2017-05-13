@@ -10,7 +10,7 @@ const UserRow = (props) => {
   const role = user.role;
   const cohort = user.cohort;
   const deleteIcon = <IconButton onClick={() => props.handleUserDelete(user)} iconClassName="material-icons" tooltip='Delete User'>delete</IconButton>;
-  const modifyIcon = <IconButton onClick={() => props.handleUserModify(user)} iconClassName="material-icons" tooltip='Modify User'>build</IconButton>;
+  const modifyIcon = <IconButton onClick={() => props.handleOpen(user)} iconClassName="material-icons" tooltip='Modify User'>build</IconButton>;
 
   return (
     <TableRow className="user-row">
