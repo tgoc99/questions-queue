@@ -149,8 +149,8 @@ class HomeComponent extends React.Component {
         }
       })
       .then(questions => {
-      		this.setState({questions: questions})}
-      );
+      		this.setState({questions: questions})
+      });
   }
 
   handleNextTownHall() {

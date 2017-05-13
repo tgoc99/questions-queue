@@ -45,7 +45,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-      <NavBar/>
+      <NavBar loggedIn={this.state.loggedIn} />
       <Router>
         <div>
           <Route exact path="/" render={() => (
