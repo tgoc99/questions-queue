@@ -26,6 +26,7 @@ class EditQuestionButton extends React.Component {
   }
   handleEdit(question) {
     this.props.handlers.edit(question);
+    this.props.showAnswerCodeEditor();
     this.handleClose();
   }
   render() {
@@ -38,6 +39,7 @@ class EditQuestionButton extends React.Component {
           onClick={() => {
             this.handleOpen();
             this.props.closeCodeEditor();
+            this.props.closeAnswerCodeEditor();
           }}>
         Edit</button>
         <Dialog
@@ -49,7 +51,8 @@ class EditQuestionButton extends React.Component {
           >
           <QuestionFormComponent
             question={this.props.question}
-            handleEdit={this.handleEdit}/>
+            handleEdit={this.handleEdit}
+            isAdmin={this.props.isAdmin}/>
           <RaisedButton style={{width: '92%', margin: '4%'}} onClick={this.handleClose} label="BACK TO QUESTIONS" />
         </Dialog>
       </span>

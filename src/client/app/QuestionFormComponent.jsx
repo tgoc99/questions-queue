@@ -15,6 +15,12 @@ const allTags = ['Node', 'Express', 'React', 'Angular', 'Closures', 'Promises',
                   'Callback Functions', 'ES6', 'Leo\'s Magnificent Beard', 'Optimization',
                   'Corgis', 'Bob & Alice'];
 
+// handleAnswerInputChange
+// toggleAnswerCode
+// showAnswerButtonText
+// showAnswerCode
+// codeAnswerSnippet
+
 class QuestionFormComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +32,10 @@ class QuestionFormComponent extends React.Component {
       dialogOpen: false,
       showCode: false,
       showButtonText: this.props.question ? 'Show Code' : 'Add some code',
+      // answer states
+      showAnswerButtonText: this.props.question ? 'Set Answer' : 'Answer',
+      showAnswerCode: false,
+      codeAnswerSnippet: this.props.question ? this.props.question.answer : '',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,6 +45,10 @@ class QuestionFormComponent extends React.Component {
     this.closeDialog = this.closeDialog.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.toggleCode = this.toggleCode.bind(this);
+
+    // Answer bindings
+    this.handleAnswerInputChange = this.handleAnswerInputChange.bind(this);
+    this.toggleAnswerCode = this.toggleAnswerCode.bind(this);
   }
 
   handleInputChange(event) {
@@ -46,6 +60,14 @@ class QuestionFormComponent extends React.Component {
     });
   }
 
+  handleAnswerInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  }
 
   handleTagAdd(tag) {
     const appliedTags = this.state.appliedTags;
@@ -86,6 +108,11 @@ class QuestionFormComponent extends React.Component {
     this.setState({ showCode });
   }
 
+  toggleAnswerCode() {
+    const showAnswerCode = !this.state.showAnswerCode;
+    this.setState({ showAnswerCode });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     // don't add a snippet if user has not modified code editor
@@ -111,6 +138,8 @@ class QuestionFormComponent extends React.Component {
     question.questionText = this.state.questionText;
     question.codeSnippet = this.state.codeSnippet;
     question.tags = this.state.appliedTags;
+    question.answer = this.state.codeAnswerSnippet;
+    question.answered = false;
     this.props.handleEdit(question);
   }
 
@@ -142,6 +171,17 @@ class QuestionFormComponent extends React.Component {
       />
     );
 
+    const codeAnswerZone = (
+      <CodeZone
+        name="codeAnswerSnippet"
+        display={this.state.showAnswerCode ? 'block' : 'none'}
+        onChange={this.handleAnswerInputChange}
+        codeSnippet={this.state.codeAnswerSnippet}
+        value = {this.state.codeAnswerSnippet}
+      />
+    );
+
+
     return (
       <Paper className="question-form" >
         <form onSubmit={this.props.handleEdit ? this.handleEdit : this.handleSubmit} >
@@ -157,6 +197,13 @@ class QuestionFormComponent extends React.Component {
             <RaisedButton className="questionFormCodeButton" onClick={this.toggleCode}
               label= {this.state.showCode ? 'Hide Code' : this.state.showButtonText} />
             {this.state.showCode ? codeZone : null}
+
+            {this.props.isAdmin ? <div> 
+              <RaisedButton className="questionFormCodeButton" onClick={this.toggleAnswerCode}
+                label= {this.state.showAnswerCode ? 'Hide Answer' : this.state.showAnswerButtonText} />
+              {this.state.showAnswerCode ? codeAnswerZone : null}
+            </div> : null}
+
             <br/>
             <AutoComplete
               ref="tagBar"
