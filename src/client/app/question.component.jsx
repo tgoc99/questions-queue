@@ -26,7 +26,6 @@ class QuestionComponent extends React.Component {
 				user[k] = v;
 			}
 	    });
-console.log(user);
 	    this.state = {
 			user,
 			snackMessage: 'Hello World',
@@ -44,7 +43,6 @@ console.log(user);
 
 	// Methods to update questions
 	handleSubmit(text, code = null, tags = []) {
-		console.log(this.state.townHall, this.state.user.cohort);
 
 		fetch('/api/questions', {
 		  credentials: 'include',
@@ -62,7 +60,6 @@ console.log(user);
 		})
 		.then(res => res.json())
 		.then((data) => {
-			console.log(data);
 		  this.setState({
 		      snackMessage: 'Your Question was added to Queue',
 		      snackbackgroundColor: '#536DFE',
@@ -84,7 +81,6 @@ console.log(user);
 	        }
 	      })
 	      .then(res => {
-	      		console.log(res);
 	      		this.setState({townHall: res.townHall})}
 	      );
 	  }

@@ -7,6 +7,7 @@ import SvgIcon from 'material-ui/SvgIcon';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const LoginComponent = props => (
+
   props.loggedIn ? <Redirect to='/home' /> :
   (
   <MuiThemeProvider>
