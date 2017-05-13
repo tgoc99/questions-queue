@@ -11,6 +11,7 @@ import {
   IndexRoute
 } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 class ProfileComponent extends React.Component {
 	constructor(props) {
@@ -157,10 +158,10 @@ class ProfileComponent extends React.Component {
 		return (
 			<MuiThemeProvider>
 			<div className="app-body">
-			<div className="profileContent">
+			<div id="profile-wrapper" className="profileContent">
 				<img className="profilePic" src={this.state.user.avatarURL}/>
 
-
+				<hr style={{margin: "20px"}}/>
 
 				<div className="profileHeading">Username</div>
 				<div className="profileText"> {this.state.user.username} </div>
@@ -177,7 +178,9 @@ class ProfileComponent extends React.Component {
 				<div className="profileHeading">TownHall</div>
 				<div className="profileText"> {this.state.townHall} </div>
 
-				<button onClick={this.handleOpen}>EDIT PROFILE FUCKERS!</button>
+				<RaisedButton onClick={this.handleOpen} style={{marginTop: '20px', marginBottom: '20px', width: '92%'}} label="EDIT PROFILE" />
+
+				<hr style={{margin: "20px"}}/>
 
 				<div className="profileHeading">Total Votes</div>
 				<div className="profileText"> {this.state.votes} </div>
@@ -186,54 +189,62 @@ class ProfileComponent extends React.Component {
 				<div className="profileText"> {this.state.questions.length} </div>
 
 				<div className="profileHeading">Questions</div>
+
+				<br />
+
 				{this.state.questions.map((question, idx) => {
 					return (
 						<div key={idx} className="question-wrapper" style={{border: '1px solid black', 'backgroundColor': 'lightblue'}}>
-			        {/* <QuestionAdminComponent question={question} user={user} handlers={handlers}/> */}
 							<p className="question-created">{`TownHall #${question.townHall}`}</p>
-			        <div className="question-header-container">
-			          <div className="question-header">
-			            <div className="question-text">
-			              {question.questionText.split('\n').map(function(line, idx) {
-			                return <p key={idx}>{line}<br/></p>
-			              })}
-			            </div>
-			            <div className="question-info">
-			              {/* <QuestionVoteComponent question={question} user={user} handlers={handlers}/> */}
-										<div className="question-upvote">
-								      <p>{question.votes}</p>
-								      <i className="material-icons">star</i>
-								    </div>
-			            </div>
-			          </div>
-			          <p className="question-created">{moment(question.createdAt).fromNow()}</p>
-			          {question.answered ? <span className="question-badge answered">Answered</span> : null}
-			          <div className="question-tags">
-			            {question.tags.map(function(tag, idx) {
-			              return <span key={idx} className="question-badge">{tag}</span>
-			            })}
-			          </div>
-			        </div>
-			        {/* <QuestionMenuComponent question={question} user={user} handlers={handlers}/> */}
-							<br></br>
-							<br></br>
-			      </div>
-					)
+			        		<div className="question-header-container">
+			          		<div className="question-header">
+		            		<div className="question-text">
+				              {question.questionText.split('\n').map(function(line, idx) {
+				                return <p key={idx}>{line}<br/></p>
+				              })}
+			            	</div>
+				            <div className="question-info">
+				              {/* <QuestionVoteComponent question={question} user={user} handlers={handlers}/> */}
+											<div className="question-upvote">
+									      <p>{question.votes}</p>
+									      <i className="material-icons">star</i>
+									    </div>
+				            </div>
+					          </div>
+					          <p className="question-created">{moment(question.createdAt).fromNow()}</p>
+					          {question.answered ? <span className="question-badge answered">Answered</span> : null}
+					          <div className="question-tags">
+					            {question.tags.map(function(tag, idx) {
+					              return <span key={idx} className="question-badge">{tag}</span>
+					            })}
+					          </div>
+			        		</div>      
+					        {/* <QuestionMenuComponent question={question} user={user} handlers={handlers}/> */}
+									<br></br>
+									<br></br>
+					      </div>
+							)
 				})}
 
+			    <hr style={{margin: "20px"}}/>
+			  
 				<Dialog
+				  style={{width: "100%"}}
 		          title="Edit Question"
 		          modal={false}
 		          open={this.state.open}
 		          onRequestClose={this.handleClose}
 		          autoScrollBodyContent={true}
 		          >
-					<input onChange={(e) => this.updateUserName(e.target.value)} placeholder="Update your Name"></input>
-					<br></br>
-					<input onChange={(e) => this.updateUserPicture(e.target.value)} placeholder="Update your Profile Picture"></input>
-					<br></br>
-					<button disabled={this.state.disableButton} onClick={() => this.updateCurrentUser(this.state.updatedUser)}>SAVE</button>
-					<button onClick={this.handleClose}>GO BACK</button>
+		          	<TextField className="profileInput"
+				        onChange={(e) => this.updateUserName(e.target.value)}
+				        floatingLabelText="Update your Name..." />
+					<TextField className="profileInput"
+				        onChange={(e) => this.updateUserPicture(e.target.value)}
+				        floatingLabelText="Update your Profile Picture..." />
+					<br />
+					<RaisedButton className="profileBtn" disabled={this.state.disableButton} onClick={() => this.updateCurrentUser(this.state.updatedUser)} label="SAVE" />
+					<RaisedButton className="profileBtn" onClick={this.handleClose} label="GO BACK" />
 				</Dialog>
 
 	            <Link style={{padding: '4%', textAlign: 'center'}} to="/home">
