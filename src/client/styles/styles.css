@@ -40,7 +40,6 @@ td, th {
 .app-body {
   padding-top: 80px;
   max-width: 100% !important;
-  min-width: 300px !important;
   width: 100% !important;
   margin: auto !important;
 }
@@ -227,6 +226,12 @@ td, th {
   font-weight: bold !important;
   color: white !important;
   margin-top: 8px !important;
+}
+
+.question-code-header {
+  font-size: 12pt;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 
 @media screen and (min-width: 1000px){

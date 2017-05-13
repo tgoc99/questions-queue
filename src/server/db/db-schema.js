@@ -13,6 +13,7 @@ const questionSchema = new mongoose.Schema({
   cohort: { type: String, required: true },
   townHall: { type: Number, required: true },
   usersVoted: { type: [String], default: [] },
+  answer: { type: String, default: '' },
 });
 
 // exporting the questionQueue schema with questionQueue instance

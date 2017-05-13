@@ -120,7 +120,7 @@ class NavBar extends React.Component {
 				<div className="desktopView">
 					<AppBar showMenuIconButton={false}
 						className="appbar"
-			            title="Question Queue"
+		            	title={(<MenuItem className="logo-button" href="/#/home" primaryText="Question Queue" />)}
 			            iconElementRight = {<RaisedButton href="/auth/logout" style={{marginTop: '7px'}} label="LOG OUT" />}
 			          />
 				</div>
