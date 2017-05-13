@@ -30,7 +30,6 @@ const LoginComponent = props => (
   ) : (
       <MuiThemeProvider>
         <div>
-          <AppBar style={{backgroundColor: '#2b9fda'}} title="Question Queue" showMenuIconButton={false}/>
           <div className="loginContent" style={{padding: '25% 25%'}}>
             <h1 className='welcomeText' style= {{width: '100%'}}>Log in with your github account</h1>
             <div className="loginButton" style={{margin: 'auto', textAlign: 'left'}}>

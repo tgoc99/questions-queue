@@ -69,16 +69,17 @@ class NavBar extends React.Component {
 				<div className="mobileView">
 				<AppBar
 					className="appbar"
+					showMenuIconButton={this.props.loggedIn}
 		            title={(<MenuItem className="logo-button" href="/#/home" primaryText="Question Queue" />)}
 		            onLeftIconButtonTouchTap = {this.openDrawer}
-		            iconElementRight = {<IconMenu iconButtonElement={
+		            iconElementRight = {this.props.loggedIn ? (<IconMenu iconButtonElement={
 		                <IconButton><MoreVertIcon /></IconButton>
 		              }
 		              targetOrigin={{horizontal: 'right', vertical: 'top'}}
 		              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
 		            >
 						<MenuItem href="/auth/logout" primaryText="Log out" />
-		            </IconMenu>}
+		            </IconMenu>) : (<span />)}
 		          />
 
 					<Drawer
@@ -121,7 +122,7 @@ class NavBar extends React.Component {
 					<AppBar showMenuIconButton={false}
 						className="appbar"
 		            	title={(<MenuItem className="logo-button" href="/#/home" primaryText="Question Queue" />)}
-			            iconElementRight = {<RaisedButton href="/auth/logout" style={{marginTop: '7px'}} label="LOG OUT" />}
+			            iconElementRight = {this.props.loggedIn ? (<RaisedButton href="/auth/logout" style={{marginTop: '7px'}} label="LOG OUT" />) : <span />}
 			          />
 				</div>
 			</div>
