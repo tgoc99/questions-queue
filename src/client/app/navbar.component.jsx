@@ -50,7 +50,7 @@ class NavBar extends React.Component {
 
 	// Navigation
 	openDrawer() {
-		console.log("open drawer");
+		//console.log("open drawer");
 		this.setState({open: true});
 	}
 

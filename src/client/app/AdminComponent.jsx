@@ -36,10 +36,10 @@ class AdminComponent extends React.Component {
       }
     })
     .then(data => {
-      console.log(data)
+      //console.log(data)
       let allCohorts = data.map(item => [item._id, item.cohort])
       this.setState({allCohorts,}) 
-      console.log(this.state.allCohorts)
+      //console.log(this.state.allCohorts)
     })
   }
 

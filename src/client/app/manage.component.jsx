@@ -95,7 +95,7 @@ class ManageComponent extends React.Component {
 	          cohort,
 	        }
 	    })
-    console.log(username.length, 'users')
+    //console.log(username.length, 'users')
 	
       fetch('/api/users', {
         credentials: 'include',

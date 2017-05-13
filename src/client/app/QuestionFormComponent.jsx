@@ -131,7 +131,7 @@ class QuestionFormComponent extends React.Component {
   }
   handleEdit(event) {
     var currentTime = Date.now();
-    console.log(currentTime);
+    //console.log(currentTime);
 
     event.preventDefault();
     const question = this.props.question;
