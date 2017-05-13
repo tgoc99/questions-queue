@@ -24,4 +24,8 @@
   .question-admin-button  {
     right: 18%;
   }
+
+  #login-wrapper .login-content {
+    margin-top: 20%; 
+  }
 }
