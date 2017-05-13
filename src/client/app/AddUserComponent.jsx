@@ -212,6 +212,7 @@ class AddUserComponent extends React.Component {
                 Create New Cohort: <br/>
                 
                 <SelectField
+                style={{width: '50%'}}
                   className="user-input-field" 
                   value={this.state.cohortCity}
                   floatingLabelText='User Cohort City'
@@ -224,6 +225,7 @@ class AddUserComponent extends React.Component {
                   <MenuItem value={'HRREM'} primaryText="Remote" />
                 </SelectField> 
                 <TextField
+                style={{width: '50%'}}
                   name="cohortNumber"
                   errorText={(+this.state.cohortNumber < 0 || +this.state.cohortNumber >400 || isNaN(+this.state.cohortNumber)) ? "Please enter a valid cohort number" : ""}
                   className="user-input-field" 
