@@ -57,7 +57,7 @@ class QuestionMenuComponent extends React.Component {
     var isAdmin = user.role === 'admin';
     var isAuthor = user.username == question.username;
 
-    var codeEditorButton = <button key={1} disabled={!question.codeSnippet} className="question-button" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
+    var codeEditorButton = <button key={1} disabled={!question.codeSnippet} className="question-button no-border-left" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
     var answerButton = (<button key={2} disabled={!isAdmin && !question.answered} className="question-button" onClick={() => { if(isAdmin) handlers.answer(question); if(isAdmin) this.showAnswerCodeEditor(); else this.toogleAnswerCode(); }}>{(question.answered && isAdmin) ? ' Hide Answer' : 'Answer'}</button>);
     var editButton = (<EditQuestionButton showAnswerCodeEditor={this.showAnswerCodeEditor} closeAnswerCodeEditor={this.closeAnswerCodeEditor} toogleAnswerCode={this.toogleAnswerCode} openCodeEditor={this.openCodeEditor} closeCodeEditor={this.closeCodeEditor} isAdmin={isAdmin} isAuthor={isAuthor} key={3} question={question} handlers={handlers}/>);
     var deleteButton = (<button key={4} disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);

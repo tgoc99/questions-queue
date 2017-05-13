@@ -4,7 +4,7 @@
 
 body {
   box-sizing: content-box !important;
-  background-color: #f9f9f9 !important;
+  background-color: #dae2e9 !important;
   font-family: 'Roboto', sans-serif !important;
   font-size: 12px;
 }
@@ -26,7 +26,7 @@ body {
 }
 #queue-wrapper .question-wrapper {
   margin-top: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #989ea3;
   background-color: #fff;
 }
 
@@ -89,7 +89,7 @@ body {
 }
 
 #queue-wrapper .question-buttons {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #989ea3;
 }
 
 #queue-wrapper .question-open-editor {
@@ -114,7 +114,7 @@ body {
 
 #queue-wrapper .question-code-container {
   padding: 10px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #989ea3;
 }
 
 #queue-wrapper button {
@@ -122,10 +122,14 @@ body {
   min-height: 40px;
   max-height: 40px;
   border: none;
-  border-left: 1px solid #ddd;
+  border-left: 1px solid #989ea3;
   outline: none;
   background-color: #fafbfc;
   align-items: center;
+}
+
+#queue-wrapper .no-border-left {
+  border-left: 0;
 }
 
 #queue-wrapper button:hover,
@@ -156,7 +160,7 @@ body {
 #home-wrapper .search-wrapper {
   margin: 15px;
   padding: 0px 15px 30px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #989ea3;
   background-color: white;
 }
 
@@ -235,26 +239,36 @@ body {
 }
 .question-admin-header {
   min-height: 20px;
-  padding: 10px;
-  border: 1px solid rgb(221, 221, 221);
-  background-color: #5b717c;
+  padding: 10px 0px 10px 15px;
+  border-bottom: 1px solid #989ea3;
+  background-color: #fafbfc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .question-admin-title {
-  color: white;
-  font-size: 1.375em !important;
-  font-weight: bold;
+  color: #414345;
+  font-size: 1.125em !important;
 }
 .question-admin-button {
   position: absolute;
   right: 30px;
-  display: inline !important;
-  min-height: 30px !important;
-  margin-top: -4px !important;
-  padding: 4px !important;
-  border-width: 0px !important;
-  border-radius: 5px;
+  display: inline-block;
+  width: 25%;
+  padding: 0;
+  margin-right: -14px;
+  border-right: 1px solid #dae2e9;
+  padding: 10px 15px;
   font-size: 1.25em !important;
   font-weight: bold !important;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: #0366d6;
+  font-size: 11px !important;
+  font-weight: normal !important;
 }
 
 .mobileView {
@@ -322,10 +336,10 @@ body {
   height: 50%;
   margin-top: 50%;
   display: block;
-  background-color: #f9f9f9;
+  background-color: #dae2e9;
   padding: 16px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  border: 1px solid #ddd;
+  border: 1px solid #989ea3;
 }
 
 #login-wrapper h1 {
