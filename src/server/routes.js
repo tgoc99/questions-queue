@@ -42,8 +42,8 @@ routes.route('/api/user/:username')
 
 routes.route('/api/cohort')
   .get(controllers.getAllCohorts)
-  .post(controllers.createCohort);
-  // .delete(controllers.deleteTownHall)
+  .post(controllers.createCohort)
+  .delete(controllers.deleteCohort);
   // .put(controllers.nextTownHall);
 
 routes.route('/api/townHall')

@@ -43,9 +43,7 @@ class ProfileComponent extends React.Component {
 					user: {},
 					open: false,
 				 	updatedUser: {},
-					disableButton: true,
-					questions: [],
-					votes: 0
+					disableButton: true
 				}
 
 			document.cookie.split(';').forEach((str) => {
@@ -57,8 +55,6 @@ class ProfileComponent extends React.Component {
 				}
 			});
 			this.getCurrentUser();
-			this.getTownHall();
-			this.getQuestions();
 
 			this.handleOpen = this.handleOpen.bind(this);
 			this.handleClose = this.handleClose.bind(this);
@@ -217,28 +213,6 @@ class ProfileComponent extends React.Component {
       );
   }
 
-	getQuestions() {
-    fetch('/api/questions', { credentials: 'include' })
-      .then((res) => {
-        if (res.status === 200 || res.status === 304) {
-          return res.json();
-        } else if (res.status === 403) {
-          return null;
-        }
-      })
-      .then(questions => {
-					questions = questions.filter(question => question.cohort === this.state.user.cohort && question.username ===  this.state.user.username);
-					questions = questions.sort((a, b) => a.createdAt > b.createdAt);
-					questions = questions.sort((a, b) => a.townHall < b.townHall);
-					var votes = questions.reduce(function(acc, question) {
-						return acc + question.votes;
-					}, 0);
-					this.setState({questions: questions});
-					this.setState({votes: votes});
-			});
-
-  }
-
 	checkDisabled() {
 		var disabled = true;
 		if(this.state.updatedUser.givenName || this.state.updatedUser.avatarURL) disabled = false;
@@ -275,21 +249,6 @@ class ProfileComponent extends React.Component {
 			this.handleClose();
 		})
 	}
-
-	getTownHall() {
-      const props = this.props;
-      fetch('/api/townhall', { credentials: 'include' })
-        .then((res) => {
-          if (res.status === 200 || res.status === 304) {
-            return res.json();
-          } else if (res.status === 403) {
-            return null;
-          }
-        })
-        .then(res => {
-            this.setState({townHall: res.townHall})
-        });
-    }
 
 	render() {
 
