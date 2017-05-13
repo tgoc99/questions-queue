@@ -24,7 +24,8 @@ body {
 #queue-wrapper {
   margin: 15px;
 }
-#queue-wrapper .question-wrapper {
+#queue-wrapper .question-wrapper,
+#profile-wrapper .question-wrapper {
   margin-top: 20px;
   border: 1px solid #ddd;
   background-color: #fff;
@@ -32,18 +33,24 @@ body {
 
 #queue-wrapper .question-header,
 #queue-wrapper .question-info,
-#queue-wrapper .question-upvote {
+#queue-wrapper .question-upvote,
+#profile-wrapper .question-header,
+#profile-wrapper .question-info,
+#profile-wrapper .question-upvote  {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 #queue-wrapper .question-header,
-#queue-wrapper .question-created {
+#queue-wrapper .question-created,
+#profile-wrapper .question-header,
+#profile-wrapper .question-created {
   padding-bottom: 10px;
 }
 
-#queue-wrapper .question-badge {
+#queue-wrapper .question-badge,
+#profile-wrapper .question-badge {
   display: flex;
   min-height: 18px;
   max-height: 18px;
@@ -58,51 +65,62 @@ body {
   justify-content: center;
 }
 
-#queue-wrapper .question-header-container {
+#queue-wrapper .question-header-container,
+#profile-wrapper .question-header-container {
   padding: 10px 15px 0 15px;
 }
 
-#queue-wrapper .question-text {
+#queue-wrapper .question-text,
+#profile-wrapper .question-text {
   color: #0366d6;
   font-size: 1.25em;
 }
 
 #queue-wrapper .question-upvote,
-#queue-wrapper i {
+#queue-wrapper i,
+#profile-wrapper .question-upvote,
+#profile-wrapper i {
   cursor: pointer;
   font-size: 1.5em;
 }
 
-#queue-wrapper .question-created {
+#queue-wrapper .question-created,
+#profile-wrapper .question-created {
   font-size: 0.875em;
   font-style: italic;
 }
 
-#queue-wrapper .question-tags {
+#queue-wrapper .question-tags,
+#profile-wrapper .question-tags {
   display: flex;
   margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
-#queue-wrapper .question-badge-container {
+#queue-wrapper .question-badge-container,
+#profile-wrapper .question-badge-container {
   padding: 10px 15px;
 }
 
-#queue-wrapper .question-buttons {
+#queue-wrapper .question-buttons,
+#profile-wrapper .question-buttons {
   border-top: 1px solid #ddd;
 }
 
-#queue-wrapper .question-open-editor {
+#queue-wrapper .question-open-editor,
+#profile-wrapper .question-open-editor {
   cursor: pointer;
 }
 
-#queue-wrapper .question-buttons {
+#queue-wrapper .question-buttons,
+#profile-wrapper .question-buttons {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-#queue-wrapper .question-button {
+#queue-wrapper .question-button,
+#profile-wrapper .question-button {
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -112,12 +130,14 @@ body {
   flex-grow: 1;
 }
 
-#queue-wrapper .question-code-container {
+#queue-wrapper .question-code-container,
+#profile-wrapper .question-code-container {
   padding: 10px;
   border-top: 1px solid #ddd;
 }
 
-#queue-wrapper button {
+#queue-wrapper button,
+#profile-wrapper button {
   display: flex;
   min-height: 40px;
   max-height: 40px;
@@ -129,21 +149,26 @@ body {
 }
 
 #queue-wrapper button:hover,
-#queue-wrapper button:active {
+#queue-wrapper button:active,
+#profile-wrapper button:hover,
+#profile-wrapper button:active {
   cursor: pointer;
   background-color: rgba(3, 102, 214, 0.30);
 }
 
-#queue-wrapper button:disabled {
+#queue-wrapper button:disabled,
+#profile-wrapper button:disabled {
   cursor: default;
   opacity: 0.20;
 }
 
-#queue-wrapper button:disabled:hover {
+#queue-wrapper button:disabled:hover,
+#profile-wrapper button:disabled:hover {
   background-color: #fafbfc;
 }
 
-#queue-wrapper .answered {
+#queue-wrapper .answered,
+#profile-wrapper .answered {
   width: 60px;
   margin-top: 0;
   text-transform: uppercase;
@@ -196,22 +221,34 @@ body {
 }
 .profilePic {
   width:50%;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
   border-radius: 50%;
 }
 .profileContent {
   max-width: 500px !important;
-  margin: 10% auto 5% auto;
   text-align: center !important;
+  margin: 5% auto 5% auto;
+  width: 80%;
+  padding: 0px 15px 30px 15px;
+  font-family: 'Roboto', sans-serif !important;
 }
 .profileHeading {
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   font-size: 0.875em !important;
   font-weight: bold;
 }
 .profileText {
   font-size: 1.25em !important;
   font-weight: normal;
+}
+.profileInput {
+  width: 100% !important;
+}
+.profileBtn {
+  width: 100% !important;
+  margin-top: 20px;
 }
 .navbarItem {
   padding: 5pt !important;
@@ -274,7 +311,7 @@ body {
 }
 
 .logo-button {
-  width: 230px;
+  width: 330px;
   margin-top: 8px !important;
   color: white !important;
   font-size: 1.75em !important;
