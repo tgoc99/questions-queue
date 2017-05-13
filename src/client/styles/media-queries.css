@@ -29,3 +29,10 @@
     margin-top: 20%; 
   }
 }
+
+@media screen and (max-width: 1000px){
+  .question-admin-button {
+    right: 3% !important;
+    width: 25%;
+  }
+}
