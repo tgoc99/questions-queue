@@ -2,6 +2,15 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NavBar from './navbar.component.jsx';
 import Dialog from 'material-ui/Dialog';
+import {
+  HashRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+  IndexRoute
+} from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class ProfileComponent extends React.Component {
 	constructor(props) {
@@ -179,7 +188,7 @@ class ProfileComponent extends React.Component {
 				<div className="profileHeading">Questions</div>
 				{this.state.questions.map((question, idx) => {
 					return (
-						<div key={idx} className="question-wrapper" style={{border: '1px solid black', 'background-color': 'lightblue'}}>
+						<div key={idx} className="question-wrapper" style={{border: '1px solid black', 'backgroundColor': 'lightblue'}}>
 			        {/* <QuestionAdminComponent question={question} user={user} handlers={handlers}/> */}
 							<p className="question-created">{`TownHall #${question.townHall}`}</p>
 			        <div className="question-header-container">
@@ -213,12 +222,12 @@ class ProfileComponent extends React.Component {
 				})}
 
 				<Dialog
-          title="Edit Question"
-          modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
-          autoScrollBodyContent={true}
-          >
+		          title="Edit Question"
+		          modal={false}
+		          open={this.state.open}
+		          onRequestClose={this.handleClose}
+		          autoScrollBodyContent={true}
+		          >
 					<input onChange={(e) => this.updateUserName(e.target.value)} placeholder="Update your Name"></input>
 					<br></br>
 					<input onChange={(e) => this.updateUserPicture(e.target.value)} placeholder="Update your Profile Picture"></input>
@@ -226,6 +235,10 @@ class ProfileComponent extends React.Component {
 					<button disabled={this.state.disableButton} onClick={() => this.updateCurrentUser(this.state.updatedUser)}>SAVE</button>
 					<button onClick={this.handleClose}>GO BACK</button>
 				</Dialog>
+
+	            <Link style={{padding: '4%', textAlign: 'center'}} to="/home">
+	                <RaisedButton style={{width: '92%'}} label="BACK TO HOME" />
+	            </Link>
 			</div>
 		</div>
 	</MuiThemeProvider>)

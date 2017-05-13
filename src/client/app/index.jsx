@@ -19,7 +19,6 @@ import HomeComponent from './home.component.jsx';
 import QuestionComponent from './question.component.jsx';
 import ProfileComponent from './profile.component.jsx';
 import ManageComponent from './manage.component.jsx';
-import AnalyticsComponent from './analytics.component.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-      <NavBar/>
+      <NavBar loggedIn={this.state.loggedIn} />
       <Router>
         <div>
           <Route exact path="/" render={() => (
@@ -87,15 +86,6 @@ class Main extends React.Component {
             render={ () => (
               this.state.loggedIn ? (
                 <ManageComponent logout={this.logout} />
-              ) : (
-                <Redirect to="/" />
-              )
-          )} />
-
-          <Route path="/analytics"
-            render={ () => (
-              this.state.loggedIn ? (
-                <AnalyticsComponent logout={this.logout} />
               ) : (
                 <Redirect to="/" />
               )

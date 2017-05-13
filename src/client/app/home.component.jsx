@@ -6,6 +6,15 @@ import NextTownHallButton from './NextTownHallButton.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 import SearchBar from './SearchBar.jsx'
+import {
+  HashRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter,
+  IndexRoute
+} from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 
 // integration
 import ManageComponent from './manage.component.jsx'
@@ -43,7 +52,6 @@ class HomeComponent extends React.Component {
       if (k === 'username' || k === 'role' || k === 'cohort') {
         user[k] = v;
       }
-      console.log(user.cohort)
       if (user.role === 'admin') isAdmin = true;
       else isAdmin = false;
     });
@@ -117,7 +125,6 @@ class HomeComponent extends React.Component {
           }
         })
         .then(res => {
-            console.log(res);
             this.setState({townHall: res.townHall})
             this.setState({currentTownHall: `TownHall #${this.state.townHall}`})}
         );
@@ -149,8 +156,8 @@ class HomeComponent extends React.Component {
         }
       })
       .then(questions => {
-      		this.setState({questions: questions})}
-      );
+      		this.setState({questions})
+      });
   }
 
   handleNextTownHall() {
@@ -287,7 +294,6 @@ class HomeComponent extends React.Component {
   }
 
   handleKeep(question) {
-    console.log('keep');
     question.keep = true;
     putRequest(question).then(this.getQuestions);
     this.setState({
@@ -298,7 +304,6 @@ class HomeComponent extends React.Component {
   }
 
   handleUnkeep(question) {
-    console.log('unkeep');
     question.keep = false;
     putRequest(question).then(this.getQuestions);
     this.setState({
@@ -324,7 +329,6 @@ class HomeComponent extends React.Component {
 
   // Filter Functions
   questionsSearchIn(questions) {
-    //console.log(questions);
     var filtered = questions;
     var query = this.state.query;
     if(!!query) {
@@ -439,7 +443,6 @@ class HomeComponent extends React.Component {
   }
 
   toggleFilter() {
-    console.log('toggle');
     var current = this.state.showFilters;
     this.setState({showFilters: !current})
   }
@@ -484,6 +487,13 @@ class HomeComponent extends React.Component {
           isAdmin={this.state.isAdmin}
           handleNextTownHall={this.handleNextTownHall}
         />
+
+        <div className="desktopView">
+          <Link style={{padding: '4%', textAlign: 'center'}} to="/profile">
+              <RaisedButton style={{width: '92%'}} label="VIEW PROFILE" />
+          </Link>
+        </div>
+
 		    <Snackbar
 			        bodyStyle={{ background: this.state.snackbackgroundColor }}
 			        open={this.state.snackbar}
@@ -491,6 +501,7 @@ class HomeComponent extends React.Component {
 			        autoHideDuration={4000}
 			        onRequestClose={this.closeSnackbar}
 			    />
+
 		</div>
 		</MuiThemeProvider>)
 	}

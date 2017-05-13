@@ -14,6 +14,8 @@ class QuestionMenuComponent extends React.Component {
     this.closeAnswerCodeEditor = this.closeAnswerCodeEditor.bind(this);
     this.toogleAnswerCode = this.toogleAnswerCode.bind(this);
     this.showAnswerCodeEditor = this.showAnswerCodeEditor.bind(this);
+
+    this.answerZone = null;
   }
 
   toogleCode() {
@@ -38,6 +40,12 @@ class QuestionMenuComponent extends React.Component {
     this.setState({ showAnswer: true })
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('received', nextProps.question);
+    if(!nextProps.question.answered) {
+      this.closeAnswerCodeEditor();
+    }
+  }
 
 
   render() {
@@ -50,7 +58,7 @@ class QuestionMenuComponent extends React.Component {
     var isAuthor = user.username == question.username;
 
     var codeEditorButton = <button key={1} disabled={!question.codeSnippet} className="question-button" onClick={() => this.toogleCode()}>{this.state.showCode ? 'Close Code' : 'Open Code'}</button>;
-    var answerButton = (<button key={2} disabled={!isAdmin} className="question-button" onClick={() => {handlers.answer(question); this.showAnswerCodeEditor()}}>{(question.answered && isAdmin) ? 'Unanswer' : 'Answer'}</button>);
+    var answerButton = (<button key={2} disabled={!isAdmin && !question.answered} className="question-button" onClick={() => { if(isAdmin) handlers.answer(question); if(isAdmin) this.showAnswerCodeEditor(); else this.toogleAnswerCode(); }}>{(question.answered && isAdmin) ? ' Hide Answer' : 'Answer'}</button>);
     var editButton = (<EditQuestionButton showAnswerCodeEditor={this.showAnswerCodeEditor} closeAnswerCodeEditor={this.closeAnswerCodeEditor} toogleAnswerCode={this.toogleAnswerCode} openCodeEditor={this.openCodeEditor} closeCodeEditor={this.closeCodeEditor} isAdmin={isAdmin} isAuthor={isAuthor} key={3} question={question} handlers={handlers}/>);
     var deleteButton = (<button key={4} disabled={!isAdmin} className="question-button" onClick={() => handlers.delete(question)}>Delete</button>);
 
@@ -61,7 +69,7 @@ class QuestionMenuComponent extends React.Component {
       />
     ) : null;
 
-    var answerZone = this.state.showAnswer ? (
+    this.answerZone = this.state.showAnswer || (!isAdmin && question.answered) ? (
       <div>
         <div className="question-code-header"> Instructor Answer </div>
         <CodeZone
@@ -78,7 +86,7 @@ class QuestionMenuComponent extends React.Component {
           {codeZone}
         </div>
         <div className="question-code-container" style={{display: this.state.showAnswer ? 'block' : 'none'}}>
-          {answerZone}
+          {this.answerZone}
         </div>
         <div className="question-buttons">
           {[codeEditorButton, answerButton, editButton, deleteButton]}
