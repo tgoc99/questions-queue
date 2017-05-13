@@ -1,0 +1,27 @@
+@media screen and (min-width: 1000px){
+  #home-wrapper .expand-icon {
+    margin-right: 17.5%;
+  }
+
+  .mobileView {
+    display: none;
+  }
+
+  .desktopView {
+    display: block;
+  }
+
+  .app-body {
+    padding-top: 20px;
+  }
+
+  .desktopBody {
+    width: 76% !important;
+    padding-right: 12%;
+    padding-left: 12%;
+  }
+
+  .question-admin-button  {
+    right: 18%;
+  }
+}
