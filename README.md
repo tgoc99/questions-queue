@@ -14,9 +14,9 @@ A web application for students to submit questions to be answered during a later
 
 ## Team
 
-  - __Product Owner__: Leo Gomez
-  - __Scrum Master__: Deb Mozumder
-  - __Development Team Members__: David Hamberlin, Paul Jaffre
+  - __Product Owner__: Thomas O'Connor
+  - __Scrum Master__: Willian Hua
+  - __Development Team Members__: Arturo Rubalcava
 
 
 ## Usage
