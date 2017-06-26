@@ -13,8 +13,6 @@ Please e-mail tgoc99@gmail.com for permission to access via your GitHub handle o
 1. [Requirements](#requirements)
 1. [Development](#development)
 1. [Installing Dependencies](#installing-dependencies)
-1. [Tasks](#tasks)
-1. [Contributing](#contributing)
 
 ## Team
 
