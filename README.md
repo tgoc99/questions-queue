@@ -16,7 +16,7 @@ Please e-mail tgoc99@gmail.com for permission to access via your GitHub handle o
 
 ## Team
 
-  - __Product Owner__: Thomas O'Connor
+  - __Product Owner / Developer __: Thomas O'Connor
   - __Scrum Master__: Willian Hua
   - __Development Team Members__: Arturo Rubalcava
 
