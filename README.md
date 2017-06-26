@@ -2,6 +2,10 @@
 
 A web application for students to submit questions to be answered during a later lecture. Questions can optionally include code snippets or tags.
 
+https://questionqueue-hr.herokuapp.com/
+
+Please e-mail tgoc99@gmail.com for permission to access via your GitHub handle or sign in to Github with the username "qqdemo" and password "demopass1".
+
 ## Table of Contents
 
 1. [Team](#team)
@@ -45,7 +49,3 @@ npm install
 
 See [ROADMAP.md](ROADMAP.md).
 
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
